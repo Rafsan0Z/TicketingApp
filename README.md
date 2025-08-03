@@ -4,7 +4,7 @@ Development Log
 
 August 2nd, 2025 -> Project approved, github created, started file added, collaborators invited, basic Panel classes added
 
-August 3rd, 2025 ->
+August 3rd, 2025 -> Added the databse csv files, more might be added later.
 
 August 4th, 2025 ->
 
