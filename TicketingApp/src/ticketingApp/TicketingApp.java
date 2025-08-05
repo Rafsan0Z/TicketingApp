@@ -3,7 +3,9 @@ package ticketingApp;
 import java.awt.EventQueue;
 
 public class TicketingApp {
-    public static void main(String[] args) throws Exception {
+
+	public static void main(String[] args) throws Exception {
+    	
     	EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -14,6 +16,5 @@ public class TicketingApp {
 				}
 			}
 		});
-//    	new MainFrame();
     }
 }
