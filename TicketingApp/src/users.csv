@@ -1,0 +1,5 @@
+Name, Phone, Email, Password, Tickets, PastTickets,isManager
+"Rafsan"," ""9293323480"""," ""mrz281@nyu.edu""","""test""",0,0,false
+Derek,"""12313123113""",,"""test2""",0,0,false 
+Sophia,"""45674899873""",,"""test3""",0,0,false
+,,,,,,
