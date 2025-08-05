@@ -1,7 +1,7 @@
 package ticketingApp;
-import java.awt.CardLayout;
+import java.awt.BorderLayout;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 public class MainFrame extends JFrame {
     
@@ -16,14 +16,17 @@ public class MainFrame extends JFrame {
     TicketPurchasePanel purchasePanel;
     AccountInfoPanel userinfoPanel;
 
+
     public MainFrame(){
 
         // main screen goes here
         setTitle("Ticketing Application");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
-        setLocationRelativeTo(null); // center the window on the screen
-        getContentPane().setLayout(new CardLayout()); // use CardLayout to switch between panels
+        setLocationRelativeTo(null);
+        
+        loginPanel = new LoginPanel();
+        getContentPane().add(loginPanel, BorderLayout.CENTER);
         
     }
 }
