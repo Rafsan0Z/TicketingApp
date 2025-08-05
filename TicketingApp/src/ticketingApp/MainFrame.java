@@ -1,8 +1,12 @@
+package ticketingApp;
+import java.awt.CardLayout;
+
 import javax.swing.*;
 
 public class MainFrame extends JFrame {
     
-    // List of all screens we'll have (so far only for the User)
+    private static final long serialVersionUID = 1L;
+	// List of all screens we'll have (so far only for the User)
     LoginPanel loginPanel;
     RegisterPanel registerPanel;
     EventBrowsePanel browsePanel;
@@ -19,8 +23,7 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null); // center the window on the screen
-        setLayout(new CardLayout()); // use CardLayout to switch between panels
+        getContentPane().setLayout(new CardLayout()); // use CardLayout to switch between panels
+        
     }
-
-
 }
