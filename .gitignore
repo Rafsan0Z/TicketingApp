@@ -1,3 +1,3 @@
 /.metadata/
-.class
-.csv
+*.class
+*.csv
