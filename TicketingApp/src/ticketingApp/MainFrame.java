@@ -1,5 +1,5 @@
 package ticketingApp;
-import java.awt.BorderLayout;
+import java.awt.CardLayout;
 
 import javax.swing.JFrame;
 
@@ -24,9 +24,8 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
+        getContentPane().setLayout(new CardLayout()); // use CardLayout to switch between panels
         
-        loginPanel = new LoginPanel();
-        getContentPane().add(loginPanel, BorderLayout.CENTER);
         
     }
 }
