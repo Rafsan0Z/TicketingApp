@@ -1,6 +1,7 @@
 package ticketingApp;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Date;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,14 +27,21 @@ public class AccountInfoPanel extends JPanel{
 	public AccountInfoPanel(User user){
 		
 		// TODO remove testing data and implement real data
-		Ticket[] testTickets = { new Ticket("Super Cool event", "12/25/2022", "MSG", 21.1),
-				new Ticket("mets vs. braves", "11/12/2024", "city field", 15.1),
-				new Ticket("giants vs tampa bay", "11/15/1968", "metlife", 13)};
-		
-		Ticket[] testUpcomingTickets = { new Ticket("Chicago", "10/11/2025", "MSG", 210.99),
-				new Ticket("mets vs yankees", "11/12/2025", "city field", 105.8),
-				new Ticket("Mumford and Sons", "09/08/2025", "metlife", 19)};
-		
+		Venue testVenue = new Venue("MSG", 100);
+		Venue testVenue2 = new Venue("City Field", 200);
+		Venue testVenue3 = new Venue("Metlife", 200);		
+		Event testEvent = new Event("Super Cool event", testVenue, 100, new Date());
+		Event testEvent2 = new Event("mets vs. braves", testVenue2, 100, new Date());
+		Event testEvent3 = new Event("giants vs tampa bay", testVenue3, 100, new Date());
+		Event testEvent4 = new Event("Chicago", testVenue, 100, new Date());
+		Event testEvent5 = new Event("mets vs yankees", testVenue2, 100, new Date());
+		Event testEvent6 = new Event("Mumford and Sons", testVenue3, 100, new Date());		
+		Ticket[] testTickets = { new Ticket(testEvent, 21.1),
+				new Ticket(testEvent2, 15.1),
+				new Ticket(testEvent3, 13)};	
+		Ticket[] testUpcomingTickets = { new Ticket(testEvent4, 210.99),
+				new Ticket(testEvent5, 105.8),
+				new Ticket(testEvent6, 19)};	
 		setLayout(null);
         
 		// Title information on panel
@@ -184,9 +192,9 @@ public class AccountInfoPanel extends JPanel{
 	 */
 	public static Object[] getRowInfo(Ticket toAdd) {
 		Object[] obj = new Object[7];
-		obj[0] = toAdd.getEvent();
+		obj[0] = toAdd.getEvent().getName();
 		obj[1] = toAdd.getTime();
-		obj[2] = toAdd.getVenue();
+		obj[2] = toAdd.getVenue().getName();
 		obj[3] = toAdd.getCost();
 		return obj;
 	}
