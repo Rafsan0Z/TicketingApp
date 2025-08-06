@@ -1,14 +1,193 @@
 package ticketingApp;
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class AccountInfoPanel extends JPanel{
 
     private static final long serialVersionUID = 1L;
+    private JPasswordField pwdPassword;
+    private JTextField totalField;
+    private JTextField phoneField;
+    private JTextField nameField;
+    private JTextField emailField;
 
-	public AccountInfoPanel(){
-
-
+	public AccountInfoPanel(User user){
+		
+		// TODO remove testing data and implement real data
+		Ticket[] testTickets = { new Ticket("Super Cool event", "12/25/2022", "MSG", 21.1),
+				new Ticket("mets vs. braves", "11/12/2024", "city field", 15.1),
+				new Ticket("giants vs tampa bay", "11/15/1968", "metlife", 13)};
+		
+		Ticket[] testUpcomingTickets = { new Ticket("Chicago", "10/11/2025", "MSG", 210.99),
+				new Ticket("mets vs yankees", "11/12/2025", "city field", 105.8),
+				new Ticket("Mumford and Sons", "09/08/2025", "metlife", 19)};
+		
+		setLayout(null);
         
+		// Title information on panel
+		JLabel titleLabel = new JLabel("Welcome");
+        titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setBounds(234, 34, 332, 58);
+        add(titleLabel);
+        
+        // Name information on panel
+        JLabel nameLabel = new JLabel("Name:");
+        nameLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+        nameLabel.setBounds(169, 85, 81, 19);
+        add(nameLabel);
+        
+        nameField = new JTextField();
+        nameField.setEditable(false);
+        nameField.setOpaque(true);
+        nameField.setText("Guest Name");
+        nameField.setBounds(262, 82, 332, 26);
+        add(nameField);
+        nameField.setColumns(10);
+        
+    	// Phone information on panel
+        JLabel phoneLabel = new JLabel("Phone:");
+        phoneLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+        phoneLabel.setBounds(169, 116, 81, 19);
+        add(phoneLabel);
+        
+        phoneField = new JTextField();
+        phoneField.setEditable(false);
+        phoneField.setText("6461234567");
+        phoneField.setBounds(262, 113, 337, 26);
+        add(phoneField);
+        phoneField.setColumns(10);
+        
+        // Email information on panel
+        JLabel emailLabel = new JLabel("Email:");
+        emailLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+        emailLabel.setBounds(169, 147, 81, 19);
+        add(emailLabel);
+        
+        emailField = new JTextField();
+        emailField.setText("guestemail@nyu.edu");
+        emailField.setEditable(false);
+        emailField.setColumns(10);
+        emailField.setBounds(262, 144, 337, 26);
+        add(emailField);
+        
+        // Password information on panel
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+        passwordLabel.setBounds(169, 183, 81, 19);
+        add(passwordLabel);
+        
+        pwdPassword = new JPasswordField();
+        pwdPassword.setEditable(false);
+        pwdPassword.setText("password123");
+        pwdPassword.setBounds(262, 180, 337, 26);
+        add(pwdPassword);
+        
+        // Upcoming event information on panel
+        JLabel upcomingLabel = new JLabel("Upcoming Events:");
+        upcomingLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+        upcomingLabel.setBounds(169, 251, 146, 19);
+        add(upcomingLabel);
+        
+        JScrollPane upcomingScrollPane = new JScrollPane();
+        upcomingScrollPane.setBounds(169, 275, 539, 83);
+        this.add(upcomingScrollPane);
+        
+        this.ticketTable(upcomingScrollPane, testUpcomingTickets, new Color(240, 255, 240));      
+        
+        // Past event information on panel
+        JLabel pastEventsLabel = new JLabel("Past Events:");
+        pastEventsLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+        pastEventsLabel.setBounds(169, 370, 146, 19);
+        add(pastEventsLabel);
+        
+        JScrollPane pastScrollPane = new JScrollPane();
+        pastScrollPane.setBounds(169, 392, 539, 83);
+        add(pastScrollPane);
+        
+        this.ticketTable(pastScrollPane, testTickets, new Color(255, 228, 225)); 
+        
+        // Total spent information on panel
+        JLabel totalSpentLabel = new JLabel("Total Spent: ");
+        totalSpentLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+        totalSpentLabel.setBounds(169, 220, 97, 19);
+        add(totalSpentLabel);
+        
+        totalField = new JTextField();
+        totalField.setEditable(false);
+        totalField.setText("$500.89");
+        totalField.setBounds(272, 213, 327, 26);
+        add(totalField);
+        totalField.setColumns(10);
+        
+        // Button information on panel
+        JButton logoutBtn = new JButton("Logout");
+        logoutBtn.setBounds(591, 503, 117, 29);
+        add(logoutBtn);
+        
+        JButton browseBtn = new JButton("Browse Events");
+        browseBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        browseBtn.setBounds(169, 503, 117, 29);
+        add(browseBtn);
     }
-
+	
+	/**
+	 * This method will format and popup a table with ticket information on a scrollable pane
+	 * @param pane
+	 * @param tickets
+	 * @param bgColor
+	 */
+	public void ticketTable(JScrollPane pane, Ticket[] tickets, Color bgColor) {
+		JTable table = new JTable();
+        pane.setViewportView(table);
+        table.setEnabled(false);
+		Object[] columns = {"Event", "Time", "Venue"
+		, "Cost"};
+		DefaultTableModel model = new DefaultTableModel();
+		
+		model.setColumnIdentifiers(columns);
+		table.setModel(model);
+		
+		table.setBackground(bgColor);
+		table.setForeground(Color.black);
+		table.setSelectionBackground(Color.white);
+		table.setGridColor(new Color(0, 0, 51));
+		table.setSelectionForeground(Color.white);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		table.setRowHeight(30);
+		table.setAutoCreateRowSorter(true);
+		
+		for (int i = 0; i < tickets.length; i++) {
+			model.addRow(getRowInfo(tickets[i]));
+		}
+	}
+	
+	/**
+	 * This function will create an object with row information for the table
+	 * @param toAdd
+	 * @return
+	 */
+	public static Object[] getRowInfo(Ticket toAdd) {
+		Object[] obj = new Object[7];
+		obj[0] = toAdd.getEvent();
+		obj[1] = toAdd.getTime();
+		obj[2] = toAdd.getVenue();
+		obj[3] = toAdd.getCost();
+		return obj;
+	}
 }
