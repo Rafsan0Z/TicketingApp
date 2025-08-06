@@ -38,79 +38,81 @@ public class AccountInfoPanel extends JPanel{
 		Event testEvent6 = new Event("Mumford and Sons", testVenue3, 100, new Date());		
 		Ticket[] testTickets = { new Ticket(testEvent, 21.1),
 				new Ticket(testEvent2, 15.1),
+				new Ticket(testEvent5, 105.8),
 				new Ticket(testEvent3, 13)};	
 		Ticket[] testUpcomingTickets = { new Ticket(testEvent4, 210.99),
 				new Ticket(testEvent5, 105.8),
-				new Ticket(testEvent6, 19)};	
+				new Ticket(testEvent, 400),
+				new Ticket(testEvent6, 19)};
 		setLayout(null);
         
 		// Title information on panel
 		JLabel titleLabel = new JLabel("Welcome");
         titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        titleLabel.setBounds(234, 34, 332, 58);
+        titleLabel.setBounds(234, 6, 332, 58);
         add(titleLabel);
         
         // Name information on panel
         JLabel nameLabel = new JLabel("Name:");
         nameLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-        nameLabel.setBounds(169, 85, 81, 19);
+        nameLabel.setBounds(169, 57, 81, 19);
         add(nameLabel);
         
         nameField = new JTextField();
         nameField.setEditable(false);
         nameField.setOpaque(true);
         nameField.setText("Guest Name");
-        nameField.setBounds(262, 82, 332, 26);
+        nameField.setBounds(262, 54, 332, 26);
         add(nameField);
         nameField.setColumns(10);
         
     	// Phone information on panel
         JLabel phoneLabel = new JLabel("Phone:");
         phoneLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-        phoneLabel.setBounds(169, 116, 81, 19);
+        phoneLabel.setBounds(169, 88, 81, 19);
         add(phoneLabel);
         
         phoneField = new JTextField();
         phoneField.setEditable(false);
         phoneField.setText("6461234567");
-        phoneField.setBounds(262, 113, 337, 26);
+        phoneField.setBounds(262, 85, 337, 26);
         add(phoneField);
         phoneField.setColumns(10);
         
         // Email information on panel
         JLabel emailLabel = new JLabel("Email:");
         emailLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-        emailLabel.setBounds(169, 147, 81, 19);
+        emailLabel.setBounds(169, 119, 81, 19);
         add(emailLabel);
         
         emailField = new JTextField();
         emailField.setText("guestemail@nyu.edu");
         emailField.setEditable(false);
         emailField.setColumns(10);
-        emailField.setBounds(262, 144, 337, 26);
+        emailField.setBounds(262, 116, 337, 26);
         add(emailField);
         
         // Password information on panel
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-        passwordLabel.setBounds(169, 183, 81, 19);
+        passwordLabel.setBounds(169, 155, 81, 19);
         add(passwordLabel);
         
         pwdPassword = new JPasswordField();
         pwdPassword.setEditable(false);
         pwdPassword.setText("password123");
-        pwdPassword.setBounds(262, 180, 337, 26);
+        pwdPassword.setBounds(262, 152, 337, 26);
         add(pwdPassword);
         
         // Upcoming event information on panel
         JLabel upcomingLabel = new JLabel("Upcoming Events:");
         upcomingLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-        upcomingLabel.setBounds(169, 251, 146, 19);
+        upcomingLabel.setBounds(169, 223, 146, 19);
         add(upcomingLabel);
         
         JScrollPane upcomingScrollPane = new JScrollPane();
-        upcomingScrollPane.setBounds(169, 275, 539, 83);
+        upcomingScrollPane.setBounds(169, 247, 539, 133);
         this.add(upcomingScrollPane);
         
         this.ticketTable(upcomingScrollPane, testUpcomingTickets, new Color(240, 255, 240));      
@@ -118,11 +120,11 @@ public class AccountInfoPanel extends JPanel{
         // Past event information on panel
         JLabel pastEventsLabel = new JLabel("Past Events:");
         pastEventsLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-        pastEventsLabel.setBounds(169, 370, 146, 19);
+        pastEventsLabel.setBounds(169, 392, 146, 19);
         add(pastEventsLabel);
         
         JScrollPane pastScrollPane = new JScrollPane();
-        pastScrollPane.setBounds(169, 392, 539, 83);
+        pastScrollPane.setBounds(169, 414, 539, 99);
         add(pastScrollPane);
         
         this.ticketTable(pastScrollPane, testTickets, new Color(255, 228, 225)); 
@@ -130,19 +132,23 @@ public class AccountInfoPanel extends JPanel{
         // Total spent information on panel
         JLabel totalSpentLabel = new JLabel("Total Spent: ");
         totalSpentLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-        totalSpentLabel.setBounds(169, 220, 97, 19);
+        totalSpentLabel.setBounds(169, 192, 97, 19);
         add(totalSpentLabel);
         
         totalField = new JTextField();
         totalField.setEditable(false);
         totalField.setText("$500.89");
-        totalField.setBounds(272, 213, 327, 26);
+        totalField.setBounds(272, 185, 327, 26);
         add(totalField);
         totalField.setColumns(10);
         
         // Button information on panel
         JButton logoutBtn = new JButton("Logout");
-        logoutBtn.setBounds(591, 503, 117, 29);
+        logoutBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        logoutBtn.setBounds(591, 525, 117, 29);
         add(logoutBtn);
         
         JButton browseBtn = new JButton("Browse Events");
@@ -150,8 +156,24 @@ public class AccountInfoPanel extends JPanel{
         	public void actionPerformed(ActionEvent e) {
         	}
         });
-        browseBtn.setBounds(169, 503, 117, 29);
+        browseBtn.setBounds(169, 525, 117, 29);
         add(browseBtn);
+        
+        JButton sellBtn = new JButton("Sell");
+        sellBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        sellBtn.setBounds(373, 525, 117, 29);
+        add(sellBtn);
+        
+        JButton editBtn = new JButton("Edit");
+        editBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        editBtn.setBounds(611, 54, 117, 29);
+        add(editBtn);
     }
 	
 	/**
