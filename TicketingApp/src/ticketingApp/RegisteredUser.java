@@ -38,7 +38,7 @@ public class RegisteredUser extends User {
 	public String getPhone() {return phone;}
 	public String getEmail() {return email;}
 	public boolean isManager() {return isManager;}
-	public static RegisteredUser getCurrentUser() {return currentUser;}
+	public static RegisteredUser getCuxrrentUser() {return currentUser;}
 	public ArrayList<Ticket> getCurrentTickets() {return tickets;}
 	public List<RegisteredUser> getRegisteredUsers() {return REGISTERED_USERS;}
 	
