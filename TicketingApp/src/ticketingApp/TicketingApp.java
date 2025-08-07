@@ -5,7 +5,10 @@ import java.awt.EventQueue;
 public class TicketingApp {
 
 	public static void main(String[] args) throws Exception {
-    	
+
+		// We might wanna change this and outsource it to another class / method 
+        // which initializes everything!
+        Shipping.slurpAll();
     	EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
