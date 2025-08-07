@@ -1,12 +1,13 @@
 package ticketingApp;
-import java.awt.CardLayout;
 
+import java.awt.CardLayout;
+import java.io.IOException;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame {
-    
+
     private static final long serialVersionUID = 1L;
-	// List of all screens we'll have (so far only for the User)
+    // List of all screens we'll have (so far only for the User)
     LoginPanel loginPanel;
     RegisterPanel registerPanel;
     EventBrowsePanel browsePanel;
@@ -16,8 +17,11 @@ public class MainFrame extends JFrame {
     TicketPurchasePanel purchasePanel;
     AccountInfoPanel userinfoPanel;
 
+    public MainFrame() throws IOException {
 
-    public MainFrame(){
+        // We might wanna change this and outsource it to another class / method 
+        // which initializes everything!
+            Shipping.slurpAll();
 
         // main screen goes here
         setTitle("Ticketing Application");
@@ -25,7 +29,8 @@ public class MainFrame extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         getContentPane().setLayout(new CardLayout()); // use CardLayout to switch between panels
-        
-        
+
+        ManagerLoginPanel managerLoginPanel = new ManagerLoginPanel();
+        getContentPane().add(managerLoginPanel, "ManagerLoginPanel");
     }
 }

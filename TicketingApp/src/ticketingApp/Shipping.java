@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.function.Function;
 
-public class Shipping implements Serializable{
+public class Shipping implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final String FILENAME_EXTENSION = ".ser";
 	
@@ -38,13 +38,13 @@ public class Shipping implements Serializable{
 	 * This method slurps in all necessary files for this project
 	 */
 	public static void slurpAll() throws IOException {
-		slurpFile("src/Users.csv", RegisteredUser::new);
-		slurpFile("src/Venues.csv", Venue::new);
-		slurpFile("src/Events.csv", Event::new);
-		slurpFile("src/Tickets.csv", Ticket::new);
+System.out.println(new File(".").getCanonicalPath());
+
+		slurpFile("TicketingApp/src/users.csv", RegisteredUser::new);
+		slurpFile("TicketingApp/src/venues.csv", Venue::new);
+		slurpFile("TicketingApp/src/events.csv", Event::new);
+		slurpFile("TicketingApp/src/tickets.csv", Ticket::new);
 	}
-	
-	
 	
 	/**
 	 * This method deserializes an ArrayList<T>
@@ -72,7 +72,7 @@ public class Shipping implements Serializable{
 		}
 		System.out.println("worked i think");
 	}
-	
+
 	/**
 	 * 
 	 * @param <T>
