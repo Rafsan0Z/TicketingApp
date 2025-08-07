@@ -1,9 +1,12 @@
 package ticketingApp;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class LoginPanel extends JPanel {
     
@@ -38,27 +41,38 @@ public class LoginPanel extends JPanel {
         passwordField = new JPasswordField();
         passwordField.setBounds(317, 247, 249, 26);
         add(passwordField);
-        
-        JButton loginBtn = new JButton("Login");
-        loginBtn.setBounds(91, 332, 142, 63);
-        add(loginBtn);
-        
+
         JButton registerBtn = new JButton("Register");
-        registerBtn.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
-        registerBtn.setBounds(245, 332, 142, 63);
+        registerBtn.setBounds(91, 332, 142, 63);
         add(registerBtn);
         
-        JButton managerBtn = new JButton("Login as Manager");
-        managerBtn.setBounds(567, 332, 142, 63);
-        add(managerBtn);
+        // registerBtn.addActionListener(new ActionListener() {
+        // 	public void actionPerformed(ActionEvent e) {
+        //         // provide logic to go to a new page for registration
+        // 	}
+        // });
         
-        JButton guestBtn = new JButton("Login as Guest");
-        guestBtn.setBounds(413, 332, 142, 63);
-        add(guestBtn);
+        JButton loginBtn = new JButton("Login");
+        loginBtn.setBounds(567, 332, 142, 63);
+        add(loginBtn);
+        
+        loginBtn.addActionListener((ActionEvent e) -> {
+            if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+                System.out.println("ERROR!");
+                return;
+            }
 
+            if (RegisteredUser.login(emailField.getText(), passwordField.getText()) != null) {
+                System.out.println("SUCCESS");
+                if (RegisteredUser.getCurrentUser().isManager()) {
+                    System.out.println("User is a manager, proceeding to manager panel.");
+                } else {
+                    System.out.println("User is not a manager, proceeding to user panel.");
+                }
+            } else {
+                System.out.println("NO SUCCESS");
+            }
+        });
     }
 
 }

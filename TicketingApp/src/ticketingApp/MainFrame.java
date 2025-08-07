@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setLayout(new CardLayout()); // use CardLayout to switch between panels
 
-        ManagerLoginPanel managerLoginPanel = new ManagerLoginPanel();
-        getContentPane().add(managerLoginPanel, "ManagerLoginPanel");
+        LoginPanel loginPanel = new LoginPanel();
+        getContentPane().add(loginPanel, "LoginPanel");
     }
 }
