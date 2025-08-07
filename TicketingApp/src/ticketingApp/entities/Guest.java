@@ -1,4 +1,6 @@
-package ticketingApp;
+package ticketingApp.entities;
+
+import ticketingApp.RegisteredUser;
 
 public class Guest extends User {
 	public Guest() {}

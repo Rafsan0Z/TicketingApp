@@ -1,4 +1,4 @@
-package ticketingApp;
+package ticketingApp.entities;
 
 public class User {
   

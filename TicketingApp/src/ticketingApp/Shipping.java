@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.function.Function;
 
+import ticketingApp.entities.Event;
+import ticketingApp.entities.Ticket;
+import ticketingApp.entities.Venue;
+import ticketingApp.shipping.Serializables;
+
 public class Shipping implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static final String FILENAME_EXTENSION = ".ser";
