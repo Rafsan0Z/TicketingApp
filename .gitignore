@@ -1,2 +1,5 @@
 /.metadata/
 *.class
+*.ser
+.DS_Store
+bin/

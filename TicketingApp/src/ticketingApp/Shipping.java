@@ -38,7 +38,7 @@ public class Shipping implements Serializable{
 	 * This method slurps in all necessary files for this project
 	 */
 	public static void slurpAll() throws IOException {
-		slurpFile("src/Users.csv", User::new);
+		slurpFile("src/Users.csv", RegisteredUser::new);
 		slurpFile("src/Venues.csv", Venue::new);
 		slurpFile("src/Events.csv", Event::new);
 		slurpFile("src/Tickets.csv", Ticket::new);
