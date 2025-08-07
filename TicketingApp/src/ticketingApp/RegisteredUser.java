@@ -44,8 +44,6 @@ public class RegisteredUser extends User {
 	public boolean checkPassword(String entry) {return entry.equals(password);}
 
 	public static boolean login(String email, String phone, String password) {
-		System.out.println(REGISTERED_USERS.size());
-
 		var found = REGISTERED_USERS
 			.stream()
 			.filter(u -> u.checkPassword(password) && u.getEmail().equals(email) && u.getPhone().equals(phone)).findFirst().orElse(null);

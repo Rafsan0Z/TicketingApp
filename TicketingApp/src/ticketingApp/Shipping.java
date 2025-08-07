@@ -38,8 +38,6 @@ public class Shipping implements Serializable {
 	 * This method slurps in all necessary files for this project
 	 */
 	public static void slurpAll() throws IOException {
-System.out.println(new File(".").getCanonicalPath());
-
 		slurpFile("TicketingApp/src/users.csv", RegisteredUser::new);
 		slurpFile("TicketingApp/src/venues.csv", Venue::new);
 		slurpFile("TicketingApp/src/events.csv", Event::new);

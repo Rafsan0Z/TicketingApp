@@ -19,9 +19,6 @@ public class MainFrame extends JFrame {
 
     public MainFrame() throws IOException {
 
-        // We might wanna change this and outsource it to another class / method 
-        // which initializes everything!
-            Shipping.slurpAll();
 
         // main screen goes here
         setTitle("Ticketing Application");
