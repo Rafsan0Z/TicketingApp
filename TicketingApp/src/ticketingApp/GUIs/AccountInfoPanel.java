@@ -10,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 
 import ticketingApp.entities.Event;
 import ticketingApp.entities.Ticket;
-import ticketingApp.entities.User;
 import ticketingApp.entities.Venue;
 
 import javax.swing.JScrollPane;
@@ -20,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 public class AccountInfoPanel extends JPanel{
 
@@ -29,8 +29,10 @@ public class AccountInfoPanel extends JPanel{
     private JTextField phoneField;
     private JTextField nameField;
     private JTextField emailField;
+    
+    private int rowSelected = -1;
 
-	public AccountInfoPanel(User user){
+    public AccountInfoPanel(){
 		
 		// TODO remove testing data and implement real data
 		Venue testVenue = new Venue("MSG", 100);
@@ -121,7 +123,7 @@ public class AccountInfoPanel extends JPanel{
         upcomingScrollPane.setBounds(169, 247, 539, 133);
         this.add(upcomingScrollPane);
         
-        this.ticketTable(upcomingScrollPane, testUpcomingTickets, new Color(240, 255, 240));      
+        this.ticketTable(upcomingScrollPane, testUpcomingTickets, new Color(240, 255, 240), true);      
         
         // Past event information on panel
         JLabel pastEventsLabel = new JLabel("Past Events:");
@@ -133,7 +135,7 @@ public class AccountInfoPanel extends JPanel{
         pastScrollPane.setBounds(169, 414, 539, 99);
         add(pastScrollPane);
         
-        this.ticketTable(pastScrollPane, testTickets, new Color(255, 228, 225)); 
+        this.ticketTable(pastScrollPane, testTickets, new Color(255, 228, 225), false);  
         
         // Total spent information on panel
         JLabel totalSpentLabel = new JLabel("Total Spent: ");
@@ -188,10 +190,9 @@ public class AccountInfoPanel extends JPanel{
 	 * @param tickets
 	 * @param bgColor
 	 */
-	public void ticketTable(JScrollPane pane, Ticket[] tickets, Color bgColor) {
+    public void ticketTable(JScrollPane pane, Ticket[] tickets, Color bgColor, boolean selectable) {
 		JTable table = new JTable();
         pane.setViewportView(table);
-        table.setEnabled(false);
 		Object[] columns = {"Event", "Time", "Venue"
 		, "Cost"};
 		DefaultTableModel model = new DefaultTableModel();
@@ -201,12 +202,18 @@ public class AccountInfoPanel extends JPanel{
 		
 		table.setBackground(bgColor);
 		table.setForeground(Color.black);
-		table.setSelectionBackground(Color.white);
 		table.setGridColor(new Color(0, 0, 51));
-		table.setSelectionForeground(Color.white);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		table.setRowHeight(30);
 		table.setAutoCreateRowSorter(true);
+		
+		if (selectable) {
+			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			table.setSelectionBackground(new Color(143, 188, 143));
+			rowSelected = table.getSelectedRow();
+		} else {
+			table.setEnabled(false);		
+		}
 		
 		for (int i = 0; i < tickets.length; i++) {
 			model.addRow(getRowInfo(tickets[i]));
@@ -225,5 +232,9 @@ public class AccountInfoPanel extends JPanel{
 		obj[2] = toAdd.getVenue().getName();
 		obj[3] = toAdd.getCost();
 		return obj;
+	}
+	
+	public int getSelectedRow() {
+		return rowSelected;
 	}
 }
