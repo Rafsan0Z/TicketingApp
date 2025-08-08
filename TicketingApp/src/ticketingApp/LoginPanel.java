@@ -40,12 +40,18 @@ public class LoginPanel extends JPanel {
         add(passwordField);
         
         JButton loginBtn = new JButton("Login");
+        loginBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		MainFrame.swap("userinfo");
+        	}
+        });
         loginBtn.setBounds(91, 332, 142, 63);
         add(loginBtn);
         
         JButton registerBtn = new JButton("Register");
         registerBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		MainFrame.swap("register");
         	}
         });
         registerBtn.setBounds(245, 332, 142, 63);
