@@ -1,10 +1,14 @@
 package ticketingApp.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Venue {
+import ticketingApp.SystemData;
+
+public class Venue implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String location;
 	private int capacity;
 	private List<Event> scheduledEvents = new ArrayList<Event>();
@@ -12,11 +16,14 @@ public class Venue {
 	public Venue(String location, int capacity) {
 		this.location = location;
 		this.capacity = capacity;
+		SystemData.addVenue(this);
 	}
 	
 	public Venue(String[] venueInfo) {
+		System.out.println("hello");
 		location = venueInfo[0];
-		capacity = Integer.parseInt(venueInfo[2]);
+		capacity = Integer.parseInt(venueInfo[1]);
+		SystemData.addVenue(this);
 	}
 	
 	public void setCapacity(int cap) {capacity = cap;}
