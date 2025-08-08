@@ -6,9 +6,7 @@ import javax.swing.JFrame;
 import ticketingApp.GUIs.AccountInfoPanel;
 import ticketingApp.GUIs.EventBrowsePanel;
 import ticketingApp.GUIs.EventUpcomingPanel;
-import ticketingApp.GUIs.LoginPanel;
 import ticketingApp.GUIs.PastPurchasePanel;
-import ticketingApp.GUIs.RegisterPanel;
 import ticketingApp.GUIs.TicketPurchasePanel;
 
 public class MainFrame extends JFrame {
@@ -33,7 +31,6 @@ public class MainFrame extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         getContentPane().setLayout(new CardLayout()); // use CardLayout to switch between panels
-        
         
     }
 }

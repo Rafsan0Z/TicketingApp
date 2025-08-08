@@ -1,4 +1,4 @@
-package ticketingApp.GUIs;
+package ticketingApp;
 import java.awt.Font;
 
 import javax.swing.JLabel;
