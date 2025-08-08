@@ -1,4 +1,6 @@
 package ticketingApp;
+import ticketingApp.data.DataStore;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,19 +67,14 @@ public class LoginPanel extends JPanel {
         add(guestBtn);
         
 
-        loginBtn.addActionListener((ActionEvent e) -> {
+        guestBtn.addActionListener((ActionEvent e) -> {
             if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
                 System.out.println("ERROR!");
                 return;
             }
 
-            if (RegisteredUser.login(emailField.getText(), passwordField.getText()) != null) {
+            if (DataStore.loginUser(emailField.getText(), passwordField.getText())) {
                 System.out.println("SUCCESS");
-                if (RegisteredUser.getCurrentUser().isManager()) {
-                    System.out.println("User is a manager, proceeding to manager panel.");
-                } else {
-                    System.out.println("User is not a manager, proceeding to user panel.");
-                }
             } else {
                 System.out.println("NO SUCCESS");
             }

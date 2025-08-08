@@ -2,6 +2,7 @@ package ticketingApp;
 
 import java.awt.EventQueue;
 
+import ticketingApp.data.DataStore;
 import ticketingApp.shipping.Shipping;
 
 public class TicketingApp {
@@ -9,7 +10,9 @@ public class TicketingApp {
 	public static void main(String[] args) throws Exception {
     	// We might wanna change this and outsource it to another class / method 
         // which initializes everything!
-        Shipping.slurpAll();
+//        Shipping.slurpAll();
+
+        var dataStore = new DataStore();
 
     	EventQueue.invokeLater(new Runnable() {
 			public void run() {

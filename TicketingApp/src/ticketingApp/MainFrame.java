@@ -3,6 +3,8 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.io.IOException;
 import javax.swing.JFrame;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import ticketingApp.GUIs.AccountInfoPanel;
 import ticketingApp.GUIs.EventBrowsePanel;
 import ticketingApp.GUIs.EventUpcomingPanel;
@@ -10,7 +12,7 @@ import ticketingApp.GUIs.PastPurchasePanel;
 import ticketingApp.GUIs.TicketPurchasePanel;
 
 public class MainFrame extends JFrame {
-    
+
     private static final long serialVersionUID = 1L;
 	// List of all screens we'll have (so far only for the User)
     LoginPanel loginPanel;

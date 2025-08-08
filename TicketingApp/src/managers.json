@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Tobi",
+    "phone": "+1 (232) 131-424",
+    "email": "t@user.com",
+    "password": "ihatethis321",
+    "events": ["Event1"]
+  }
+]
