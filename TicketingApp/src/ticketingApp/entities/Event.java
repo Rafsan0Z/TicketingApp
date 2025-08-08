@@ -12,7 +12,6 @@ public class Event {
 	private int maxTickets;
 	private Date date;
 	private List<Ticket> tickets = new ArrayList<Ticket>();
-	private boolean soldOut;
 	
 	public Event(String name, Venue venue, int maxTickets, Date date) {
 		this.name = name;
@@ -33,7 +32,7 @@ public class Event {
 	public List<Ticket> getAvailableTickets() {
 		List<Ticket> availableTickets = new ArrayList<Ticket>();
 		for (Ticket ticket : tickets) {
-			if (!ticket.isSold()) {
+			if (!ticket.isPurchased()) {
 				availableTickets.add(ticket);
 			}
 		}
@@ -42,7 +41,7 @@ public class Event {
 	public List<Ticket> getPurchasedTickets() {
 		List<Ticket> purchasedTickets = new ArrayList<Ticket>();
 		for (Ticket ticket : tickets) {
-			if (ticket.isSold()) {
+			if (ticket.isPurchased()) {
 				purchasedTickets.add(ticket);
 			}
 		}
@@ -56,9 +55,17 @@ public class Event {
 		return false;
 	}
 	
+	public void changeTicketPrice(double newPrice) {
+		for (Ticket ticket : tickets) {
+			if (!ticket.isPurchased()) {
+				ticket.changePrice(newPrice);
+			}
+		}
+	}
+	
 	public void cancelAllTickets() {
 		for (Ticket ticket : tickets) {
-			if (ticket.isSold()) {
+			if (ticket.isPurchased()) {
 				RegisteredUser user = ticket.getOwner();
 				user.getCurrentTickets().remove(ticket);
 			}
