@@ -2,7 +2,6 @@ package ticketingApp;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
 public class LoginPanel extends JPanel {
@@ -64,7 +63,25 @@ public class LoginPanel extends JPanel {
         JButton guestBtn = new JButton("Login as Guest");
         guestBtn.setBounds(413, 332, 142, 63);
         add(guestBtn);
+        
 
+        loginBtn.addActionListener((ActionEvent e) -> {
+            if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+                System.out.println("ERROR!");
+                return;
+            }
+
+            if (RegisteredUser.login(emailField.getText(), passwordField.getText()) != null) {
+                System.out.println("SUCCESS");
+                if (RegisteredUser.getCurrentUser().isManager()) {
+                    System.out.println("User is a manager, proceeding to manager panel.");
+                } else {
+                    System.out.println("User is not a manager, proceeding to user panel.");
+                }
+            } else {
+                System.out.println("NO SUCCESS");
+            }
+        });
     }
-
+    
 }

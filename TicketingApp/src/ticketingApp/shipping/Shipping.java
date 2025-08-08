@@ -1,16 +1,16 @@
-package ticketingApp;
+package ticketingApp.shipping;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.function.Function;
 
+import ticketingApp.RegisteredUser;
 import ticketingApp.entities.Event;
 import ticketingApp.entities.Ticket;
 import ticketingApp.entities.Venue;
-import ticketingApp.shipping.Serializables;
 
-public class Shipping implements Serializable{
+public class Shipping implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final String FILENAME_EXTENSION = ".ser";
 	
@@ -43,10 +43,10 @@ public class Shipping implements Serializable{
 	 * This method slurps in all necessary files for this project
 	 */
 	public static void slurpAll() throws IOException {
-		slurpFile("src/Users.csv", RegisteredUser::new);
-		slurpFile("src/Venues.csv", Venue::new);
-		slurpFile("src/Events.csv", Event::new);
-		slurpFile("src/Tickets.csv", Ticket::new);
+		slurpFile("TicketingApp/src/users.csv", RegisteredUser::new);
+		slurpFile("TicketingApp/src/venues.csv", Venue::new);
+		slurpFile("TicketingApp/src/events.csv", Event::new);
+		slurpFile("TicketingApp/src/tickets.csv", Ticket::new);
 	}
 	
 	

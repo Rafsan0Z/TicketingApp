@@ -1,8 +1,8 @@
 package ticketingApp;
 import java.awt.CardLayout;
 import java.awt.Container;
+import java.io.IOException;
 import javax.swing.JFrame;
-
 import ticketingApp.GUIs.AccountInfoPanel;
 import ticketingApp.GUIs.EventBrowsePanel;
 import ticketingApp.GUIs.EventUpcomingPanel;
@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
     private static CardLayout Maincard;
     private static Container content;
 
-    public MainFrame(){
+    public MainFrame() throws IOException {
 
         // main screen goes here
         setTitle("Ticketing Application");
