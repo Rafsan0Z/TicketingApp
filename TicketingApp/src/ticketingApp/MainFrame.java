@@ -1,6 +1,6 @@
 package ticketingApp;
 import java.awt.CardLayout;
-
+import java.awt.Container;
 import javax.swing.JFrame;
 
 import ticketingApp.GUIs.AccountInfoPanel;
@@ -21,7 +21,9 @@ public class MainFrame extends JFrame {
 
     TicketPurchasePanel purchasePanel;
     AccountInfoPanel userinfoPanel;
-
+    
+    private static CardLayout Maincard;
+    private static Container content;
 
     public MainFrame(){
 
@@ -30,7 +32,27 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
-        getContentPane().setLayout(new CardLayout()); // use CardLayout to switch between panels
+        Maincard = new CardLayout();
+        content = getContentPane();
+        content.setLayout(Maincard); // use CardLayout to switch between panels
+        
+                
+        loginPanel = new LoginPanel();
+        content.add(loginPanel, "login");
+        
+        registerPanel = new RegisterPanel();
+        content.add(registerPanel, "register");
+        
+        userinfoPanel = new AccountInfoPanel();
+        content.add(userinfoPanel, "userinfo");
         
     }
+    
+    public static void swap(String name) {
+    	Maincard.show(content, name);
+    }
+    
+    
+    	
+   
 }

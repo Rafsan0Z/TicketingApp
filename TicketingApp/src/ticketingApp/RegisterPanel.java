@@ -80,12 +80,18 @@ public class RegisterPanel extends JPanel{
         JButton registerBtn = new JButton("Register");
         registerBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		MainFrame.swap("login");
         	}
         });
         registerBtn.setBounds(532, 513, 117, 29);
         add(registerBtn);
         
         JButton cancelBtn = new JButton("Cancel");
+        cancelBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		MainFrame.swap("login");
+        	}
+        });
         cancelBtn.setBounds(409, 513, 117, 29);
         add(cancelBtn);
     }
