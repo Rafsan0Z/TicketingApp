@@ -30,6 +30,11 @@ public class ManagerDto {
         this.events = events;
     }
 
+    public boolean checkPassword(String entry) {
+        return entry.equals(password);
+    }
+
+
     public String getName() {
         return name;
     }

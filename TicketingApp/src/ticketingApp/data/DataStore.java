@@ -27,6 +27,8 @@ public class DataStore {
     private static final List<EventDto> EVENTS = new ArrayList<>();
 
     private static UserDto currentUser;
+    private static ManagerDto currentManager;
+    private static boolean isCurrentUser;
 
     static {
         try {
@@ -86,7 +88,20 @@ public class DataStore {
                 .filter(u -> u.checkPassword(password) && u.getEmail().equals(email)).findFirst().orElse(null);
 
         if (found != null) {
+            isCurrentUser = true;
             currentUser = found;
+        }
+
+        return found != null;
+    }
+    public static boolean loginManager(String email, String password) {
+        var found = MANAGERS
+                .stream()
+                .filter(u -> u.checkPassword(password) && u.getEmail().equals(email)).findFirst().orElse(null);
+
+        if (found != null) {
+            isCurrentUser = false;
+            currentManager = found;
         }
 
         return found != null;
@@ -94,5 +109,11 @@ public class DataStore {
 
     public static UserDto getCurrentUser() {
         return currentUser;
+    }
+    public static ManagerDto getCurrentManager() {
+        return currentManager;
+    }
+    public static boolean isCurrentUser() {
+        return isCurrentUser;
     }
 }

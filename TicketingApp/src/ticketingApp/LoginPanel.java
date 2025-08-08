@@ -40,14 +40,14 @@ public class LoginPanel extends JPanel {
         passwordField.setBounds(317, 247, 249, 26);
         add(passwordField);
         
-        JButton loginBtn = new JButton("Login");
-        loginBtn.addActionListener(new ActionListener() {
+        JButton viewAvailableEventsBtn = new JButton("View Available Events");
+        viewAvailableEventsBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		MainFrame.swap("userinfo");
         	}
         });
-        loginBtn.setBounds(91, 332, 142, 63);
-        add(loginBtn);
+        viewAvailableEventsBtn.setBounds(91, 332, 142, 63);
+        add(viewAvailableEventsBtn);
         
         JButton registerBtn = new JButton("Register");
         registerBtn.addActionListener(new ActionListener() {
@@ -74,6 +74,20 @@ public class LoginPanel extends JPanel {
             }
 
             if (DataStore.loginUser(emailField.getText(), passwordField.getText())) {
+                System.out.println("SUCCESS");
+                MainFrame.swap("userinfo");
+            } else {
+                System.out.println("NO SUCCESS");
+            }
+        });
+
+        managerBtn.addActionListener((ActionEvent e) -> {
+            if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+                System.out.println("ERROR!");
+                return;
+            }
+
+            if (DataStore.loginManager(emailField.getText(), passwordField.getText())) {
                 System.out.println("SUCCESS");
             } else {
                 System.out.println("NO SUCCESS");
