@@ -1,4 +1,4 @@
-package ticketingApp;
+package ticketingApp.entities;
 
 import java.util.Date;
 

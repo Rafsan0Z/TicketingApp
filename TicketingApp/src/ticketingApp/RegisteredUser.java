@@ -2,6 +2,9 @@ package ticketingApp;
 
 import java.util.ArrayList;
 
+import ticketingApp.entities.Ticket;
+import ticketingApp.entities.User;
+
 public class RegisteredUser extends User {
 	private static final ArrayList<User> REGISTERED_USERS = new ArrayList<User>();
 	private String name;

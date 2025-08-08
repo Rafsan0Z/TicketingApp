@@ -1,4 +1,4 @@
-package ticketingApp;
+package ticketingApp.shipping;
 
 /*
  * This is a special class that defines the constants that
@@ -13,8 +13,8 @@ public enum Serializables {
 	USERS("user"),
 	VENUES("venues");
 	
-	
-	String fileName;
+	// TODO: fix when packages are finalized
+	public String fileName;
 	
 	/**
 	 * This creates a predefined constant for the given string

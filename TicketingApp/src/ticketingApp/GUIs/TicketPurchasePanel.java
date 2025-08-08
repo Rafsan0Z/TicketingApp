@@ -1,4 +1,4 @@
-package ticketingApp;
+package ticketingApp.GUIs;
 import javax.swing.JPanel;
 
 public class TicketPurchasePanel extends JPanel{

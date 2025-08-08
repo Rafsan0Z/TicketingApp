@@ -1,4 +1,4 @@
-package ticketingApp;
+package ticketingApp.GUIs;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Date;
@@ -7,6 +7,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+
+import ticketingApp.entities.Event;
+import ticketingApp.entities.Ticket;
+import ticketingApp.entities.Venue;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -27,7 +32,7 @@ public class AccountInfoPanel extends JPanel{
     
     private int rowSelected = -1;
 
-	public AccountInfoPanel(){
+    public AccountInfoPanel(){
 		
 		// TODO remove testing data and implement real data
 		Venue testVenue = new Venue("MSG", 100);
@@ -130,7 +135,7 @@ public class AccountInfoPanel extends JPanel{
         pastScrollPane.setBounds(169, 414, 539, 99);
         add(pastScrollPane);
         
-        this.ticketTable(pastScrollPane, testTickets, new Color(255, 228, 225), false); 
+        this.ticketTable(pastScrollPane, testTickets, new Color(255, 228, 225), false);  
         
         // Total spent information on panel
         JLabel totalSpentLabel = new JLabel("Total Spent: ");
@@ -185,7 +190,7 @@ public class AccountInfoPanel extends JPanel{
 	 * @param tickets
 	 * @param bgColor
 	 */
-	public void ticketTable(JScrollPane pane, Ticket[] tickets, Color bgColor, boolean selectable) {
+    public void ticketTable(JScrollPane pane, Ticket[] tickets, Color bgColor, boolean selectable) {
 		JTable table = new JTable();
         pane.setViewportView(table);
 		Object[] columns = {"Event", "Time", "Venue"
@@ -201,6 +206,7 @@ public class AccountInfoPanel extends JPanel{
 		table.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		table.setRowHeight(30);
 		table.setAutoCreateRowSorter(true);
+		
 		if (selectable) {
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			table.setSelectionBackground(new Color(143, 188, 143));
@@ -226,5 +232,9 @@ public class AccountInfoPanel extends JPanel{
 		obj[2] = toAdd.getVenue().getName();
 		obj[3] = toAdd.getCost();
 		return obj;
+	}
+	
+	public int getSelectedRow() {
+		return rowSelected;
 	}
 }

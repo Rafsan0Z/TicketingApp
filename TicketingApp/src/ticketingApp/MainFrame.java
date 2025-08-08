@@ -3,6 +3,12 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import javax.swing.JFrame;
 
+import ticketingApp.GUIs.AccountInfoPanel;
+import ticketingApp.GUIs.EventBrowsePanel;
+import ticketingApp.GUIs.EventUpcomingPanel;
+import ticketingApp.GUIs.PastPurchasePanel;
+import ticketingApp.GUIs.TicketPurchasePanel;
+
 public class MainFrame extends JFrame {
     
     private static final long serialVersionUID = 1L;
