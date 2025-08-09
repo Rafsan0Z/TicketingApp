@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import MainFrame;
 import entities.Event;
 import entities.Ticket;
 import entities.Venue;
