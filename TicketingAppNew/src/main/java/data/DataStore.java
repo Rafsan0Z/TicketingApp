@@ -2,12 +2,10 @@ package data;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import data.dto.EventDto;
 import data.dto.ManagerDto;
-import data.dto.TicketDto;
 import data.dto.UserDto;
 
 import java.io.File;
@@ -16,7 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 public class DataStore {
@@ -69,6 +66,13 @@ public class DataStore {
 
     public static void saveEverything() {
         try {
+            // saving the current person logged in
+            if (isCurrentUser) {
+                saveCurrentUser(currentUser);
+            } else if (!isCurrentUser) {
+                saveCurrentManager(currentManager);
+            }
+
             File userOutFile = new File("src/users.json");
             MAPPER.writerWithDefaultPrettyPrinter().writeValue(userOutFile, USERS);
 
@@ -140,6 +144,32 @@ public class DataStore {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static void saveCurrentUser(UserDto currentUser) {
+        UserDto foundUser = null;
+        for (UserDto user : USERS) {
+            if(currentUser.getEmail().equals(user.getEmail())) {
+                foundUser = user;
+            }
+        }
+        if (foundUser != null) {
+            USERS.remove(foundUser);
+            USERS.add(currentUser);
+        }
+    }
+
+    public static void saveCurrentManager(ManagerDto currentManager) {
+        ManagerDto foundManager = null;
+        for (ManagerDto manager : MANAGERS) {
+            if(currentManager.getEmail().equals(manager.getEmail())) {
+                foundManager = manager;
+            }
+        }
+        if (foundManager != null) {
+            MANAGERS.remove(foundManager);
+            MANAGERS.add(currentManager);
         }
     }
 

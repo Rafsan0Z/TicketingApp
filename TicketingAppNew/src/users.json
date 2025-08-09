@@ -1,13 +1,13 @@
 [ {
-  "name" : "Derek",
-  "phone" : "+1 (923) 424-424",
-  "email" : "d@user.com",
-  "password" : "hughjaynuss1234",
-  "tickets" : [ ]
-}, {
   "name" : "mike",
   "phone" : "(+22) 222-333-4444",
   "email" : "m@user.com",
   "password" : "dixienormuss222",
+  "tickets" : [ ]
+}, {
+  "name" : "Derek",
+  "phone" : "+1 (923) 424-424",
+  "email" : "d@user.com",
+  "password" : "hughjaynuss1234",
   "tickets" : [ ]
 } ]
