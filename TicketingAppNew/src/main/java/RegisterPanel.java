@@ -93,5 +93,7 @@ public class RegisterPanel extends JPanel{
         });
         cancelBtn.setBounds(409, 513, 117, 29);
         add(cancelBtn);
+
+
     }
 }
