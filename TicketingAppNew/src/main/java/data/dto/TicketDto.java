@@ -1,6 +1,6 @@
 package data.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,11 +19,11 @@ public class TicketDto {
     @JsonProperty("owner")
     private String owner;
 
-    public TicketDto(Date ticketId, String eventName, double price, boolean purchased) {
+    public TicketDto(Date ticketId, String eventName, double price) {
         this.ticketId = ticketId;
         this.eventName = eventName;
         this.price = price;
-        this.purchased = purchased;
+        this.purchased = false;
     }
 
     public Date getTicketId() {

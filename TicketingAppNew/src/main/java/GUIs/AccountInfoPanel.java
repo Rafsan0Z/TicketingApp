@@ -8,9 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import entities.Event;
-import entities.Ticket;
-import entities.Venue;
+import data.dto.EventDto;
+import data.dto.TicketDto;
+import data.dto.VenueDto;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -35,23 +35,23 @@ public class AccountInfoPanel extends JPanel{
     public AccountInfoPanel(){
 		
 		// TODO remove testing data and implement real data
-		Venue testVenue = new Venue("MSG", 100);
-		Venue testVenue2 = new Venue("City Field", 200);
-		Venue testVenue3 = new Venue("Metlife", 200);		
-		Event testEvent = new Event("Super Cool event", testVenue, 100, new Date());
-		Event testEvent2 = new Event("mets vs. braves", testVenue2, 100, new Date());
-		Event testEvent3 = new Event("giants vs tampa bay", testVenue3, 100, new Date());
-		Event testEvent4 = new Event("Chicago", testVenue, 100, new Date());
-		Event testEvent5 = new Event("mets vs yankees", testVenue2, 100, new Date());
-		Event testEvent6 = new Event("Mumford and Sons", testVenue3, 100, new Date());		
-		Ticket[] testTickets = { new Ticket(testEvent, 21.1),
-				new Ticket(testEvent2, 15.1),
-				new Ticket(testEvent5, 105.8),
-				new Ticket(testEvent3, 13)};	
-		Ticket[] testUpcomingTickets = { new Ticket(testEvent4, 210.99),
-				new Ticket(testEvent5, 105.8),
-				new Ticket(testEvent, 400),
-				new Ticket(testEvent6, 19)};
+		VenueDto testVenue = new VenueDto("MSG", 100);
+		VenueDto testVenue2 = new VenueDto("City Field", 200);
+		VenueDto testVenue3 = new VenueDto("Metlife", 200);		
+		EventDto testEvent = new EventDto("Super Cool event", 100, 100, "MSG", new Date());
+		EventDto testEvent2 = new EventDto("mets vs. braves", 200, 200, "City Field", new Date());
+		EventDto testEvent3 = new EventDto("giants vs tampa bay", 100, 100, "Metlife", new Date());
+		EventDto testEvent4 = new EventDto("Chicago", 100, 100, "MSG", new Date());
+		EventDto testEvent5 = new EventDto("mets vs yankees", 100, 100, "City Field", new Date());
+		EventDto testEvent6 = new EventDto("Mumford and Sons", 300, 100, "Metlife", new Date());		
+		TicketDto[] testTickets = { new TicketDto(new Date(), "Super Cool event", 21.1),
+				new TicketDto(new Date(), "mets vs. braves", 15.1),
+				new TicketDto(new Date(), "giants vs tampa bay", 105.8),
+				new TicketDto(new Date(), "Chicago", 13)};	
+		TicketDto[] testUpcomingTickets = { new TicketDto(new Date(), "mets vs. braves", 210.99),
+				new TicketDto(new Date(), "mets vs yankees", 105.8),
+				new TicketDto(new Date(), "Mumford and sons", 400),
+				new TicketDto(new Date(), "Super Cool event", 19)};
 		setLayout(null);
         
 		// Title information on panel
@@ -190,7 +190,7 @@ public class AccountInfoPanel extends JPanel{
 	 * @param tickets
 	 * @param bgColor
 	 */
-    public void ticketTable(JScrollPane pane, Ticket[] tickets, Color bgColor, boolean selectable) {
+    public void ticketTable(JScrollPane pane, TicketDto[] tickets, Color bgColor, boolean selectable) {
 		JTable table = new JTable();
         pane.setViewportView(table);
 		Object[] columns = {"Event", "Time", "Venue"
@@ -225,11 +225,11 @@ public class AccountInfoPanel extends JPanel{
 	 * @param toAdd
 	 * @return
 	 */
-	public static Object[] getRowInfo(Ticket toAdd) {
+	public static Object[] getRowInfo(TicketDto toAdd) {
 		Object[] obj = new Object[7];
-		obj[0] = toAdd.getEvent().getName();
-		obj[1] = toAdd.getEvent().getDate();
-		obj[2] = toAdd.getEvent().getVenue().getLocation();
+		obj[0] = toAdd.getEvent();
+		obj[1] = new Date();
+		obj[2] = "MSG";
 		obj[3] = toAdd.getPrice();
 		return obj;
 	}

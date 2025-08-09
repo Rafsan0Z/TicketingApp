@@ -61,7 +61,14 @@ public class DataStore {
             EVENTS.addAll(MAPPER.readValue(managerJSON, new TypeReference<List<EventDto>>() {
             }));
             
+            System.out.println("Reading Venues...");
+            
+            String venuesJSON = new String(Files.readAllBytes(Path.of("src/venues.json")));
             VENUES.addAll(MAPPER.readValue(jsonString, new TypeReference<List<VenueDto>>() {}));
+            
+            System.out.println("Reading Tickets...");
+            
+            String ticketsJSON = new String(Files.readAllBytes(Path.of("src/tickets.json")));
             TICKETS.addAll(MAPPER.readValue(jsonString, new TypeReference<List<TicketDto>>() {}));
 
 

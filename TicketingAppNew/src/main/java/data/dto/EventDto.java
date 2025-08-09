@@ -3,8 +3,6 @@ package data.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import entities.User;
-
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -23,11 +21,11 @@ public class EventDto {
     private Date date;
     
     // Mapping for an array of Users used for canceling
-    private User[] users;
+    private UserDto[] users;
 
     public EventDto() {}
 
-    public EventDto(String eventName, ManagerDto manager, int numTickets, int numTicketsRemaining, String venue, Date date) {
+    public EventDto(String eventName, int numTickets, int numTicketsRemaining, String venue, Date date) {
         this.eventName = eventName;
         this.numTickets = numTickets;
         this.venue = venue;
@@ -58,12 +56,12 @@ public class EventDto {
 	
 	public void changeTicketPrice(double newPrice) {cost = newPrice;}
 	
-	public void cancelAllTickets() {
-		for (User user : users) {
-			user.getCurrentTickets();
-			// TODO: add remove
-		}
-		numTicketsRemaining = 0;
-	}
+//	public void cancelAllTickets() {
+//		for (UserDto user : users) {
+//			user.getCurrentTickets();
+//			// TODO: add remove
+//		}
+//		numTicketsRemaining = 0;
+//	}
 
 }
