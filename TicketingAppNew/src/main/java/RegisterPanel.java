@@ -91,7 +91,11 @@ public class RegisterPanel extends JPanel{
         		MainFrame.swap("login");
         	}
         });
-        cancelBtn.setBounds(409, 513, 117, 29);
+        cancelBtn.setBounds(269, 513, 117, 29);
         add(cancelBtn);
+        
+        JButton registerManagerBtn = new JButton("Register Manager");
+        registerManagerBtn.setBounds(386, 513, 140, 29);
+        add(registerManagerBtn);
     }
 }

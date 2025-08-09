@@ -1,28 +1,40 @@
 package entities;
 
-import java.util.Date;
-
 public class Ticket {
 
 	private Event event;
-	private Venue venue;
-	private Date time;
-	private double cost;
+	private double price;
+	private boolean purchased;
+	private double discount;
+	private User owner;
 	
 	public Ticket(Event event, double cost) {
 		this.event = event;
-		this.venue = event.getVenue();
-		this.time = event.getDate();
-		this.cost = cost;
+		this.price = cost;
+		this.owner = null;
+		purchased = false;
+		
 	}
 	
 	public Ticket(String[] ticketInfo) {
 		// TODO Auto-generated constructor stub
 	}
+	
 
 	public Event getEvent() {return event;	}
-	public Venue getVenue() {return venue;}
-	public Date getTime() {return time;}
-	public double getCost() {return cost;}
-
+	public double getPrice() {return price;}
+	public User getOwner() {return owner;}
+	public boolean isPurchased() {return purchased;}
+	
+	public void changePrice(double price) {this.price = price;}
+	public void purchase(User owner) {
+		this.owner = owner;
+		purchased = true;
+	}
+	
+	public void sell() {
+		owner = null;
+		purchased = false;
+	}
+	
 }

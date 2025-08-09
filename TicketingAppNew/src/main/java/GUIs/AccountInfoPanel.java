@@ -228,9 +228,9 @@ public class AccountInfoPanel extends JPanel{
 	public static Object[] getRowInfo(Ticket toAdd) {
 		Object[] obj = new Object[7];
 		obj[0] = toAdd.getEvent().getName();
-		obj[1] = toAdd.getTime();
-		obj[2] = toAdd.getVenue().getName();
-		obj[3] = toAdd.getCost();
+		obj[1] = toAdd.getEvent().getDate();
+		obj[2] = toAdd.getEvent().getVenue().getLocation();
+		obj[3] = toAdd.getPrice();
 		return obj;
 	}
 	
