@@ -209,11 +209,14 @@ public class DataStore {
         }
         if (currentEvent != null && !currentEvent.isSoldOut()) {
             TicketDto newTicket = new TicketDto(eventName, currentEvent.getCost(), true, currentUser.getEmail());
-            TicketInfo newTicketInfo = new TicketInfo(currentUser.getEmail(), newTicket.getTicketId());
-            currentEvent.setNumTicketsRemaining(currentEvent.getNumTicketsRemaining() - 1);
+
+            TicketInfo newTicketInfo = new TicketInfo(currentUser.getEmail(), newTicket.getTicketId()); // for the event.getAttendees()
+            currentEvent.setNumTicketsRemaining(currentEvent.getNumTicketsRemaining() - 1); // decrement the remaining tickets
+
             currentEvent.getAttendees().add(newTicketInfo);
             currentUser.getTickets().add(newTicket);
             TICKETS.add(newTicket);
+
             saveEverything();
             return true;
         } else {
