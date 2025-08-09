@@ -17,26 +17,32 @@ public class EventViewerPanel extends JPanel{
 
     private static final long serialVersionUID = 1L;
     private JTable EventTable;
+    
+    private JLabel TopicLabel;
+    
+    private JButton PurchaseButton;
+    private JButton AccountButton;
 
 	public EventViewerPanel(){
 
-		JLabel TopicLabel = new JLabel("View all Available Events");
+		TopicLabel = new JLabel("View all Available Events");
 		TopicLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		TopicLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		
 		EventTable = new JTable();
 		EventTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		JButton PurchaseButton = new JButton("Purchase Tickets");
+		PurchaseButton = new JButton("Purchase Tickets");
 		PurchaseButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JButton AccountButton = new JButton("Account Info");
+		AccountButton = new JButton("Account Info");
 		AccountButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainFrame.swap("userinfo");
 			}
 		});
 		AccountButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)

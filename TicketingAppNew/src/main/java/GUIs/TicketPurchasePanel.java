@@ -14,35 +14,46 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 public class TicketPurchasePanel extends JPanel{
 
     private static final long serialVersionUID = 1L;
+    JLabel PurchaseTicketsLabel;
+    JLabel TicketEventLabel;
+    JLabel TicketVenueLabel;
+    JLabel TicketPriceLabel;
+    JLabel TicketManagerLabel;
+    JLabel SelectAgeLabel;
+    JLabel NumTicketsLabel;
+    JLabel TotalChargeLabel;
+    
+    JButton CancelButton;
+    JButton PurchaseButton;
 
 	public TicketPurchasePanel(){
 
-		JLabel PurchaseTicketsLabel = new JLabel("Purchase Tickets");
+		PurchaseTicketsLabel = new JLabel("Purchase Tickets");
 		PurchaseTicketsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		PurchaseTicketsLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		
-		JLabel TicketEventLabel = new JLabel("Event Name");
+		TicketEventLabel = new JLabel("Event Name");
 		TicketEventLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JLabel TicketVenueLabel = new JLabel("Venue Name");
+		TicketVenueLabel = new JLabel("Venue Name");
 		TicketVenueLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JLabel TicketPriceLabel = new JLabel("Ticket Price");
+		TicketPriceLabel = new JLabel("Ticket Price");
 		TicketPriceLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JLabel TicketManagerLabel = new JLabel("Managed By");
+		TicketManagerLabel = new JLabel("Managed By");
 		TicketManagerLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JLabel SelectAgeLabel = new JLabel("Select Age");
+		SelectAgeLabel = new JLabel("Select Age");
 		SelectAgeLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JLabel NumTicketsLabel = new JLabel("Number of Tickets");
+		NumTicketsLabel = new JLabel("Number of Tickets");
 		NumTicketsLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JLabel TotalChargeLabel = new JLabel("Total Charge");
+		TotalChargeLabel = new JLabel("Total Charge");
 		TotalChargeLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JButton CancelButton = new JButton("Cancel");
+		CancelButton = new JButton("Cancel");
 		CancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainFrame.swap("eventview");
@@ -50,7 +61,7 @@ public class TicketPurchasePanel extends JPanel{
 		});
 		CancelButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JButton PurchaseButton = new JButton("Purchase these tickets");
+		PurchaseButton = new JButton("Purchase these tickets");
 		PurchaseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
