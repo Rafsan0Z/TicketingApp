@@ -12,5 +12,11 @@
 	"email": "so@user.com",
 	"password": "abc123",
 	"tickets": []
-  }
-]
+  },
+  {
+  "name" : "mike",
+  "phone" : "(+22) 222-333-4444",
+  "email" : "m@user.com",
+  "password" : "xyz987",
+  "tickets" : []
+} ]

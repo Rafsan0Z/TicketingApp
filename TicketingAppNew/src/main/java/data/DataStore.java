@@ -2,6 +2,7 @@ package data;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import data.dto.EventDto;
@@ -15,6 +16,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+
+import java.util.Collections;
+import java.util.LinkedList;
+
 import java.util.List;
 
 public class DataStore {
@@ -71,20 +76,16 @@ public class DataStore {
         }
     }
 
-    public void SaveUsers() {
+    public static void saveEverything() {
         try {
-            String jsonString = MAPPER.writeValueAsString(USERS);
             File userOutFile = new File("src/users.json");
-            MAPPER.writeValue(userOutFile, jsonString);
+            MAPPER.writerWithDefaultPrettyPrinter().writeValue(userOutFile, USERS);
 
-            String managerJSON = MAPPER.writeValueAsString(USERS);
             File managerOutFile = new File("src/managers.json");
-            MAPPER.writeValue(managerOutFile, managerJSON);
+            MAPPER.writerWithDefaultPrettyPrinter().writeValue(managerOutFile, MANAGERS);
 
-            String eventJSON = MAPPER.writeValueAsString(USERS);
             File eventOutFile = new File("src/events.json");
-            MAPPER.writeValue(eventOutFile, eventJSON);
-            
+            MAPPER.writerWithDefaultPrettyPrinter().writeValue(eventOutFile, EVENTS);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -114,6 +115,41 @@ public class DataStore {
         }
 
         return found != null;
+    }
+
+    public static boolean isEmailUnique(String email) {
+        for (UserDto user : USERS) {
+            if (user.getEmail().equals(email)) {
+                return false;
+            }
+        }
+        for (ManagerDto manager : MANAGERS) {
+            if (manager.getEmail().equals(email)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean registerUser(String name, String phone, String email, String password) {
+        if(isEmailUnique(email)) {
+            UserDto newUser = new UserDto(name, phone, email, password, Collections.EMPTY_LIST);
+            USERS.add(newUser);
+            saveEverything();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static boolean registerManager(String name, String phone, String email, String password) {
+        if(isEmailUnique(email)) {
+            ManagerDto newManager = new ManagerDto(name, phone, email, password, Collections.EMPTY_LIST);
+            MANAGERS.add(newManager);
+            saveEverything();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static UserDto getCurrentUser() {

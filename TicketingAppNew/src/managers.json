@@ -1,9 +1,13 @@
-[
-  {
-    "name": "Tobi",
-    "phone": "+1 (232) 131-424",
-    "email": "t@user.com",
-    "password": "ihatethis321",
-    "events": ["Event1"]
-  }
-]
+[ {
+  "name" : "Tobi",
+  "phone" : "+1 (232) 131-424",
+  "email" : "t@user.com",
+  "password" : "ihatethis321",
+  "events" : [ "Event1" ]
+}, {
+  "name" : "Rafsan",
+  "phone" : "(-32) 323-323-3223",
+  "email" : "r@user.com",
+  "password" : "testing123",
+  "events" : [ ]
+} ]
