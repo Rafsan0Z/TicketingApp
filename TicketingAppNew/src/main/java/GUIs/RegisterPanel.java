@@ -1,3 +1,5 @@
+package GUIs;
+
 import data.DataStore;
 
 import java.awt.Font;

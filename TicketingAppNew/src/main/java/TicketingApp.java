@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 
+import GUIs.MainFrame;
 import data.DataStore;
 
 public class TicketingApp {
