@@ -6,8 +6,8 @@ import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EventDto {
-    private String EventName;
-    private ManagerDto Manager;
+    private String eventName;
+    private ManagerDto manager;
     private int numTickets;
     private int numTicketsRemaining;
     private String venue;
@@ -16,8 +16,8 @@ public class EventDto {
     public EventDto() {}
 
     public EventDto(String eventName, ManagerDto manager, int numTickets, int numTicketsRemaining, String venue, Date date) {
-        EventName = eventName;
-        Manager = manager;
+        this.eventName = eventName;
+        this.manager = manager;
         this.numTickets = numTickets;
         this.numTicketsRemaining = numTicketsRemaining;
         this.venue = venue;
@@ -25,19 +25,19 @@ public class EventDto {
     }
 
     public String getEventName() {
-        return EventName;
+        return eventName;
     }
 
     public void setEventName(String eventName) {
-        EventName = eventName;
+        this.eventName = eventName;
     }
 
     public ManagerDto getManager() {
-        return Manager;
+        return manager;
     }
 
     public void setManager(ManagerDto manager) {
-        Manager = manager;
+        this.manager = manager;
     }
 
     public int getNumTickets() {

@@ -1,16 +1,4 @@
-[
-  {
-    "name": "Event1",
-    "manager": {
-      "name": "Tobi",
-      "phone": "+1 (232) 131-424",
-      "email": "t@user.com",
-      "password": "ihatethis321",
-      "events": ["Event1"]
-    },
-    "numTickets": 50,
-    "numTicketsRemaining": 50,
-    "venue": "MSG",
-    "date": "01-01-2026 02:30"
-  }
-]
+[ {
+  "numTickets" : 0,
+  "numTicketsRemaining" : 0
+} ]
