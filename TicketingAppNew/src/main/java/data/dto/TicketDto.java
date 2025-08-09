@@ -1,5 +1,7 @@
 package data.dto;
 
+import java.sql.Date;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -7,72 +9,44 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class TicketDto {
 
     @JsonProperty("ticketId")
-    private int ticketId;
+    private Date ticketId;
     @JsonProperty("eventName")
     private String eventName;
-    @JsonProperty("manager")
-    private String manager;
     @JsonProperty("price")
     private double price;
     @JsonProperty("purchased")
     private boolean purchased;
-    @JsonProperty("venue")
-    private String venue;
+    @JsonProperty("owner")
+    private String owner;
 
-    public TicketDto(int ticketId, String eventName, String manager, double price, boolean purchased, String venue) {
+    public TicketDto(Date ticketId, String eventName, double price, boolean purchased) {
         this.ticketId = ticketId;
         this.eventName = eventName;
-        this.manager = manager;
         this.price = price;
         this.purchased = purchased;
-        this.venue = venue;
     }
 
-    public int getTicketId() {
+    public Date getTicketId() {
         return ticketId;
     }
 
-    public void setTicketId(int ticketId) {
+    public void setTicketId(Date ticketId) {
         this.ticketId = ticketId;
     }
 
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    public String getManager() {
-        return manager;
-    }
-
-    public void setManager(String manager) {
-        this.manager = manager;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public boolean isPurchased() {
-        return purchased;
-    }
-
-    public void setPurchased(boolean purchased) {
-        this.purchased = purchased;
-    }
-
-    public String getVenue() {
-        return venue;
-    }
-
-    public void setVenue(String venue) {
-        this.venue = venue;
-    }
+	public String getEvent() {return eventName;	}
+	public double getPrice() {return price;}
+	public String getOwner() {return owner;}
+	public boolean isPurchased() {return purchased;}
+	
+	public void changePrice(double price) {this.price = price;}
+	public void purchase(String owner) {
+		this.owner = owner;
+		purchased = true;
+	}
+	
+	public void sell() {
+		owner = null;
+		purchased = false;
+	}
 }
