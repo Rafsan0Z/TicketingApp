@@ -12,6 +12,7 @@ import data.dto.EventDto;
 import data.dto.TicketDto;
 import data.dto.VenueDto;
 
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -161,16 +162,20 @@ public class AccountInfoPanel extends JPanel{
 
         JButton browseBtn = new JButton("Browse Events");
         browseBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
+
+        	public void actionPerformed(ActionEvent e) {
+        		MainFrame.swap("eventview");
+        	}
         });
         browseBtn.setBounds(169, 525, 117, 29);
         add(browseBtn);
 
         JButton sellBtn = new JButton("Sell");
         sellBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
+
+        	public void actionPerformed(ActionEvent e) {
+        		MainFrame.swap("transfer");
+        	}
         });
         sellBtn.setBounds(373, 525, 117, 29);
         add(sellBtn);

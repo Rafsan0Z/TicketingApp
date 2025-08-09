@@ -1,14 +1,16 @@
+
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.io.IOException;
 import javax.swing.JFrame;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+
 import GUIs.AccountInfoPanel;
-import GUIs.EventBrowsePanel;
-import GUIs.EventUpcomingPanel;
-import GUIs.PastPurchasePanel;
+import GUIs.AddEventPanel;
+import GUIs.EventViewerPanel;
 import GUIs.TicketPurchasePanel;
+import GUIs.TransferTicketPanel;
 
 public class MainFrame extends JFrame {
 
@@ -16,12 +18,13 @@ public class MainFrame extends JFrame {
 	// List of all screens we'll have (so far only for the User)
     LoginPanel loginPanel;
     RegisterPanel registerPanel;
-    EventBrowsePanel browsePanel;
-    EventUpcomingPanel upcomingPanel;
-    PastPurchasePanel previousPanel; // we can also call it EventPastPanel
+    EventViewerPanel eventviewerPanel;
+    TransferTicketPanel transferPanel; // we can also call it EventPastPanel
 
     TicketPurchasePanel purchasePanel;
     AccountInfoPanel userinfoPanel;
+    
+    AddEventPanel addeventPanel;
     
     private static CardLayout Maincard;
     private static Container content;
@@ -46,6 +49,19 @@ public class MainFrame extends JFrame {
         
         userinfoPanel = new AccountInfoPanel();
         content.add(userinfoPanel, "userinfo");
+        
+        eventviewerPanel = new EventViewerPanel();
+        content.add(eventviewerPanel, "eventview");
+        
+        purchasePanel = new TicketPurchasePanel();
+        content.add(purchasePanel, "purchase");
+        
+        transferPanel = new TransferTicketPanel();
+        content.add(transferPanel, "transfer");
+        
+        addeventPanel = new AddEventPanel();
+        content.add(addeventPanel, "addevent");
+        
         
     }
     
