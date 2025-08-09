@@ -1,11 +1,8 @@
+import data.DataStore;
+
 import java.awt.Font;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
+import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -75,24 +72,55 @@ public class RegisterPanel extends JPanel{
         passwordField = new JPasswordField();
         passwordField.setBounds(317, 359, 332, 26);
         add(passwordField);
-        
-        JButton registerBtn = new JButton("Register");
-        registerBtn.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		MainFrame.swap("login");
-        	}
+
+        JButton registerUserBtn = new JButton("Register as User");
+        registerUserBtn.setBounds(532, 513, 117, 29);
+        add(registerUserBtn);
+        registerUserBtn.addActionListener((ActionEvent e) -> {
+            if (emailField.getText().isEmpty() || passwordField.getText().isEmpty() || nameField.getText().isEmpty() || phoneField.getText().isEmpty() || confirmField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(RegisterPanel.this, "Empty Fields!");
+                return;
+            }
+            if (!confirmField.getText().equals(passwordField.getText())) {
+                JOptionPane.showMessageDialog(RegisterPanel.this, "Passwords do not match!");
+                return;
+            }
+            if(DataStore.registerUser(nameField.getText(), phoneField.getText(), emailField.getText(), passwordField.getText()) == false){
+                JOptionPane.showMessageDialog(RegisterPanel.this, "Email already exists");
+                return;
+            };
+
+            MainFrame.swap("login");
         });
-        registerBtn.setBounds(532, 513, 117, 29);
-        add(registerBtn);
-        
+
         JButton cancelBtn = new JButton("Cancel");
         cancelBtn.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		MainFrame.swap("login");
-        	}
+            public void actionPerformed(ActionEvent e) {
+                MainFrame.swap("login");
+            }
         });
-        cancelBtn.setBounds(409, 513, 117, 29);
+        cancelBtn.setBounds(269, 513, 117, 29);
         add(cancelBtn);
+
+        JButton registerManagerBtn = new JButton("Register as Manager");
+        registerManagerBtn.setBounds(386, 513, 140, 29);
+        add(registerManagerBtn);
+        registerManagerBtn.addActionListener((ActionEvent e) -> {
+            if (emailField.getText().isEmpty() || passwordField.getText().isEmpty() || nameField.getText().isEmpty() || phoneField.getText().isEmpty() || confirmField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(RegisterPanel.this, "Empty Fields!");
+                return;
+            }
+            if (!confirmField.getText().equals(passwordField.getText())) {
+                JOptionPane.showMessageDialog(RegisterPanel.this, "Passwords do not match!");
+                return;
+            }
+            if(DataStore.registerManager(nameField.getText(), phoneField.getText(), emailField.getText(), passwordField.getText()) == false){
+                JOptionPane.showMessageDialog(RegisterPanel.this, "Email already exists");
+                return;
+            };
+
+            MainFrame.swap("login");
+        });
 
 
     }
