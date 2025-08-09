@@ -1,74 +1,69 @@
 package data.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import entities.User;
 
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EventDto {
-    private String EventName;
-    private ManagerDto Manager;
+	@JsonProperty("eventName")
+    private String eventName;
+	@JsonProperty("numTickets")
     private int numTickets;
+	@JsonProperty("numTicketsRemaining")
     private int numTicketsRemaining;
+	@JsonProperty("cost")
+    private double cost;
+	@JsonProperty("venue")
     private String venue;
+	@JsonProperty("date")
     private Date date;
+    
+    // Mapping for an array of Users used for canceling
+    private User[] users;
 
     public EventDto() {}
 
     public EventDto(String eventName, ManagerDto manager, int numTickets, int numTicketsRemaining, String venue, Date date) {
-        EventName = eventName;
-        Manager = manager;
+        this.eventName = eventName;
         this.numTickets = numTickets;
-        this.numTicketsRemaining = numTicketsRemaining;
         this.venue = venue;
         this.date = date;
-    }
-
-    public String getEventName() {
-        return EventName;
-    }
-
-    public void setEventName(String eventName) {
-        EventName = eventName;
-    }
-
-    public ManagerDto getManager() {
-        return Manager;
-    }
-
-    public void setManager(ManagerDto manager) {
-        Manager = manager;
-    }
-
-    public int getNumTickets() {
-        return numTickets;
-    }
-
-    public void setNumTickets(int numTickets) {
-        this.numTickets = numTickets;
-    }
-
-    public int getNumTicketsRemaining() {
-        return numTicketsRemaining;
-    }
-
-    public void setNumTicketsRemaining(int numTicketsRemaining) {
         this.numTicketsRemaining = numTicketsRemaining;
     }
+    
+    // Setters
+    public void setEventName(String eventName) {this.eventName = eventName;}
+    public void setDate(Date date) {this.date = date;}
+    public void setNumTicketsRemaining(int numTicketsRemaining) {this.numTicketsRemaining = numTicketsRemaining;}
+    public void setNumTickets(int numTickets) {this.numTickets = numTickets;}
+    
+    // Getters
+    public String getEventName() {return eventName;}
+    public String getVenue() {return venue;}
+	public Date getDate() {return date;}
+	public int getNumTickets() {return numTickets;}
+	public int getNumTicketsRemaining() {return numTicketsRemaining;}
+	public double getCost() {return cost;}
+		
+	public boolean isSoldOut() {
+		if (numTicketsRemaining == 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void changeTicketPrice(double newPrice) {cost = newPrice;}
+	
+	public void cancelAllTickets() {
+		for (User user : users) {
+			user.getCurrentTickets();
+			// TODO: add remove
+		}
+		numTicketsRemaining = 0;
+	}
 
-    public String getVenue() {
-        return venue;
-    }
-
-    public void setVenue(String venue) {
-        this.venue = venue;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 }
