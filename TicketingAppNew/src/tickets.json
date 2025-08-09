@@ -1,0 +1,8 @@
+[
+  {
+    "ticketId": "2025-08-09T19:30:00.000Z",
+    "eventName": "Event1",
+    "purchased": "true",
+    "owner": "so@user.com"
+  }
+]
