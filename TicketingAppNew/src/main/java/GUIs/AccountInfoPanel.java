@@ -162,6 +162,7 @@ public class AccountInfoPanel extends JPanel{
         JButton browseBtn = new JButton("Browse Events");
         browseBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		MainFrame.swap("eventview");
         	}
         });
         browseBtn.setBounds(169, 525, 117, 29);
@@ -170,6 +171,7 @@ public class AccountInfoPanel extends JPanel{
         JButton sellBtn = new JButton("Sell");
         sellBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		MainFrame.swap("transfer");
         	}
         });
         sellBtn.setBounds(373, 525, 117, 29);

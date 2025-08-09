@@ -1,3 +1,4 @@
+package GUIs;
 import data.DataStore;
 
 import java.awt.Font;
@@ -42,7 +43,7 @@ public class LoginPanel extends JPanel {
         JButton viewAvailableEventsBtn = new JButton("View Available Events");
         viewAvailableEventsBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		MainFrame.swap("userinfo");
+        		MainFrame.swap("eventview");
         	}
         });
         viewAvailableEventsBtn.setBounds(91, 332, 142, 63);
