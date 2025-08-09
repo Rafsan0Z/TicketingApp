@@ -52,27 +52,20 @@ public class DataStore {
             MANAGERS.addAll(MAPPER.readValue(managerJSON, new TypeReference<List<ManagerDto>>() {
             }));
 
-            System.out.println("Reading managers...done amount=" + MANAGERS.size());
-
-            System.out.println("Reading Events...");
-
             String eventsJSON = new String(Files.readAllBytes(Path.of("src/events.json")));
 
             EVENTS.addAll(MAPPER.readValue(managerJSON, new TypeReference<List<EventDto>>() {
             }));
             
-            System.out.println("Reading Venues...");
+            System.out.println("Reading events...done amount=" + EVENTS.size());
             
             String venuesJSON = new String(Files.readAllBytes(Path.of("src/venues.json")));
             VENUES.addAll(MAPPER.readValue(jsonString, new TypeReference<List<VenueDto>>() {}));
             
-            System.out.println("Reading Tickets...");
             
             String ticketsJSON = new String(Files.readAllBytes(Path.of("src/tickets.json")));
             TICKETS.addAll(MAPPER.readValue(jsonString, new TypeReference<List<TicketDto>>() {}));
 
-
-            System.out.println("Reading events...done amount=" + EVENTS.size());
         } catch (IOException e) {
             e.printStackTrace();
         }

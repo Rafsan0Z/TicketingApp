@@ -17,9 +17,16 @@ public class VenueDto {
 	@JsonProperty("scheduledEvents")
 	private List<EventDto> scheduledEvents = new ArrayList<EventDto>();
 	
+	public VenueDto() {}
 	public VenueDto(String location, int capacity) {
 		this.location = location;
 		this.capacity = capacity;
+	}
+	
+	public VenueDto(String location, int capacity, List<EventDto> scheduledEvents) {
+		this.location = location;
+		this.capacity = capacity;
+		this.scheduledEvents = scheduledEvents;
 	}
 	
 	public void setCapacity(int cap) {capacity = cap;}

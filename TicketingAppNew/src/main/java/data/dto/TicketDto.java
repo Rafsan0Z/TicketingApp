@@ -19,11 +19,20 @@ public class TicketDto {
     @JsonProperty("owner")
     private String owner;
 
+    public TicketDto() {}
     public TicketDto(Date ticketId, String eventName, double price) {
         this.ticketId = ticketId;
         this.eventName = eventName;
         this.price = price;
         this.purchased = false;
+    }
+    
+    public TicketDto(Date ticketId, String eventName, double price, boolean purchased, String owner) {
+    	this.ticketId = ticketId;
+    	this.eventName = eventName;
+    	this.price = price;
+    	this.purchased = purchased;
+    	this.owner = owner;
     }
 
     public Date getTicketId() {
