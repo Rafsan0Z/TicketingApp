@@ -8,13 +8,13 @@ import data.dto.EventDto;
 import data.dto.ManagerDto;
 import data.dto.TicketDto;
 import data.dto.UserDto;
+import data.dto.VenueDto;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class DataStore {
@@ -25,10 +25,12 @@ public class DataStore {
     private static final List<UserDto> USERS = new ArrayList<>();
     private static final List<ManagerDto> MANAGERS = new ArrayList<>();
     private static final List<EventDto> EVENTS = new ArrayList<>();
+    private static final List<TicketDto> TICKETS = new ArrayList<>();
+    private static final List<VenueDto> VENUES = new ArrayList<>();
 
     private static UserDto currentUser;
     private static ManagerDto currentManager;
-
+    
     // this bool tracks if the current person signed in is a user or a manager
     private static boolean isCurrentUser;
 
@@ -58,6 +60,10 @@ public class DataStore {
 
             EVENTS.addAll(MAPPER.readValue(managerJSON, new TypeReference<List<EventDto>>() {
             }));
+            
+            VENUES.addAll(MAPPER.readValue(jsonString, new TypeReference<List<VenueDto>>() {}));
+            TICKETS.addAll(MAPPER.readValue(jsonString, new TypeReference<List<TicketDto>>() {}));
+
 
             System.out.println("Reading events...done amount=" + EVENTS.size());
         } catch (IOException e) {
@@ -78,6 +84,7 @@ public class DataStore {
             String eventJSON = MAPPER.writeValueAsString(USERS);
             File eventOutFile = new File("src/events.json");
             MAPPER.writeValue(eventOutFile, eventJSON);
+            
 
         } catch (IOException e) {
             e.printStackTrace();
