@@ -8,6 +8,13 @@
     "numTicketsRemaining" : 49,
     "cost" : 5.0,
     "venue" : "MSG",
-    "date" : 1735693200000
+    "date" : 1735725600000,
+    "attendees" : [ {
+      "email" : "john.doe@example.com",
+      "ticketId" : 1723456789000
+    }, {
+      "email" : "jane.smith@example.com",
+      "ticketId" : 1723456790001
+    } ]
   } ]
 } ]

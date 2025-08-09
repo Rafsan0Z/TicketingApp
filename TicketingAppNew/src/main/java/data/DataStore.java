@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class DataStore {
@@ -26,6 +27,10 @@ public class DataStore {
     private static final List<TicketDto> TICKETS = new ArrayList<>();
     private static final List<VenueDto> VENUES = new ArrayList<>();
 
+    // announcement: if you modify the current user/manager, it will also modify the user/manager in the list above
+    // BECAUSE, the currentUser and currentManager are just pointers to the actual object in the list
+    // so when you do saveEverything(), it should still save
+    // apply this logic to the other lists too
     private static UserDto currentUser;
     private static ManagerDto currentManager;
 
@@ -83,12 +88,6 @@ public class DataStore {
 
     public static void saveEverything() {
         try {
-            // saving the current person logged in
-            if (isCurrentUser) {
-                saveCurrentUser(currentUser);
-            } else if (!isCurrentUser) {
-                saveCurrentManager(currentManager);
-            }
 
             File userOutFile = new File("src/users.json");
             MAPPER.writerWithDefaultPrettyPrinter().writeValue(userOutFile, USERS);
@@ -170,32 +169,6 @@ public class DataStore {
         }
     }
 
-    public static void saveCurrentUser(UserDto currentUser) {
-        UserDto foundUser = null;
-        for (UserDto user : USERS) {
-            if(currentUser.getEmail().equals(user.getEmail())) {
-                foundUser = user;
-            }
-        }
-        if (foundUser != null) {
-            USERS.remove(foundUser);
-            USERS.add(currentUser);
-        }
-    }
-
-    public static void saveCurrentManager(ManagerDto currentManager) {
-        ManagerDto foundManager = null;
-        for (ManagerDto manager : MANAGERS) {
-            if(currentManager.getEmail().equals(manager.getEmail())) {
-                foundManager = manager;
-            }
-        }
-        if (foundManager != null) {
-            MANAGERS.remove(foundManager);
-            MANAGERS.add(currentManager);
-        }
-    }
-
     public static UserDto getCurrentUser() {
         return currentUser;
     }
@@ -204,5 +177,47 @@ public class DataStore {
     }
     public static boolean isCurrentUser() {
         return isCurrentUser;
+    }
+
+
+    // create an event, return true if successful, false if not
+    public static boolean createEvent(String eventName, int numTickets, int numTicketsRemaining, double cost, String venue, Date date){
+        VenueDto currentVenue = null;
+        for (VenueDto v : VENUES) {
+            if (!v.checkDateAvailability(date)) return false;
+            if (v.getLocation().equals(venue)) { // sets the current venue to the one with the matching name
+                currentVenue = v;
+            }
+        }
+        if (currentVenue == null) return false;
+
+        EventDto newEvent = new EventDto(eventName, numTickets, numTicketsRemaining, cost, venue, date);
+        currentVenue.scheduleEvent(newEvent);
+        EVENTS.add(newEvent);
+        saveEverything();
+        return true;
+    }
+    //
+    //
+    // will try to buy ticket, return true if successful, false if not
+    public static boolean buyTicket(String eventName){
+        EventDto currentEvent = null;
+        for (EventDto event : EVENTS) {
+            if (eventName.equals(event.getEventName())) {
+                currentEvent = event;
+            }
+        }
+        if (currentEvent != null && !currentEvent.isSoldOut()) {
+            TicketDto newTicket = new TicketDto(eventName, currentEvent.getCost(), true, currentUser.getEmail());
+            TicketInfo newTicketInfo = new TicketInfo(currentUser.getEmail(), newTicket.getTicketId());
+            currentEvent.setNumTicketsRemaining(currentEvent.getNumTicketsRemaining() - 1);
+            currentEvent.getAttendees().add(newTicketInfo);
+            currentUser.getTickets().add(newTicket);
+            TICKETS.add(newTicket);
+            saveEverything();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

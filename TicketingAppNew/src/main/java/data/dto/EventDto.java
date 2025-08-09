@@ -3,10 +3,14 @@ package data.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EventDto {
+
     @JsonProperty("eventName")
     private String eventName;
     @JsonProperty("numTickets")
@@ -19,18 +23,19 @@ public class EventDto {
     private String venue;
     @JsonProperty("date")
     private Date date;
-
-    // Mapping for an array of Users used for canceling
-    private UserDto[] users;
+    @JsonProperty("attendees")
+    private List<TicketInfo> attendees;
 
     public EventDto() {}
 
-    public EventDto(String eventName, int numTickets, int numTicketsRemaining, String venue, Date date) {
+    public EventDto(String eventName, int numTickets, int numTicketsRemaining, double cost, String venue, Date date) {
         this.eventName = eventName;
         this.numTickets = numTickets;
+        this.numTicketsRemaining = numTicketsRemaining;
+        this.cost = cost;
         this.venue = venue;
         this.date = date;
-        this.numTicketsRemaining = numTicketsRemaining;
+        this.attendees = new ArrayList<TicketInfo>();
     }
 
     // Setters
@@ -47,6 +52,10 @@ public class EventDto {
     public int getNumTicketsRemaining() {return numTicketsRemaining;}
     public double getCost() {return cost;}
 
+    public List<TicketInfo> getAttendees() {
+        return attendees;
+    }
+
     public boolean isSoldOut() {
         if (numTicketsRemaining == 0) {
             return true;
@@ -56,12 +65,5 @@ public class EventDto {
 
     public void changeTicketPrice(double newPrice) {cost = newPrice;}
 
-//	public void cancelAllTickets() {
-//		for (UserDto user : users) {
-//			user.getCurrentTickets();
-//			// TODO: add remove
-//		}
-//		numTicketsRemaining = 0;
-//	}
 
 }

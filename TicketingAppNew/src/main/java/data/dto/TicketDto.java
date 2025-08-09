@@ -52,6 +52,10 @@ public class TicketDto {
         return purchased;
     }
 
+    public void setPurchased(boolean purchased) {
+        this.purchased = purchased;
+    }
+
     public void changePrice(double price) {
         this.price = price;
     }

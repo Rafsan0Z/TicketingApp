@@ -35,15 +35,15 @@ public class AccountInfoPanel extends JPanel{
     public AccountInfoPanel(){
 
         // TODO remove testing data and implement real data
-        VenueDto testVenue = new VenueDto("MSG", 100);
-        VenueDto testVenue2 = new VenueDto("City Field", 200);
-        VenueDto testVenue3 = new VenueDto("Metlife", 200);
-        EventDto testEvent = new EventDto("Super Cool event", 100, 100, "MSG", new Date());
-        EventDto testEvent2 = new EventDto("mets vs. braves", 200, 200, "City Field", new Date());
-        EventDto testEvent3 = new EventDto("giants vs tampa bay", 100, 100, "Metlife", new Date());
-        EventDto testEvent4 = new EventDto("Chicago", 100, 100, "MSG", new Date());
-        EventDto testEvent5 = new EventDto("mets vs yankees", 100, 100, "City Field", new Date());
-        EventDto testEvent6 = new EventDto("Mumford and Sons", 300, 100, "Metlife", new Date());
+//        VenueDto testVenue = new VenueDto("MSG", 100);
+//        VenueDto testVenue2 = new VenueDto("City Field", 200);
+//        VenueDto testVenue3 = new VenueDto("Metlife", 200);
+//        EventDto testEvent = new EventDto("Super Cool event", 100, 100, "MSG", new Date());
+//        EventDto testEvent2 = new EventDto("mets vs. braves", 200, 200, "City Field", new Date());
+//        EventDto testEvent3 = new EventDto("giants vs tampa bay", 100, 100, "Metlife", new Date());
+//        EventDto testEvent4 = new EventDto("Chicago", 100, 100, "MSG", new Date());
+//        EventDto testEvent5 = new EventDto("mets vs yankees", 100, 100, "City Field", new Date());
+//        EventDto testEvent6 = new EventDto("Mumford and Sons", 300, 100, "Metlife", new Date());
         TicketDto[] testTickets = { new TicketDto("Super Cool event", 21.1, true, "so@user.com"),
                 new TicketDto("mets vs. braves", 15.1, true, "so@user.com"),
                 new TicketDto("giants vs tampa bay", 105.8, true, "so@user.com"),
