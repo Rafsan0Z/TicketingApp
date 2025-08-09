@@ -1,13 +1,19 @@
 [ {
+  "name" : "Sophia",
+  "phone" : "6467689999",
+  "email" : "so@user.com",
+  "password" : "abc123",
+  "tickets" : [ ]
+}, {
   "name" : "mike",
   "phone" : "(+22) 222-333-4444",
   "email" : "m@user.com",
-  "password" : "dixienormuss222",
+  "password" : "xyz987",
   "tickets" : [ ]
 }, {
   "name" : "Derek",
   "phone" : "+1 (923) 424-424",
   "email" : "d@user.com",
-  "password" : "hughjaynuss1234",
+  "password" : "1234",
   "tickets" : [ ]
 } ]

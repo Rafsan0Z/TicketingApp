@@ -4,15 +4,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import data.dto.EventDto;
-import data.dto.ManagerDto;
-import data.dto.UserDto;
+import data.dto.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -24,6 +23,8 @@ public class DataStore {
     private static final List<UserDto> USERS = new ArrayList<>();
     private static final List<ManagerDto> MANAGERS = new ArrayList<>();
     private static final List<EventDto> EVENTS = new ArrayList<>();
+    private static final List<TicketDto> TICKETS = new ArrayList<>();
+    private static final List<VenueDto> VENUES = new ArrayList<>();
 
     private static UserDto currentUser;
     private static ManagerDto currentManager;
@@ -55,10 +56,26 @@ public class DataStore {
 
             String eventsJSON = new String(Files.readAllBytes(Path.of("src/events.json")));
 
-            EVENTS.addAll(MAPPER.readValue(managerJSON, new TypeReference<List<EventDto>>() {
+            EVENTS.addAll(MAPPER.readValue(eventsJSON, new TypeReference<List<EventDto>>() {
             }));
 
             System.out.println("Reading events...done amount=" + EVENTS.size());
+
+            System.out.println("Reading Tickets...");
+
+            String ticketsJSON = new String(Files.readAllBytes(Path.of("src/tickets.json")));
+
+            TICKETS.addAll(MAPPER.readValue(ticketsJSON, new TypeReference<List<TicketDto>>() {
+            }));
+
+            System.out.println("Reading Tickets...done amount=" + TICKETS.size());
+
+            System.out.println("Reading Venues...");
+            String venuesJSON = new String(Files.readAllBytes(Path.of("src/venues.json")));
+            VENUES.addAll(MAPPER.readValue(venuesJSON, new TypeReference<List<VenueDto>>() {
+            }));
+            System.out.println("Reading Venues...done amount=" + VENUES.size());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,6 +98,12 @@ public class DataStore {
 
             File eventOutFile = new File("src/events.json");
             MAPPER.writerWithDefaultPrettyPrinter().writeValue(eventOutFile, EVENTS);
+
+            File ticketOutFile = new File("src/tickets.json");
+            MAPPER.writerWithDefaultPrettyPrinter().writeValue(ticketOutFile, TICKETS);
+
+            File venuesOutFile = new File("src/venues.json");
+            MAPPER.writerWithDefaultPrettyPrinter().writeValue(venuesOutFile, VENUES);
 
         } catch (IOException e) {
             e.printStackTrace();

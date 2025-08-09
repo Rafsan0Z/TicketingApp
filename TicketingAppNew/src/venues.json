@@ -1,0 +1,13 @@
+[ {
+  "location" : "MSG",
+  "capacity" : 500,
+  "scheduledEvents" : [ {
+    "soldOut" : false,
+    "eventName" : "graduation",
+    "numTickets" : 50,
+    "numTicketsRemaining" : 49,
+    "cost" : 5.0,
+    "venue" : "MSG",
+    "date" : 1735693200000
+  } ]
+} ]
