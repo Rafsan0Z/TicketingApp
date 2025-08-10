@@ -29,10 +29,14 @@ public class AccountInfoPanel extends JPanel{
     private static JTextField phoneField;
     private static JTextField nameField;
     private static JTextField emailField;
+    private static DefaultTableModel model;
     
     private static UserDto user;
-    private static TicketDto[] upcomingTickets;
-    private static TicketDto[] pastTickets = DataStore.getTickets();
+//    private static TicketDto[] upcomingTickets = { new TicketDto("mets vs. braves", 210.99, true, "so@user.com"),
+//            new TicketDto("mets vs yankees", 105.8, true, "so@user.com"),
+//            new TicketDto("Mumford and sons", 400, true, "so@user.com"),
+//            new TicketDto("Super Cool event", 19, true, "so@user.com")};
+//    private static TicketDto[] pastTickets = DataStore.getTickets();
 
     private int rowSelected = -1;
 
@@ -43,10 +47,10 @@ public class AccountInfoPanel extends JPanel{
                 new TicketDto("mets vs. braves", 15.1, true, "so@user.com"),
                 new TicketDto("giants vs tampa bay", 105.8, true, "so@user.com"),
                 new TicketDto("Chicago", 13, true, "so@user.com")};
-        TicketDto[] testUpcomingTickets = { new TicketDto("mets vs. braves", 210.99, true, "so@user.com"),
-                new TicketDto("mets vs yankees", 105.8, true, "so@user.com"),
-                new TicketDto("Mumford and sons", 400, true, "so@user.com"),
-                new TicketDto("Super Cool event", 19, true, "so@user.com")};
+//        upcomingTickets = { new TicketDto("mets vs. braves", 210.99, true, "so@user.com"),
+//                new TicketDto("mets vs yankees", 105.8, true, "so@user.com"),
+//                new TicketDto("Mumford and sons", 400, true, "so@user.com"),
+//                new TicketDto("Super Cool event", 19, true, "so@user.com")};
         setLayout(null);
 
         // Title information on panel
@@ -114,11 +118,11 @@ public class AccountInfoPanel extends JPanel{
         upcomingLabel.setBounds(169, 223, 146, 19);
         add(upcomingLabel);
 
-        JScrollPane upcomingScrollPane = new JScrollPane();
-        upcomingScrollPane.setBounds(169, 247, 539, 133);
-        this.add(upcomingScrollPane);
-
-        this.ticketTable(upcomingScrollPane, testUpcomingTickets, new Color(240, 255, 240), true);
+//        JScrollPane upcomingScrollPane = new JScrollPane();
+//        upcomingScrollPane.setBounds(169, 247, 539, 133);
+//        this.add(upcomingScrollPane);
+//
+//        this.ticketTable(upcomingScrollPane, upcomingTickets, new Color(240, 255, 240), true);
 
         // Past event information on panel
         JLabel pastEventsLabel = new JLabel("Past Events:");
@@ -126,11 +130,11 @@ public class AccountInfoPanel extends JPanel{
         pastEventsLabel.setBounds(169, 392, 146, 19);
         add(pastEventsLabel);
 
-        JScrollPane pastScrollPane = new JScrollPane();
-        pastScrollPane.setBounds(169, 414, 539, 99);
-        add(pastScrollPane);
-
-        this.ticketTable(pastScrollPane, pastTickets, new Color(255, 228, 225), false);
+//        JScrollPane pastScrollPane = new JScrollPane();
+//        pastScrollPane.setBounds(169, 414, 539, 99);
+//        add(pastScrollPane);
+//
+//        this.ticketTable(pastScrollPane, pastTickets, new Color(255, 228, 225), false);
 
         // Total spent information on panel
         JLabel totalSpentLabel = new JLabel("Total Spent: ");
@@ -194,7 +198,7 @@ public class AccountInfoPanel extends JPanel{
         pane.setViewportView(table);
         Object[] columns = {"Event", "Time", "Venue"
                 , "Cost"};
-        DefaultTableModel model = new DefaultTableModel();
+        model = new DefaultTableModel();
 
         model.setColumnIdentifiers(columns);
         table.setModel(model);
@@ -227,11 +231,30 @@ public class AccountInfoPanel extends JPanel{
         nameField.setText(user.getName());
         emailField.setText(user.getEmail());
     	
-        pastTickets = user.getPassedTickets();
+//        pastTickets = user.getPassedTickets();
+//        upcomingTickets = user.getPassedTickets();
     }
     
     public static void loadTables() {
-    	
+    	TicketDto[] pastTickets = user.getPassedTickets();
+    	TicketDto[] upcomingTickets = user.getUpcomingTickets();
+//        TicketDto[] upcomingTickets = { new TicketDto("mets vs. braves", 210.99, true, "so@user.com"),
+//                new TicketDto("mets vs yankees", 105.8, true, "so@user.com"),
+//                new TicketDto("Mumford and sons", 400, true, "so@user.com"),
+//                new TicketDto("Super Cool event", 19, true, "so@user.com")};
+        
+    	JScrollPane upcomingScrollPane = new JScrollPane();
+        upcomingScrollPane.setBounds(169, 247, 539, 133);
+        MainFrame.userinfoPanel.add(upcomingScrollPane);
+
+        MainFrame.userinfoPanel.ticketTable(upcomingScrollPane, upcomingTickets, new Color(240, 255, 240), true);
+        
+        JScrollPane pastScrollPane = new JScrollPane();
+        pastScrollPane.setBounds(169, 414, 539, 99);
+        MainFrame.userinfoPanel.add(pastScrollPane);
+
+        MainFrame.userinfoPanel.ticketTable(pastScrollPane, pastTickets, new Color(255, 228, 225), false);
+        
     }
 
     /**

@@ -93,7 +93,18 @@ public class UserDto {
     			i++;
     		}
     	}
-    	System.out.println(passedTickets);
     	return passedTickets;
+    }
+    
+    public TicketDto[] getUpcomingTickets() {
+    	TicketDto[] upcomingTickets = new TicketDto[tickets.size()];
+    	int i = 0;
+    	for (TicketDto ticket : tickets) {
+    		if (!ticket.findEvent().pastTicket()) {
+    			upcomingTickets[i] = ticket;
+    			i++;
+    		}
+    	}
+    	return upcomingTickets;
     }
 }

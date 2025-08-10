@@ -78,6 +78,7 @@ public class LoginPanel extends JPanel {
                 System.out.println("SUCCESS");
                 MainFrame.swap("userinfo");
                 AccountInfoPanel.loadUser();
+                AccountInfoPanel.loadTables();
             } else {
                 System.out.println("NO SUCCESS");
             }
