@@ -3,6 +3,8 @@ package data.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import data.DataStore;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TicketDto {
 
@@ -68,5 +70,9 @@ public class TicketDto {
     public void sell() {
         owner = null;
         purchased = false;
+    }
+    
+    public EventDto findEvent() {
+    	return DataStore.findEventByName(eventName);
     }
 }

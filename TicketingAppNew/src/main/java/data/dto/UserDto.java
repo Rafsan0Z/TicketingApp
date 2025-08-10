@@ -83,4 +83,17 @@ public class UserDto {
     	}
     	return total;
     }
+    
+    public TicketDto[] getPassedTickets() {
+    	TicketDto[] passedTickets = new TicketDto[tickets.size()];
+    	int i = 0;
+    	for (TicketDto ticket : tickets) {
+    		if (ticket.findEvent().pastTicket()) {
+    			passedTickets[i] = ticket;
+    			i++;
+    		}
+    	}
+    	System.out.println(passedTickets);
+    	return passedTickets;
+    }
 }

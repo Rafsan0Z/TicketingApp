@@ -216,4 +216,28 @@ public class DataStore {
             return false;
         }
     }
+    
+    /**
+     * Search event list by name
+     * @param name
+     * @return
+     */
+    public static EventDto findEventByName(String name) {
+    	for (EventDto event : EVENTS) {
+    		if (event.getEventName().equals(name)) {
+    			return event;
+    		}
+    	}
+    	return null;
+    }
+    
+    public static TicketDto[] getTickets() {
+    	TicketDto[] tickets = new TicketDto[TICKETS.size()];
+    	int i = 0;
+    	for (TicketDto ticket : TICKETS) {
+    		tickets[i] = ticket;
+    	}
+    	return tickets;
+//    	return (TicketDto[]) (TICKETS.toArray());
+    }
 }

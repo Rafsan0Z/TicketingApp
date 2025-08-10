@@ -64,6 +64,13 @@ public class EventDto {
     }
 
     public void changeTicketPrice(double newPrice) {cost = newPrice;}
+    
+    public boolean pastTicket() {
+    	if (this.date.before(new Date())) {
+    		return true;
+    	}
+    	return false;
+    }
 
 
 }

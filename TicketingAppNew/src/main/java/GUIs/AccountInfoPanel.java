@@ -31,6 +31,8 @@ public class AccountInfoPanel extends JPanel{
     private static JTextField emailField;
     
     private static UserDto user;
+    private static TicketDto[] upcomingTickets;
+    private static TicketDto[] pastTickets = DataStore.getTickets();
 
     private int rowSelected = -1;
 
@@ -128,7 +130,7 @@ public class AccountInfoPanel extends JPanel{
         pastScrollPane.setBounds(169, 414, 539, 99);
         add(pastScrollPane);
 
-        this.ticketTable(pastScrollPane, testTickets, new Color(255, 228, 225), false);
+        this.ticketTable(pastScrollPane, pastTickets, new Color(255, 228, 225), false);
 
         // Total spent information on panel
         JLabel totalSpentLabel = new JLabel("Total Spent: ");
@@ -224,6 +226,11 @@ public class AccountInfoPanel extends JPanel{
         phoneField.setText(user.getPhone());
         nameField.setText(user.getName());
         emailField.setText(user.getEmail());
+    	
+        pastTickets = user.getPassedTickets();
+    }
+    
+    public static void loadTables() {
     	
     }
 
