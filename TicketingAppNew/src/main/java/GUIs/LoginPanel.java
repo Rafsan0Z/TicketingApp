@@ -92,6 +92,9 @@ public class LoginPanel extends JPanel {
 
             if (DataStore.loginManager(emailField.getText(), passwordField.getText())) {
                 System.out.println("SUCCESS");
+                MainFrame.swap("managerInfoPanel");
+                ManagerInfoPanel.loadManager();
+//                AccountInfoPanel.loadTables();
             } else {
                 System.out.println("NO SUCCESS");
             }

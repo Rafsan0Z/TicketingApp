@@ -242,4 +242,14 @@ public class DataStore {
     }
     
     public static void setCurrentUser() { currentUser = null;}
+    public static void logoutCurrentManager() {currentManager = null;}
+    
+    public static EventDto[] getEvents() {
+    	EventDto[] events = new EventDto[EVENTS.size()];
+    	int i = 0;
+    	for (EventDto event : EVENTS) {
+    		events[i] = event;
+    	}
+    	return events;
+    }
 }
