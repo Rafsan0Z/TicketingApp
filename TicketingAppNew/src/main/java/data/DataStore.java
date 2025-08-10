@@ -2,21 +2,18 @@ package data;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import data.dto.EventDto;
-import data.dto.ManagerDto;
-import data.dto.TicketDto;
-import data.dto.UserDto;
+import data.dto.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.Date;
 import java.util.List;
 
 public class DataStore {
@@ -27,7 +24,13 @@ public class DataStore {
     private static final List<UserDto> USERS = new ArrayList<>();
     private static final List<ManagerDto> MANAGERS = new ArrayList<>();
     private static final List<EventDto> EVENTS = new ArrayList<>();
+    private static final List<TicketDto> TICKETS = new ArrayList<>();
+    private static final List<VenueDto> VENUES = new ArrayList<>();
 
+    // announcement: if you modify the current user/manager, it will also modify the user/manager in the list above
+    // BECAUSE, the currentUser and currentManager are just pointers to the actual object in the list
+    // so when you do saveEverything(), it should still save
+    // apply this logic to the other lists too
     private static UserDto currentUser;
     private static ManagerDto currentManager;
 
@@ -58,10 +61,26 @@ public class DataStore {
 
             String eventsJSON = new String(Files.readAllBytes(Path.of("src/events.json")));
 
-            EVENTS.addAll(MAPPER.readValue(managerJSON, new TypeReference<List<EventDto>>() {
+            EVENTS.addAll(MAPPER.readValue(eventsJSON, new TypeReference<List<EventDto>>() {
             }));
 
             System.out.println("Reading events...done amount=" + EVENTS.size());
+
+            System.out.println("Reading Tickets...");
+
+            String ticketsJSON = new String(Files.readAllBytes(Path.of("src/tickets.json")));
+
+            TICKETS.addAll(MAPPER.readValue(ticketsJSON, new TypeReference<List<TicketDto>>() {
+            }));
+
+            System.out.println("Reading Tickets...done amount=" + TICKETS.size());
+
+            System.out.println("Reading Venues...");
+            String venuesJSON = new String(Files.readAllBytes(Path.of("src/venues.json")));
+            VENUES.addAll(MAPPER.readValue(venuesJSON, new TypeReference<List<VenueDto>>() {
+            }));
+            System.out.println("Reading Venues...done amount=" + VENUES.size());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,6 +88,7 @@ public class DataStore {
 
     public static void saveEverything() {
         try {
+
             File userOutFile = new File("src/users.json");
             MAPPER.writerWithDefaultPrettyPrinter().writeValue(userOutFile, USERS);
 
@@ -77,6 +97,12 @@ public class DataStore {
 
             File eventOutFile = new File("src/events.json");
             MAPPER.writerWithDefaultPrettyPrinter().writeValue(eventOutFile, EVENTS);
+
+            File ticketOutFile = new File("src/tickets.json");
+            MAPPER.writerWithDefaultPrettyPrinter().writeValue(ticketOutFile, TICKETS);
+
+            File venuesOutFile = new File("src/venues.json");
+            MAPPER.writerWithDefaultPrettyPrinter().writeValue(venuesOutFile, VENUES);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -151,5 +177,50 @@ public class DataStore {
     }
     public static boolean isCurrentUser() {
         return isCurrentUser;
+    }
+
+
+    // create an event, return true if successful, false if not
+    public static boolean createEvent(String eventName, int numTickets, int numTicketsRemaining, double cost, String venue, Date date){
+        VenueDto currentVenue = null;
+        for (VenueDto v : VENUES) {
+            if (v.getLocation().equals(venue)) { // sets the current venue to the one with the matching name
+                currentVenue = v;
+                break;
+            }
+        }
+        if (currentVenue == null || !currentVenue.checkDateAvailability(date)) return false;
+
+        EventDto newEvent = new EventDto(eventName, numTickets, numTicketsRemaining, cost, venue, date);
+        currentVenue.scheduleEvent(newEvent);
+        EVENTS.add(newEvent);
+        saveEverything();
+        return true;
+    }
+    //
+    //
+    // will try to buy ticket, return true if successful, false if not
+    public static boolean buyTicket(String eventName){
+        EventDto currentEvent = null;
+        for (EventDto event : EVENTS) {
+            if (eventName.equals(event.getEventName())) {
+                currentEvent = event;
+            }
+        }
+        if (currentEvent != null && !currentEvent.isSoldOut()) {
+            TicketDto newTicket = new TicketDto(eventName, currentEvent.getCost(), true, currentUser.getEmail());
+
+            TicketInfo newTicketInfo = new TicketInfo(currentUser.getEmail(), newTicket.getTicketId()); // for the event.getAttendees()
+            currentEvent.setNumTicketsRemaining(currentEvent.getNumTicketsRemaining() - 1); // decrement the remaining tickets
+
+            currentEvent.getAttendees().add(newTicketInfo);
+            currentUser.getTickets().add(newTicket);
+            TICKETS.add(newTicket);
+
+            saveEverything();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

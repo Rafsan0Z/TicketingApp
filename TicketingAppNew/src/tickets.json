@@ -1,0 +1,8 @@
+[ {
+  "event" : "Event1",
+  "ticketId" : 1,
+  "eventName" : "Event1",
+  "price" : 50.0,
+  "purchased" : true,
+  "owner" : "so@user.com"
+} ]

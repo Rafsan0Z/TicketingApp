@@ -1,16 +1,9 @@
+package GUIs;
 
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.io.IOException;
 import javax.swing.JFrame;
-
-import com.fasterxml.jackson.databind.util.JSONPObject;
-
-import GUIs.AccountInfoPanel;
-import GUIs.AddEventPanel;
-import GUIs.EventViewerPanel;
-import GUIs.TicketPurchasePanel;
-import GUIs.TransferTicketPanel;
 
 public class MainFrame extends JFrame {
 

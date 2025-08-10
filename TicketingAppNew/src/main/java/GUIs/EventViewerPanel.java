@@ -13,8 +13,6 @@ import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import MainFrame;
-
 public class EventViewerPanel extends JPanel{
 
     private static final long serialVersionUID = 1L;
