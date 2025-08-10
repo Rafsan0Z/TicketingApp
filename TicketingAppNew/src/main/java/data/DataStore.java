@@ -184,12 +184,12 @@ public class DataStore {
     public static boolean createEvent(String eventName, int numTickets, int numTicketsRemaining, double cost, String venue, Date date){
         VenueDto currentVenue = null;
         for (VenueDto v : VENUES) {
-            if (!v.checkDateAvailability(date)) return false;
             if (v.getLocation().equals(venue)) { // sets the current venue to the one with the matching name
                 currentVenue = v;
+                break;
             }
         }
-        if (currentVenue == null) return false;
+        if (currentVenue == null || !currentVenue.checkDateAvailability(date)) return false;
 
         EventDto newEvent = new EventDto(eventName, numTickets, numTicketsRemaining, cost, venue, date);
         currentVenue.scheduleEvent(newEvent);
