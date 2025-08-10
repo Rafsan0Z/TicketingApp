@@ -82,6 +82,12 @@ public class EventViewerPanel extends JPanel{
         }
 		
 		PurchaseButton = new JButton("Purchase Tickets");
+		PurchaseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PurchaseConfirmation pc = new PurchaseConfirmation();
+				pc.setVisible(true);
+			}
+		});
 		PurchaseButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		AccountButton = new JButton("Account Info");
