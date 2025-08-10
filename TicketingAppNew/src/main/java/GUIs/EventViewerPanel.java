@@ -41,6 +41,7 @@ public class EventViewerPanel extends JPanel{
 	    			new EventDto("Chicago", 100, 100, 500.6, "MSG", new Date()),
 	    			new EventDto("mets vs yankees", 100, 100, 99.99, "City Field", new Date()),
 	    			new EventDto("Mumford and Sons", 300, 100, 19.8, "Metlife", new Date())};
+//		events = DataStore.getAvailableEvents();
 		
 		
 	
