@@ -278,8 +278,8 @@ public class AccountInfoPanel extends JPanel{
     public static Object[] getRowInfo(TicketDto toAdd) {
         Object[] obj = new Object[7];
         obj[0] = toAdd.getEvent();
-        obj[1] = new Date();
-        obj[2] = "MSG";
+        obj[1] = DataStore.findEventByName(toAdd.getEvent()).getDate();
+        obj[2] = DataStore.findEventByName(toAdd.getEvent()).getVenue();
         obj[3] = toAdd.getPrice();
         return obj;
     }
