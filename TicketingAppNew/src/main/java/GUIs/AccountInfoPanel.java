@@ -20,6 +20,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.JCheckBox;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class AccountInfoPanel extends JPanel{
 
@@ -30,6 +33,7 @@ public class AccountInfoPanel extends JPanel{
     private static JTextField nameField;
     private static JTextField emailField;
     private static DefaultTableModel model;
+    private boolean editMode = false;
     
     private static UserDto user;
 //    private static TicketDto[] upcomingTickets = { new TicketDto("mets vs. braves", 210.99, true, "so@user.com"),
@@ -108,9 +112,22 @@ public class AccountInfoPanel extends JPanel{
 
         pwdPassword = new JPasswordField();
         pwdPassword.setEditable(false);
-//        pwdPassword.setText("password123");
+        pwdPassword.setEchoChar('*');
         pwdPassword.setBounds(262, 152, 337, 26);
         add(pwdPassword);
+        
+        JCheckBox showPassword = new JCheckBox("Show");
+        showPassword.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if (showPassword.isSelected()) {
+        			pwdPassword.setEchoChar((char)0);
+        		} else {
+        			pwdPassword.setEchoChar('*');
+        		}
+        	}
+        });
+        showPassword.setBounds(611, 153, 81, 23);
+        add(showPassword);
 
         // Upcoming event information on panel
         JLabel upcomingLabel = new JLabel("Upcoming Events:");
@@ -181,10 +198,27 @@ public class AccountInfoPanel extends JPanel{
         JButton editBtn = new JButton("Edit");
         editBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	if (editMode) {
+            		pwdPassword.setEditable(false);
+            		phoneField.setEditable(false);
+            		emailField.setEditable(false);
+            		nameField.setEditable(false);
+            		editBtn.setText("Edit");
+            		user.updateUser(nameField.getText(), phoneField.getText(), emailField.getText(), pwdPassword.getPassword().toString());
+            		editMode = false;
+            	} else {
+            		pwdPassword.setEditable(true);
+            		phoneField.setEditable(true);
+            		emailField.setEditable(true);
+            		nameField.setEditable(true);
+            		editBtn.setText("Save");
+            		editMode = true;
+            	}
             }
         });
         editBtn.setBounds(611, 54, 117, 29);
         add(editBtn);
+        
     }
 
     /**

@@ -3,6 +3,8 @@ package data.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import data.DataStore;
+
 import java.util.List;
 
 // THIS IS BASICALLY THE REGISTERED USER
@@ -106,5 +108,14 @@ public class UserDto {
     		}
     	}
     	return upcomingTickets;
+    }
+    
+    public void updateUser(String name, String phone, String email, String password) {
+    	setName(name);
+        setPhone(phone);
+        setEmail(email);
+        setPassword(password);
+        System.out.println(name);
+        DataStore.saveEverything();
     }
 }
