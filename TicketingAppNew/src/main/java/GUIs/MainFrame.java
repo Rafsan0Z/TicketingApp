@@ -15,7 +15,7 @@ public class MainFrame extends JFrame {
     TransferTicketPanel transferPanel; // we can also call it EventPastPanel
 
     TicketPurchasePanel purchasePanel;
-    AccountInfoPanel userinfoPanel;
+    static AccountInfoPanel userinfoPanel;
     
     AddEventPanel addeventPanel;
     
@@ -61,8 +61,5 @@ public class MainFrame extends JFrame {
     public static void swap(String name) {
     	Maincard.show(content, name);
     }
-    
-    
-    	
    
 }

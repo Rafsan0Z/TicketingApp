@@ -169,15 +169,9 @@ public class DataStore {
         }
     }
 
-    public static UserDto getCurrentUser() {
-        return currentUser;
-    }
-    public static ManagerDto getCurrentManager() {
-        return currentManager;
-    }
-    public static boolean isCurrentUser() {
-        return isCurrentUser;
-    }
+    public static UserDto getCurrentUser() {return currentUser;}
+    public static ManagerDto getCurrentManager() {return currentManager;}
+    public static boolean isCurrentUser() {return isCurrentUser;}
 
 
     // create an event, return true if successful, false if not
@@ -197,8 +191,7 @@ public class DataStore {
         saveEverything();
         return true;
     }
-    //
-    //
+    
     // will try to buy ticket, return true if successful, false if not
     public static boolean buyTicket(String eventName){
         EventDto currentEvent = null;
@@ -223,4 +216,30 @@ public class DataStore {
             return false;
         }
     }
+    
+    /**
+     * Search event list by name
+     * @param name
+     * @return
+     */
+    public static EventDto findEventByName(String name) {
+    	for (EventDto event : EVENTS) {
+    		if (event.getEventName().equals(name)) {
+    			return event;
+    		}
+    	}
+    	return null;
+    }
+    
+    public static TicketDto[] getTickets() {
+    	TicketDto[] tickets = new TicketDto[TICKETS.size()];
+    	int i = 0;
+    	for (TicketDto ticket : TICKETS) {
+    		tickets[i] = ticket;
+    	}
+    	return tickets;
+//    	return (TicketDto[]) (TICKETS.toArray());
+    }
+    
+    public static void setCurrentUser() { currentUser = null;}
 }

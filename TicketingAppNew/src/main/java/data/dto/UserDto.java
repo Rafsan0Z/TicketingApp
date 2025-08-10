@@ -3,6 +3,8 @@ package data.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import data.DataStore;
+
 import java.util.List;
 
 // THIS IS BASICALLY THE REGISTERED USER
@@ -74,5 +76,46 @@ public class UserDto {
 
     public void setTickets(List<TicketDto> tickets) {
         this.tickets = tickets;
+    }
+    
+    public double calculateTotal() {
+    	double total = 0;
+    	for (TicketDto ticket : tickets) {
+    		total += ticket.getPrice();
+    	}
+    	return total;
+    }
+    
+    public TicketDto[] getPassedTickets() {
+    	TicketDto[] passedTickets = new TicketDto[tickets.size()];
+    	int i = 0;
+    	for (TicketDto ticket : tickets) {
+    		if (ticket.findEvent().pastTicket()) {
+    			passedTickets[i] = ticket;
+    			i++;
+    		}
+    	}
+    	return passedTickets;
+    }
+    
+    public TicketDto[] getUpcomingTickets() {
+    	TicketDto[] upcomingTickets = new TicketDto[tickets.size()];
+    	int i = 0;
+    	for (TicketDto ticket : tickets) {
+    		if (!ticket.findEvent().pastTicket()) {
+    			upcomingTickets[i] = ticket;
+    			i++;
+    		}
+    	}
+    	return upcomingTickets;
+    }
+    
+    public void updateUser(String name, String phone, String email, String password) {
+    	setName(name);
+        setPhone(phone);
+        setEmail(email);
+        setPassword(password);
+        System.out.println(password);
+        DataStore.saveEverything();
     }
 }

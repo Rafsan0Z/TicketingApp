@@ -1,16 +1,22 @@
 [ {
-  "name" : "Sophia",
+  "passedTickets" : [ ],
+  "upcomingTickets" : [ ],
+  "name" : "Sophia D",
   "phone" : "6467689999",
-  "email" : "so@user.com",
+  "email" : "s@user.com",
   "password" : "abc123",
   "tickets" : [ ]
 }, {
+  "passedTickets" : [ ],
+  "upcomingTickets" : [ ],
   "name" : "mike",
   "phone" : "(+22) 222-333-4444",
   "email" : "m@user.com",
   "password" : "xyz987",
   "tickets" : [ ]
 }, {
+  "passedTickets" : [ ],
+  "upcomingTickets" : [ ],
   "name" : "Derek",
   "phone" : "+1 (923) 424-424",
   "email" : "d@user.com",
