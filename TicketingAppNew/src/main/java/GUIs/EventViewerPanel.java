@@ -19,7 +19,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import data.dto.EventDto;
-import data.dto.TicketDto;
 
 public class EventViewerPanel extends JPanel{
 
@@ -35,17 +34,15 @@ public class EventViewerPanel extends JPanel{
 	public EventViewerPanel(){
 		
 		
-		// TODO: Add actual ticket data to this
-//		TicketDto[] tickets = { new TicketDto("mets vs. braves", 210.99, true, "so@user.com"),
-//                new TicketDto("mets vs yankees", 105.8, true, "so@user.com"),
-//                new TicketDto("Mumford and sons", 400, true, "so@user.com"),
-//                new TicketDto("Super Cool event", 19, true, "so@user.com")};
+		// TODO: Add actual Event data to this
 		EventDto[] events = { new EventDto("Super Cool event", 100, 100, 30.1, "MSG", new Date()),
 					new EventDto("mets vs. braves", 200, 200, 17.2, "City Field", new Date()),
 	    			new EventDto("giants vs tampa bay", 100, 100, 11.9, "Metlife", new Date()),
 	    			new EventDto("Chicago", 100, 100, 500.6, "MSG", new Date()),
 	    			new EventDto("mets vs yankees", 100, 100, 99.99, "City Field", new Date()),
 	    			new EventDto("Mumford and Sons", 300, 100, 19.8, "Metlife", new Date())};
+		
+		
 	
 		TopicLabel = new JLabel("View all Available Events");
 		TopicLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -136,7 +133,7 @@ public class EventViewerPanel extends JPanel{
     public static Object[] getRowInfo(EventDto toAdd) {
         Object[] obj = new Object[7];
         obj[0] = toAdd.getEventName();
-        obj[1] = new Date();
+        obj[1] = toAdd.getDate();
         obj[2] = toAdd.getVenue();
         obj[3] = toAdd.getCost();
         return obj;

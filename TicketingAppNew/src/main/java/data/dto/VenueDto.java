@@ -32,6 +32,17 @@ public class VenueDto {
     public int getCapacity() {return capacity;}
 
     public List<EventDto> getScheduledEvents() {return scheduledEvents;}
+    public EventDto[] getAvailableEvents() {
+    	EventDto[] events = new EventDto[scheduledEvents.size()];
+    	int i = 0;
+        for (EventDto event : scheduledEvents) {
+            if (!event.isSoldOut()) {
+            	events[i] = event;
+            	i++;
+            }
+        }
+        return events;
+    }
 
     public void scheduleEvent(EventDto event) {
         scheduledEvents.add(event);
