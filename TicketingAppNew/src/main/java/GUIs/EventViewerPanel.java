@@ -1,7 +1,9 @@
 package GUIs;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -12,25 +14,71 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+
+import data.dto.EventDto;
 
 public class EventViewerPanel extends JPanel{
 
     private static final long serialVersionUID = 1L;
-    private JTable EventTable;
+    private JTable table;
     
     private JLabel TopicLabel;
     
     private JButton PurchaseButton;
     private JButton AccountButton;
+    private EventDto eventSelected;
 
 	public EventViewerPanel(){
-
+		
+		
+		// TODO: Add actual Event data to this
+		EventDto[] events = { new EventDto("Super Cool event", 100, 100, 30.1, "MSG", new Date()),
+					new EventDto("mets vs. braves", 200, 200, 17.2, "City Field", new Date()),
+	    			new EventDto("giants vs tampa bay", 100, 100, 11.9, "Metlife", new Date()),
+	    			new EventDto("Chicago", 100, 100, 500.6, "MSG", new Date()),
+	    			new EventDto("mets vs yankees", 100, 100, 99.99, "City Field", new Date()),
+	    			new EventDto("Mumford and Sons", 300, 100, 19.8, "Metlife", new Date())};
+//		events = DataStore.getAvailableEvents();
+		
+		
+	
 		TopicLabel = new JLabel("View all Available Events");
 		TopicLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		TopicLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		
-		EventTable = new JTable();
-		EventTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.setSelectionBackground(new Color(143, 188, 143));
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				int rowSelected = table.getSelectedRow();
+				eventSelected = getSelectedEvent(events, rowSelected);
+			}
+        });
+
+        Object[] columns = {"Event", "Time", "Venue"
+                , "Cost"};
+        DefaultTableModel model = new DefaultTableModel();
+
+        model.setColumnIdentifiers(columns);
+        table.setModel(model);
+
+        table.setBackground( new Color(240, 255, 240));
+        table.setForeground(Color.black);
+        table.setGridColor(new Color(0, 0, 51));
+        table.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        table.setRowHeight(30);
+        table.setAutoCreateRowSorter(true);
+		
+		for (int i = 0; i < events.length; i++) {
+            model.addRow(getRowInfo(events[i]));
+        }
 		
 		PurchaseButton = new JButton("Purchase Tickets");
 		PurchaseButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -59,7 +107,7 @@ public class EventViewerPanel extends JPanel{
 							.addPreferredGap(ComponentPlacement.RELATED, 193, Short.MAX_VALUE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(23)
-							.addComponent(EventTable, GroupLayout.PREFERRED_SIZE, 753, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(table, GroupLayout.PREFERRED_SIZE, 753, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(24, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
@@ -70,12 +118,33 @@ public class EventViewerPanel extends JPanel{
 						.addComponent(AccountButton, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 						.addComponent(TopicLabel, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
-					.addComponent(EventTable, GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+					.addComponent(table, GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
 					.addGap(18)
 					.addComponent(PurchaseButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addGap(40))
 		);
 		setLayout(groupLayout);
+    }
+	
+	/**
+     * This function will create an object with row information for the table
+     * @param toAdd
+     * @return
+     */
+    public static Object[] getRowInfo(EventDto toAdd) {
+        Object[] obj = new Object[7];
+        obj[0] = toAdd.getEventName();
+        obj[1] = toAdd.getDate();
+        obj[2] = toAdd.getVenue();
+        obj[3] = toAdd.getCost();
+        return obj;
+    }
+    
+    public EventDto getSelectedEvent(EventDto[] events, int rowSelected) {
+    	if (rowSelected != -1) {
+    		return events[rowSelected];
+    	}
+    	return null;
     }
 
 }
