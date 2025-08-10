@@ -157,11 +157,11 @@ public class ManagerInfoPanel extends JPanel {
         add(editBtn);
         
         EventDto[] events = DataStore.getEvents();
-        JScrollPane pastScrollPane = new JScrollPane();
-        pastScrollPane.setBounds(169, 217, 539, 296);
-        this.add(pastScrollPane);
+        JScrollPane eventScrollPane = new JScrollPane();
+        eventScrollPane.setBounds(169, 217, 539, 296);
+        this.add(eventScrollPane);
 
-        this.eventTable(pastScrollPane, events, new Color(255, 228, 225));
+        this.eventTable(eventScrollPane, events, new Color(240, 255, 240));
         
 	}
 	
