@@ -1,7 +1,6 @@
 package GUIs;
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Date;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -140,7 +139,7 @@ public class AccountInfoPanel extends JPanel{
         logoutBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	MainFrame.swap("login");
-        		DataStore.setCurrentUser();
+        		DataStore.logoutCurrentUser();
             }
         });
         logoutBtn.setBounds(591, 525, 117, 29);
@@ -277,9 +276,9 @@ public class AccountInfoPanel extends JPanel{
      */
     public static Object[] getRowInfo(TicketDto toAdd) {
         Object[] obj = new Object[7];
-        obj[0] = toAdd.getEvent();
-        obj[1] = new Date();
-        obj[2] = "MSG";
+        obj[0] = toAdd.getEventName();
+        obj[1] = DataStore.findEventByName(toAdd.getEventName()).getDate();
+        obj[2] = DataStore.findEventByName(toAdd.getEventName()).getVenue();
         obj[3] = toAdd.getPrice();
         return obj;
     }

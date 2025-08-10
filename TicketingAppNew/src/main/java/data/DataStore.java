@@ -172,6 +172,7 @@ public class DataStore {
     public static UserDto getCurrentUser() {return currentUser;}
     public static ManagerDto getCurrentManager() {return currentManager;}
     public static boolean isCurrentUser() {return isCurrentUser;}
+    public static void logoutCurrentUser() { currentUser = null;}
 
 
     // create an event, return true if successful, false if not
@@ -193,7 +194,7 @@ public class DataStore {
     }
     
     // will try to buy ticket, return true if successful, false if not
-    public static boolean buyTicket(String eventName){
+    public static boolean buyTicket(String eventName, String ageType) {
         EventDto currentEvent = null;
         for (EventDto event : EVENTS) {
             if (eventName.equals(event.getEventName())) {
@@ -201,7 +202,8 @@ public class DataStore {
             }
         }
         if (currentEvent != null && !currentEvent.isSoldOut()) {
-            TicketDto newTicket = new TicketDto(eventName, currentEvent.getCost(), true, currentUser.getEmail());
+            var cost = currentEvent.getCost() * discountAmount(ageType);
+            TicketDto newTicket = new TicketDto(eventName, cost, ageType, true, currentUser.getEmail());
 
             TicketInfo newTicketInfo = new TicketInfo(currentUser.getEmail(), newTicket.getTicketId()); // for the event.getAttendees()
             currentEvent.setNumTicketsRemaining(currentEvent.getNumTicketsRemaining() - 1); // decrement the remaining tickets
@@ -216,11 +218,22 @@ public class DataStore {
             return false;
         }
     }
+
+    public static float discountAmount(String ageType) {
+        if (ageType.trim().equalsIgnoreCase("child")) {
+            return 0.9F;
+        } else if (ageType.trim().equalsIgnoreCase("senior")) {
+            return 0.85F;
+        } else {
+            return 1;
+        }
+    }
+
     
     /**
      * Search event list by name
      * @param name
-     * @return
+     * @return EventDto
      */
     public static EventDto findEventByName(String name) {
     	for (EventDto event : EVENTS) {
@@ -230,7 +243,7 @@ public class DataStore {
     	}
     	return null;
     }
-    
+
     public static TicketDto[] getTickets() {
     	TicketDto[] tickets = new TicketDto[TICKETS.size()];
     	int i = 0;
@@ -240,7 +253,6 @@ public class DataStore {
     	return tickets;
 //    	return (TicketDto[]) (TICKETS.toArray());
     }
-    
     public static void setCurrentUser() { currentUser = null;}
     public static void logoutCurrentManager() {currentManager = null;}
     
@@ -260,5 +272,11 @@ public class DataStore {
     		venues[i] = venue;
     	}
     	return venues;
+    }
+
+    public static EventDto[] getAvailableEvents() {
+        return EVENTS.stream()
+                .filter(e -> !e.isSoldOut())
+                .toArray(EventDto[]::new);
     }
 }

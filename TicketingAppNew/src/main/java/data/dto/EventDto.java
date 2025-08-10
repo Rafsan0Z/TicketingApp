@@ -72,5 +72,4 @@ public class EventDto {
     	return false;
     }
 
-
 }

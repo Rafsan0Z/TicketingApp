@@ -14,6 +14,8 @@ public class TicketDto {
     private String eventName;
     @JsonProperty("price")
     private double price;
+    @JsonProperty("ageType")
+    private String ageType;
     @JsonProperty("purchased")
     private boolean purchased;
     @JsonProperty("owner")
@@ -22,10 +24,11 @@ public class TicketDto {
     public TicketDto() {
     }
 
-    public TicketDto(String eventName, double price, boolean purchased, String owner) {
+    public TicketDto(String eventName, double price, String ageType, boolean purchased, String owner) {
         this.ticketId = System.currentTimeMillis() * 1000 + (int)(Math.random() * 1000);
         this.eventName = eventName;
         this.price = price;
+        this.ageType = ageType;
         this.purchased = purchased;
         this.owner = owner;
     }
@@ -38,12 +41,16 @@ public class TicketDto {
         this.ticketId = ticketId;
     }
 
-    public String getEvent() {
+    public String getEventName() {
         return eventName;
     }
 
     public double getPrice() {
         return price;
+    }
+
+    public String getAgeType() {
+        return ageType;
     }
 
     public String getOwner() {
