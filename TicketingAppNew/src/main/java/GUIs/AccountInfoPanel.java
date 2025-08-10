@@ -159,7 +159,12 @@ public class AccountInfoPanel extends JPanel{
         sellBtn.addActionListener(new ActionListener() {
 
         	public void actionPerformed(ActionEvent e) {
-        		MainFrame.swap("transfer");
+        		if (ticketSelected != null) {
+        			TransferTicketPanel.loadTicketInfo(ticketSelected);
+        			MainFrame.swap("transfer");
+        		} else {
+        			System.out.println("Please select ticket to transfer or sell");
+        		}
         	}
         });
         sellBtn.setBounds(373, 525, 117, 29);
@@ -249,11 +254,7 @@ public class AccountInfoPanel extends JPanel{
     
     public static void loadTables() {
     	TicketDto[] pastTickets = user.getPassedTickets();
-//    	TicketDto[] upcomingTickets = user.getUpcomingTickets();
-      TicketDto[] upcomingTickets = { new TicketDto("mets vs. braves", 210.99, true, "so@user.com"),
-      new TicketDto("mets vs yankees", 105.8, true, "so@user.com"),
-      new TicketDto("Mumford and sons", 400, true, "so@user.com"),
-      new TicketDto("Super Cool event", 19, true, "so@user.com")};
+    	TicketDto[] upcomingTickets = user.getUpcomingTickets();
         
     	JScrollPane upcomingScrollPane = new JScrollPane();
         upcomingScrollPane.setBounds(169, 247, 539, 133);
