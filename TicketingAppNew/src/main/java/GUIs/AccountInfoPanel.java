@@ -21,8 +21,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JCheckBox;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class AccountInfoPanel extends JPanel{
 
@@ -36,25 +36,10 @@ public class AccountInfoPanel extends JPanel{
     private boolean editMode = false;
     
     private static UserDto user;
-//    private static TicketDto[] upcomingTickets = { new TicketDto("mets vs. braves", 210.99, true, "so@user.com"),
-//            new TicketDto("mets vs yankees", 105.8, true, "so@user.com"),
-//            new TicketDto("Mumford and sons", 400, true, "so@user.com"),
-//            new TicketDto("Super Cool event", 19, true, "so@user.com")};
-//    private static TicketDto[] pastTickets = DataStore.getTickets();
-
-    private int rowSelected = -1;
+    private TicketDto ticketSelected = null;
 
     public AccountInfoPanel(){
 
-        // TODO remove testing data and implement real data
-        TicketDto[] testTickets = { new TicketDto("Super Cool event", 21.1, true, "so@user.com"),
-                new TicketDto("mets vs. braves", 15.1, true, "so@user.com"),
-                new TicketDto("giants vs tampa bay", 105.8, true, "so@user.com"),
-                new TicketDto("Chicago", 13, true, "so@user.com")};
-//        upcomingTickets = { new TicketDto("mets vs. braves", 210.99, true, "so@user.com"),
-//                new TicketDto("mets vs yankees", 105.8, true, "so@user.com"),
-//                new TicketDto("Mumford and sons", 400, true, "so@user.com"),
-//                new TicketDto("Super Cool event", 19, true, "so@user.com")};
         setLayout(null);
 
         // Title information on panel
@@ -73,7 +58,6 @@ public class AccountInfoPanel extends JPanel{
         nameField = new JTextField();
         nameField.setEditable(false);
         nameField.setOpaque(true);
-//        nameField.setText("Guest Name");
         nameField.setBounds(262, 54, 332, 26);
         add(nameField);
         nameField.setColumns(10);
@@ -86,7 +70,6 @@ public class AccountInfoPanel extends JPanel{
 
         phoneField = new JTextField();
         phoneField.setEditable(false);
-//        phoneField.setText("6461234567");
         phoneField.setBounds(262, 85, 337, 26);
         add(phoneField);
         phoneField.setColumns(10);
@@ -98,7 +81,6 @@ public class AccountInfoPanel extends JPanel{
         add(emailLabel);
 
         emailField = new JTextField();
-//        emailField.setText("guestemail@nyu.edu");
         emailField.setEditable(false);
         emailField.setColumns(10);
         emailField.setBounds(262, 116, 337, 26);
@@ -135,23 +117,11 @@ public class AccountInfoPanel extends JPanel{
         upcomingLabel.setBounds(169, 223, 146, 19);
         add(upcomingLabel);
 
-//        JScrollPane upcomingScrollPane = new JScrollPane();
-//        upcomingScrollPane.setBounds(169, 247, 539, 133);
-//        this.add(upcomingScrollPane);
-//
-//        this.ticketTable(upcomingScrollPane, upcomingTickets, new Color(240, 255, 240), true);
-
         // Past event information on panel
         JLabel pastEventsLabel = new JLabel("Past Events:");
         pastEventsLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
         pastEventsLabel.setBounds(169, 392, 146, 19);
         add(pastEventsLabel);
-
-//        JScrollPane pastScrollPane = new JScrollPane();
-//        pastScrollPane.setBounds(169, 414, 539, 99);
-//        add(pastScrollPane);
-//
-//        this.ticketTable(pastScrollPane, pastTickets, new Color(255, 228, 225), false);
 
         // Total spent information on panel
         JLabel totalSpentLabel = new JLabel("Total Spent: ");
@@ -161,7 +131,6 @@ public class AccountInfoPanel extends JPanel{
 
         totalField = new JTextField();
         totalField.setEditable(false);
-//        totalField.setText("$500.89");
         totalField.setBounds(272, 185, 327, 26);
         add(totalField);
         totalField.setColumns(10);
@@ -205,7 +174,8 @@ public class AccountInfoPanel extends JPanel{
             		emailField.setEditable(false);
             		nameField.setEditable(false);
             		editBtn.setText("Edit");
-            		user.updateUser(nameField.getText(), phoneField.getText(), emailField.getText(), pwdPassword.getPassword().toString());
+            		String newPassword = new String(pwdPassword.getPassword());
+            		user.updateUser(nameField.getText(), phoneField.getText(), emailField.getText(), newPassword);
             		editMode = false;
             	} else {
             		pwdPassword.setEditable(true);
@@ -248,7 +218,16 @@ public class AccountInfoPanel extends JPanel{
         if (selectable) {
             table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             table.setSelectionBackground(new Color(143, 188, 143));
-            rowSelected = table.getSelectedRow();
+            table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					// TODO Auto-generated method stub
+					int rowSelected = table.getSelectedRow();
+					ticketSelected = getSelectedTicket(tickets, rowSelected);
+				}
+            });
+            
         } else {
             table.setEnabled(false);
         }
@@ -266,17 +245,15 @@ public class AccountInfoPanel extends JPanel{
         nameField.setText(user.getName());
         emailField.setText(user.getEmail());
     	
-//        pastTickets = user.getPassedTickets();
-//        upcomingTickets = user.getPassedTickets();
     }
     
     public static void loadTables() {
     	TicketDto[] pastTickets = user.getPassedTickets();
-    	TicketDto[] upcomingTickets = user.getUpcomingTickets();
-//        TicketDto[] upcomingTickets = { new TicketDto("mets vs. braves", 210.99, true, "so@user.com"),
-//                new TicketDto("mets vs yankees", 105.8, true, "so@user.com"),
-//                new TicketDto("Mumford and sons", 400, true, "so@user.com"),
-//                new TicketDto("Super Cool event", 19, true, "so@user.com")};
+//    	TicketDto[] upcomingTickets = user.getUpcomingTickets();
+      TicketDto[] upcomingTickets = { new TicketDto("mets vs. braves", 210.99, true, "so@user.com"),
+      new TicketDto("mets vs yankees", 105.8, true, "so@user.com"),
+      new TicketDto("Mumford and sons", 400, true, "so@user.com"),
+      new TicketDto("Super Cool event", 19, true, "so@user.com")};
         
     	JScrollPane upcomingScrollPane = new JScrollPane();
         upcomingScrollPane.setBounds(169, 247, 539, 133);
@@ -305,8 +282,11 @@ public class AccountInfoPanel extends JPanel{
         obj[3] = toAdd.getPrice();
         return obj;
     }
-
-    public int getSelectedRow() {
-        return rowSelected;
+    
+    public TicketDto getSelectedTicket(TicketDto[] tickets, int rowSelected) {
+    	if (rowSelected != -1) {
+    		return tickets[rowSelected];
+    	}
+    	return null;
     }
 }

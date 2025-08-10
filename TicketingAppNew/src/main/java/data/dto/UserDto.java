@@ -115,7 +115,7 @@ public class UserDto {
         setPhone(phone);
         setEmail(email);
         setPassword(password);
-        System.out.println(name);
+        System.out.println(password);
         DataStore.saveEverything();
     }
 }
