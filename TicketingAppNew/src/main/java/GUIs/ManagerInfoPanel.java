@@ -163,6 +163,15 @@ public class ManagerInfoPanel extends JPanel {
 
         this.eventTable(eventScrollPane, events, new Color(240, 255, 240));
         
+        JButton addBtn = new JButton("Add Event");
+        addBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		MainFrame.swap("addevent");
+        	}
+        });
+        addBtn.setBounds(468, 525, 117, 29);
+        add(addBtn);
+        
 	}
 	
 	/**
@@ -176,7 +185,7 @@ public class ManagerInfoPanel extends JPanel {
         JTable table = new JTable();
         pane.setViewportView(table);
         Object[] columns = {"Event", "Time", "Venue"
-                , "Cost"};
+                , "Cost", "Status"};
         model = new DefaultTableModel();
 
         model.setColumnIdentifiers(columns);
@@ -226,6 +235,11 @@ public class ManagerInfoPanel extends JPanel {
         obj[1] = toAdd.getDate();
         obj[2] = toAdd.getVenue();
         obj[3] = toAdd.getCost();
+        if (toAdd.isSoldOut()) {
+        	obj[4] = "Sold Out";
+        } else {
+        	obj[4] = "Available";
+        }
         return obj;
     }
     

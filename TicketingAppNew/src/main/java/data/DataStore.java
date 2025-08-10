@@ -252,4 +252,13 @@ public class DataStore {
     	}
     	return events;
     }
+    
+    public static VenueDto[] getVenues() {
+    	VenueDto[] venues = new VenueDto[VENUES.size()];
+    	int i = 0;
+    	for (VenueDto venue : VENUES) {
+    		venues[i] = venue;
+    	}
+    	return venues;
+    }
 }
