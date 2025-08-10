@@ -18,6 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import data.DataStore;
 import data.dto.EventDto;
 
 public class EventViewerPanel extends JPanel{
@@ -35,13 +36,13 @@ public class EventViewerPanel extends JPanel{
 		
 		
 		// TODO: Add actual Event data to this
-		EventDto[] events = { new EventDto("Super Cool event", 100, 100, 30.1, "MSG", new Date()),
-					new EventDto("mets vs. braves", 200, 200, 17.2, "City Field", new Date()),
-	    			new EventDto("giants vs tampa bay", 100, 100, 11.9, "Metlife", new Date()),
-	    			new EventDto("Chicago", 100, 100, 500.6, "MSG", new Date()),
-	    			new EventDto("mets vs yankees", 100, 100, 99.99, "City Field", new Date()),
-	    			new EventDto("Mumford and Sons", 300, 100, 19.8, "Metlife", new Date())};
-//		events = DataStore.getAvailableEvents();
+//		EventDto[] events = { new EventDto("Super Cool event", 100, 100, 30.1, "MSG", new Date()),
+//					new EventDto("mets vs. braves", 200, 200, 17.2, "City Field", new Date()),
+//	    			new EventDto("giants vs tampa bay", 100, 100, 11.9, "Metlife", new Date()),
+//	    			new EventDto("Chicago", 100, 100, 500.6, "MSG", new Date()),
+//	    			new EventDto("mets vs yankees", 100, 100, 99.99, "City Field", new Date()),
+//	    			new EventDto("Mumford and Sons", 300, 100, 19.8, "Metlife", new Date())};
+        EventDto[] events = DataStore.getAvailableEvents();
 		
 		
 	

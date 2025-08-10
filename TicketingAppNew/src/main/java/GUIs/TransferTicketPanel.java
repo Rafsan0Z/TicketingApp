@@ -163,8 +163,8 @@ public class TransferTicketPanel extends JPanel{
 	
 	public static void loadTicketInfo(TicketDto ticket) {
 		if (ticket != null) {
-			EventNameTextPane.setText(ticket.getEvent());
-			VenueNameTextPane.setText(DataStore.findEventByName(ticket.getEvent()).getVenue());
+			EventNameTextPane.setText(ticket.getEventName());
+			VenueNameTextPane.setText(DataStore.findEventByName(ticket.getEventName()).getVenue());
 			TicketPriceTextPane.setText(Double.toString(ticket.getPrice()));
 		}
 	}
