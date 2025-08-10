@@ -8,10 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import data.dto.EventDto;
+import data.DataStore;
 import data.dto.TicketDto;
-import data.dto.VenueDto;
-
+import data.dto.UserDto;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,26 +24,19 @@ import javax.swing.ListSelectionModel;
 public class AccountInfoPanel extends JPanel{
 
     private static final long serialVersionUID = 1L;
-    private JPasswordField pwdPassword;
-    private JTextField totalField;
-    private JTextField phoneField;
-    private JTextField nameField;
-    private JTextField emailField;
+    private static JPasswordField pwdPassword;
+    private static JTextField totalField;
+    private static JTextField phoneField;
+    private static JTextField nameField;
+    private static JTextField emailField;
+    
+    private static UserDto user;
 
     private int rowSelected = -1;
 
     public AccountInfoPanel(){
 
         // TODO remove testing data and implement real data
-//        VenueDto testVenue = new VenueDto("MSG", 100);
-//        VenueDto testVenue2 = new VenueDto("City Field", 200);
-//        VenueDto testVenue3 = new VenueDto("Metlife", 200);
-//        EventDto testEvent = new EventDto("Super Cool event", 100, 100, "MSG", new Date());
-//        EventDto testEvent2 = new EventDto("mets vs. braves", 200, 200, "City Field", new Date());
-//        EventDto testEvent3 = new EventDto("giants vs tampa bay", 100, 100, "Metlife", new Date());
-//        EventDto testEvent4 = new EventDto("Chicago", 100, 100, "MSG", new Date());
-//        EventDto testEvent5 = new EventDto("mets vs yankees", 100, 100, "City Field", new Date());
-//        EventDto testEvent6 = new EventDto("Mumford and Sons", 300, 100, "Metlife", new Date());
         TicketDto[] testTickets = { new TicketDto("Super Cool event", 21.1, true, "so@user.com"),
                 new TicketDto("mets vs. braves", 15.1, true, "so@user.com"),
                 new TicketDto("giants vs tampa bay", 105.8, true, "so@user.com"),
@@ -71,7 +63,7 @@ public class AccountInfoPanel extends JPanel{
         nameField = new JTextField();
         nameField.setEditable(false);
         nameField.setOpaque(true);
-        nameField.setText("Guest Name");
+//        nameField.setText("Guest Name");
         nameField.setBounds(262, 54, 332, 26);
         add(nameField);
         nameField.setColumns(10);
@@ -84,7 +76,7 @@ public class AccountInfoPanel extends JPanel{
 
         phoneField = new JTextField();
         phoneField.setEditable(false);
-        phoneField.setText("6461234567");
+//        phoneField.setText("6461234567");
         phoneField.setBounds(262, 85, 337, 26);
         add(phoneField);
         phoneField.setColumns(10);
@@ -96,7 +88,7 @@ public class AccountInfoPanel extends JPanel{
         add(emailLabel);
 
         emailField = new JTextField();
-        emailField.setText("guestemail@nyu.edu");
+//        emailField.setText("guestemail@nyu.edu");
         emailField.setEditable(false);
         emailField.setColumns(10);
         emailField.setBounds(262, 116, 337, 26);
@@ -110,7 +102,7 @@ public class AccountInfoPanel extends JPanel{
 
         pwdPassword = new JPasswordField();
         pwdPassword.setEditable(false);
-        pwdPassword.setText("password123");
+//        pwdPassword.setText("password123");
         pwdPassword.setBounds(262, 152, 337, 26);
         add(pwdPassword);
 
@@ -146,7 +138,7 @@ public class AccountInfoPanel extends JPanel{
 
         totalField = new JTextField();
         totalField.setEditable(false);
-        totalField.setText("$500.89");
+//        totalField.setText("$500.89");
         totalField.setBounds(272, 185, 327, 26);
         add(totalField);
         totalField.setColumns(10);
@@ -223,6 +215,16 @@ public class AccountInfoPanel extends JPanel{
         for (int i = 0; i < tickets.length; i++) {
             model.addRow(getRowInfo(tickets[i]));
         }
+    }
+    
+    public static void loadUser() {
+    	user = DataStore.getCurrentUser();
+    	pwdPassword.setText(user.getPassword());
+        totalField.setText(Double.toString(user.calculateTotal()));
+        phoneField.setText(user.getPhone());
+        nameField.setText(user.getName());
+        emailField.setText(user.getEmail());
+    	
     }
 
     /**

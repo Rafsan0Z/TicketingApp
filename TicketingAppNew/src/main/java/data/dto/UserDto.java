@@ -75,4 +75,12 @@ public class UserDto {
     public void setTickets(List<TicketDto> tickets) {
         this.tickets = tickets;
     }
+    
+    public double calculateTotal() {
+    	double total = 0;
+    	for (TicketDto ticket : tickets) {
+    		total += ticket.getPrice();
+    	}
+    	return total;
+    }
 }
