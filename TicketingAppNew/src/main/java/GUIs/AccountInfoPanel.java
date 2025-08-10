@@ -170,6 +170,8 @@ public class AccountInfoPanel extends JPanel{
         JButton logoutBtn = new JButton("Logout");
         logoutBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	MainFrame.swap("login");
+        		DataStore.setCurrentUser();
             }
         });
         logoutBtn.setBounds(591, 525, 117, 29);
@@ -177,7 +179,6 @@ public class AccountInfoPanel extends JPanel{
 
         JButton browseBtn = new JButton("Browse Events");
         browseBtn.addActionListener(new ActionListener() {
-
         	public void actionPerformed(ActionEvent e) {
         		MainFrame.swap("eventview");
         	}

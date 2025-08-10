@@ -240,4 +240,6 @@ public class DataStore {
     	return tickets;
 //    	return (TicketDto[]) (TICKETS.toArray());
     }
+    
+    public static void setCurrentUser() { currentUser = null;}
 }
