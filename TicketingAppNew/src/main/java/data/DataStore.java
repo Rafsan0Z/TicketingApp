@@ -220,7 +220,7 @@ public class DataStore {
     /**
      * Search event list by name
      * @param name
-     * @return
+     * @return EventDto
      */
     public static EventDto findEventByName(String name) {
     	for (EventDto event : EVENTS) {
@@ -230,7 +230,7 @@ public class DataStore {
     	}
     	return null;
     }
-    
+
     public static TicketDto[] getTickets() {
     	TicketDto[] tickets = new TicketDto[TICKETS.size()];
     	int i = 0;
