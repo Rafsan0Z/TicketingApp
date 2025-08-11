@@ -53,6 +53,10 @@ public class TicketDto {
         return ageType;
     }
 
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
     public String getOwner() {
         return owner;
     }

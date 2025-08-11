@@ -203,12 +203,26 @@ public class DataStore {
     // will try to buy ticket, return true if successful, false if not
     public static void buyTicket(String eventName, String ageType) {
         EventDto currentEvent = null;
+        VenueDto currentVenue = null;
         for (EventDto event : EVENTS) {
             if (eventName.equals(event.getEventName())) {
                 currentEvent = event;
             }
         }
-        if (currentEvent != null && !currentEvent.isSoldOut()) {
+        if (currentEvent == null) {return;}
+        for (VenueDto v : VENUES) {
+            if (v.getLocation().equals(currentEvent.getVenue())) {
+                currentVenue = v;
+            }
+        }
+        if (currentVenue == null) {return;}
+        EventDto tmp = null;
+        for (EventDto event : currentVenue.getScheduledEvents()) {
+            if (event.getEventName().equals(eventName)) {
+                tmp = event;
+            }
+        }
+        if (!currentEvent.isSoldOut()) {
             double cost = Math.round(currentEvent.getCost() * discountAmount(ageType) * 100.0) / 100.0;
             TicketDto newTicket = new TicketDto(eventName, cost, ageType, true, currentUser.getEmail());
 
@@ -216,6 +230,7 @@ public class DataStore {
             currentEvent.setNumTicketsRemaining(currentEvent.getNumTicketsRemaining() - 1); // decrement the remaining tickets
 
             currentEvent.getAttendees().add(newTicketInfo);
+            tmp.getAttendees().add(newTicketInfo);
             currentUser.getTickets().add(newTicket);
             TICKETS.add(newTicket);
 
@@ -264,6 +279,7 @@ public class DataStore {
     	int i = 0;
     	for (EventDto event : EVENTS) {
     		events[i] = event;
+            i++;
     	}
     	return events;
     }
@@ -273,6 +289,7 @@ public class DataStore {
     	int i = 0;
     	for (VenueDto venue : VENUES) {
     		venues[i] = venue;
+            i++;
     	}
     	return venues;
     }
@@ -281,5 +298,56 @@ public class DataStore {
         return EVENTS.stream()
                 .filter(e -> !e.isSoldOut())
                 .toArray(EventDto[]::new);
+    }
+
+    public static void updateEvent(EventDto eventSelected, String eventName, Date date, double cost) {
+        for (EventDto event : EVENTS) { // update the event.json
+            if (eventSelected.getEventName().equals(event.getEventName())) {
+                event.setEventName(eventName);
+                event.setDate(date);
+                event.setCost(cost);
+            }
+        }
+        // update the venue.json
+        for (VenueDto v : VENUES) {
+            if (v.getLocation().equals(eventSelected.getVenue())) {
+                for (EventDto event : v.getScheduledEvents()) {
+                    if (eventSelected.getEventName().equals(event.getEventName())) {
+                        event.setEventName(eventName);
+                        event.setDate(date);
+                        event.setCost(cost);
+                    }
+                }
+            }
+        }
+        // update the tickets.json
+        /**
+         * iterate through event attendees, for each attendee, find that attendee in the users
+         * for the user's tickets, find event name and then change that
+         * for every ticket id in the tickets, update the info
+         */
+        List<TicketInfo> attendees = eventSelected.getAttendees();
+        long id = -1;
+        for (TicketInfo ticket : attendees) {
+            String email = ticket.getEmail();
+            id = ticket.getTicketId();
+            for (UserDto user : USERS) {
+                if (user.getEmail().equals(email)) {
+                    for (TicketDto t : user.getTickets()) {
+                        if (t.getTicketId() == id) {
+                            t.setEventName(eventName);
+                        }
+                    }
+                }
+            }
+        }
+        for (TicketDto t : TICKETS) {
+            if (t.getTicketId() == id) {
+                t.setEventName(eventName);
+            }
+        }
+
+
+
     }
 }

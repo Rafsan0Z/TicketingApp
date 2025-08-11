@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import data.DataStore;
 import data.dto.EventDto;
 import data.dto.ManagerDto;
+import data.dto.VenueDto;
 
 public class ManagerInfoPanel extends JPanel {
 
@@ -152,11 +153,12 @@ public class ManagerInfoPanel extends JPanel {
         add(editBtn);
         
         EventDto[] events = DataStore.getEvents();
+        VenueDto[] venues = DataStore.getVenues();
         JScrollPane eventScrollPane = new JScrollPane();
         eventScrollPane.setBounds(169, 217, 539, 296);
         this.add(eventScrollPane);
 
-        this.eventTable(eventScrollPane, events, new Color(240, 255, 240));
+        this.eventTable(eventScrollPane, events, venues, new Color(240, 255, 240));
         
         JButton addBtn = new JButton("Add Event");
         addBtn.addActionListener(new ActionListener() {
@@ -172,10 +174,8 @@ public class ManagerInfoPanel extends JPanel {
 	/**
      * This method will format and popup a table with ticket information on a scrollable pane
      * @param pane
-     * @param
-     * @param bgColor
      */
-    public void eventTable(JScrollPane pane, EventDto[] events, Color bgColor) {
+    public void eventTable(JScrollPane pane, EventDto[] events, VenueDto[] venues, Color bgColor) {
     	System.out.println(events.length);
         JTable table = new JTable();
         pane.setViewportView(table);
@@ -191,45 +191,6 @@ public class ManagerInfoPanel extends JPanel {
         model.setColumnIdentifiers(columns);
         table.setModel(model);
 
-        // every time the user updates a cell, it triggers this, and finds the spot that changed and modifies it in the dto
-        model.addTableModelListener(new TableModelListener() {
-            // this way, you can enter in the simple date format for the chart: for ex, 2025-09-03 19:30
-            final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                if (e.getType() != TableModelEvent.UPDATE) return;
-                int viewRow = e.getFirstRow();
-                int col = e.getColumn();
-                if (viewRow < 0 || col < 0) return;
-
-                // convert because sorting is enabled
-                int modelRow = table.convertRowIndexToModel(viewRow);
-
-                // event is the ptr exact object we added to this table, so modifying this will also modify the actual object
-                EventDto event = events[modelRow];
-                // newValue is the new value that ended up in the table cell after the edit
-                Object newValue = model.getValueAt(modelRow, col);
-
-                try {
-                    switch (col) {
-                        case 0 -> event.setEventName(String.valueOf(newValue));
-                        case 1 -> { // Time
-                            if (newValue instanceof Date d) event.setDate(d);
-                            else event.setDate(DF.parse(String.valueOf(newValue)));
-                        }
-                        case 2 -> event.setVenue(String.valueOf(newValue));
-                        case 3 -> event.setCost(Double.parseDouble(String.valueOf(newValue)));
-                        // col 4 is Status (derived), ignore edits there
-                    }
-                    DataStore.saveEverything();
-                } catch (Exception ex) {
-                    // revert the edited cell to the DTO value if there's an issue (improper entry)
-                    Object[] row = getRowInfo(event);
-                    model.setValueAt(row[col], modelRow, col);
-                }
-            }
-        });
 
 
         table.setBackground(bgColor);
@@ -255,8 +216,8 @@ public class ManagerInfoPanel extends JPanel {
             });
 
 
-        for (int i = 0; i < events.length; i++) {
-            model.addRow(getRowInfo(events[i]));
+        for (EventDto event : events) {
+            model.addRow(getRowInfo(event));
         }
     }
 	
@@ -276,6 +237,9 @@ public class ManagerInfoPanel extends JPanel {
      */
     public static Object[] getRowInfo(EventDto toAdd) {
         Object[] obj = new Object[7];
+        if (toAdd == null) {
+            return obj;
+        }
         obj[0] = toAdd.getEventName();
         obj[1] = toAdd.getDate();
         obj[2] = toAdd.getVenue();
