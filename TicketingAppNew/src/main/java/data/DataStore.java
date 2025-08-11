@@ -248,13 +248,7 @@ public class DataStore {
     }
 
     public static TicketDto[] getTickets() {
-    	TicketDto[] tickets = new TicketDto[TICKETS.size()];
-    	int i = 0;
-    	for (TicketDto ticket : TICKETS) {
-    		tickets[i] = ticket;
-    	}
-    	return tickets;
-//    	return (TicketDto[]) (TICKETS.toArray());
+    	return TICKETS.toArray(TicketDto[]::new);
     }
     public static void setCurrentUser() { currentUser = null;}
 
@@ -263,12 +257,7 @@ public class DataStore {
     }
     
     public static VenueDto[] getVenues() {
-    	VenueDto[] venues = new VenueDto[VENUES.size()];
-    	int i = 0;
-    	for (VenueDto venue : VENUES) {
-    		venues[i] = venue;
-    	}
-    	return venues;
+    	return VENUES.toArray(VenueDto[]::new);
     }
 
     public static EventDto[] getAvailableEvents() {
