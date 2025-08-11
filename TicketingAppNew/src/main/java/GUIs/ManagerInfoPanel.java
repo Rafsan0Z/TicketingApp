@@ -32,7 +32,7 @@ public class ManagerInfoPanel extends JPanel {
 	private static JScrollPane eventScrollPane;
 	
 	private static EventDto eventSelected;
-	private static JButton deleteButton;
+	private static JButton editButton;
 
 	/**
 	 * Create the panel.
@@ -171,21 +171,21 @@ public class ManagerInfoPanel extends JPanel {
         addBtn.setBounds(468, 525, 117, 29);
         add(addBtn);
         
-        deleteButton = new JButton("Delete Event");
-        deleteButton.setEnabled(false);
-        deleteButton.setVisible(false);
-        deleteButton.addActionListener(new ActionListener() {
+        editButton = new JButton("Edit Event");
+        editButton.setEnabled(false);
+        editButton.setVisible(false);
+        editButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		if (eventSelected != null) {
-        			
-        			JOptionPane.showMessageDialog(null, "Success!");
+        			EditEventPanel.loadEventInfo(eventSelected);
+        			MainFrame.swap("editEventPanel");
         		} else {
         			System.out.println("Must select event first");
         		}
         	}
         });
-        deleteButton.setBounds(350, 525, 117, 29);
-        add(deleteButton);
+        editButton.setBounds(350, 525, 117, 29);
+        add(editButton);
         
 	}
 	
@@ -271,8 +271,8 @@ public class ManagerInfoPanel extends JPanel {
                     if (viewRow >= 0) {
                         int modelRow = table.convertRowIndexToModel(viewRow);
                         eventSelected = events[modelRow];
-                        deleteButton.setVisible(true);
-                        deleteButton.setEnabled(true);
+                        editButton.setVisible(true);
+                        editButton.setEnabled(true);
                     } else {
                         eventSelected = null;
                     }

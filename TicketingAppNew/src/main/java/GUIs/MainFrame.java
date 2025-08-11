@@ -14,6 +14,7 @@ public class MainFrame extends JFrame {
     EventViewerPanel eventviewerPanel;
     TransferTicketPanel transferPanel; // we can also call it EventPastPanel
     ManagerInfoPanel managerPanel;
+    EditEventPanel editEventPanel;
 
     TicketPurchasePanel purchasePanel;
     static AccountInfoPanel userinfoPanel;
@@ -58,6 +59,9 @@ public class MainFrame extends JFrame {
         
         managerPanel = new ManagerInfoPanel();
         content.add(managerPanel, "managerInfoPanel");
+        
+        editEventPanel = new EditEventPanel();
+        content.add(editEventPanel, "editEventPanel");
         
         
     }
