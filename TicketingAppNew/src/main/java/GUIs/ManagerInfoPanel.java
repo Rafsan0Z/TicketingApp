@@ -4,20 +4,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import data.DataStore;
@@ -196,6 +191,47 @@ public class ManagerInfoPanel extends JPanel {
         model.setColumnIdentifiers(columns);
         table.setModel(model);
 
+        // every time the user updates a cell, it triggers this, and finds the spot that changed and modifies it in the dto
+        model.addTableModelListener(new TableModelListener() {
+            // this way, you can enter in the simple date format for the chart: for ex, 2025-09-03 19:30
+            final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (e.getType() != TableModelEvent.UPDATE) return;
+                int viewRow = e.getFirstRow();
+                int col = e.getColumn();
+                if (viewRow < 0 || col < 0) return;
+
+                // convert because sorting is enabled
+                int modelRow = table.convertRowIndexToModel(viewRow);
+
+                // event is the ptr exact object we added to this table, so modifying this will also modify the actual object
+                EventDto event = events[modelRow];
+                // newValue is the new value that ended up in the table cell after the edit
+                Object newValue = model.getValueAt(modelRow, col);
+
+                try {
+                    switch (col) {
+                        case 0 -> event.setEventName(String.valueOf(newValue));
+                        case 1 -> { // Time
+                            if (newValue instanceof Date d) event.setDate(d);
+                            else event.setDate(DF.parse(String.valueOf(newValue)));
+                        }
+                        case 2 -> event.setVenue(String.valueOf(newValue));
+                        case 3 -> event.setCost(Double.parseDouble(String.valueOf(newValue)));
+                        // col 4 is Status (derived), ignore edits there
+                    }
+                    DataStore.saveEverything();
+                } catch (Exception ex) {
+                    // revert the edited cell to the DTO value if there's an issue (improper entry)
+                    Object[] row = getRowInfo(event);
+                    model.setValueAt(row[col], modelRow, col);
+                }
+            }
+        });
+
+
         table.setBackground(bgColor);
         table.setForeground(Color.black);
         table.setGridColor(new Color(0, 0, 51));
@@ -208,10 +244,14 @@ public class ManagerInfoPanel extends JPanel {
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
-					// TODO Auto-generated method stub
-					int rowSelected = table.getSelectedRow();
-					eventSelected = getSelectedEvent(events, rowSelected);
-				}
+                    int viewRow = table.getSelectedRow();
+                    if (viewRow >= 0) {
+                        int modelRow = table.convertRowIndexToModel(viewRow);
+                        eventSelected = events[modelRow];
+                    } else {
+                        eventSelected = null;
+                    }
+                }
             });
 
 

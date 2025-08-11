@@ -19,9 +19,7 @@ public class EventViewerPanel extends JPanel{
 
     private static final long serialVersionUID = 1L;
     private JTable table;
-    
     private JLabel TopicLabel;
-    
     private JButton PurchaseButton;
     private JButton AccountButton;
     private EventDto eventSelected;
@@ -33,24 +31,15 @@ public class EventViewerPanel extends JPanel{
                 updateRoleVisibility();
             }
         });
-		
-		// TODO: Add actual Event data to this
-//		EventDto[] events = { new EventDto("Super Cool event", 100, 100, 30.1, "MSG", new Date()),
-//					new EventDto("mets vs. braves", 200, 200, 17.2, "City Field", new Date()),
-//	    			new EventDto("giants vs tampa bay", 100, 100, 11.9, "Metlife", new Date()),
-//	    			new EventDto("Chicago", 100, 100, 500.6, "MSG", new Date()),
-//	    			new EventDto("mets vs yankees", 100, 100, 99.99, "City Field", new Date()),
-//	    			new EventDto("Mumford and Sons", 300, 100, 19.8, "Metlife", new Date())};
-        EventDto[] events = DataStore.getAvailableEvents();
+
+		EventDto[] events = DataStore.getAvailableEvents();
 
 
-	
 		TopicLabel = new JLabel("View all Available Events");
 		TopicLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		TopicLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		
+
 		table = new JTable();
-//        table.setEnabled(false);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setSelectionBackground(new Color(143, 188, 143));
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -81,11 +70,11 @@ public class EventViewerPanel extends JPanel{
         table.setFont(new Font("Tahoma", Font.PLAIN, 10));
         table.setRowHeight(30);
         table.setAutoCreateRowSorter(true);
-		
+
 		for (int i = 0; i < events.length; i++) {
             model.addRow(getRowInfo(events[i]));
         }
-		
+
 		PurchaseButton = new JButton("Purchase Tickets");
         PurchaseButton.setVisible(r == DataStore.Role.USER);
         PurchaseButton.addActionListener((ActionEvent e) -> {
@@ -97,7 +86,7 @@ public class EventViewerPanel extends JPanel{
             }
         });
 		PurchaseButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
+
 		AccountButton = new JButton("Account Info");
         AccountButton.setVisible(r == DataStore.Role.USER || r == DataStore.Role.MANAGER);
 		AccountButton.addActionListener(new ActionListener() {
@@ -107,7 +96,7 @@ public class EventViewerPanel extends JPanel{
 		});
 
 		AccountButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
+
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -142,7 +131,7 @@ public class EventViewerPanel extends JPanel{
 		);
 		setLayout(groupLayout);
     }
-	
+
 	/**
      * This function will create an object with row information for the table
      * @param toAdd
@@ -156,7 +145,7 @@ public class EventViewerPanel extends JPanel{
         obj[3] = toAdd.getCost();
         return obj;
     }
-    
+
     public EventDto getSelectedEvent(EventDto[] events, int rowSelected) {
     	if (rowSelected != -1) {
     		return events[rowSelected];

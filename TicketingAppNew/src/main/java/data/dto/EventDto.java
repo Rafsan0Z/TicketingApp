@@ -41,6 +41,8 @@ public class EventDto {
     // Setters
     public void setEventName(String eventName) {this.eventName = eventName;}
     public void setDate(Date date) {this.date = date;}
+    public void setVenue(String venue) {this.venue = venue;}
+    public void setCost(double cost) {this.cost = cost;}
     public void setNumTicketsRemaining(int numTicketsRemaining) {this.numTicketsRemaining = numTicketsRemaining;}
     public void setNumTickets(int numTickets) {this.numTickets = numTickets;}
 
