@@ -258,8 +258,7 @@ public class DataStore {
 //    	return (TicketDto[]) (TICKETS.toArray());
     }
     public static void setCurrentUser() { currentUser = null;}
-    public static void logoutCurrentManager() {currentManager = null;}
-    
+
     public static EventDto[] getEvents() {
     	EventDto[] events = new EventDto[EVENTS.size()];
     	int i = 0;

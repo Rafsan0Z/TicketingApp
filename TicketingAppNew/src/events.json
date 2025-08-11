@@ -1,6 +1,6 @@
 [ {
   "soldOut" : false,
-  "eventName" : "NYU Graduation",
+  "eventName" : "graduation",
   "numTickets" : 50,
   "numTicketsRemaining" : 23,
   "cost" : 5.0,

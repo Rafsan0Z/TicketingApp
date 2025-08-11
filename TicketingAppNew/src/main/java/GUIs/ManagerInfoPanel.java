@@ -117,7 +117,7 @@ public class ManagerInfoPanel extends JPanel {
         logoutBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	MainFrame.swap("login");
-        		DataStore.logoutCurrentManager();
+        		DataStore.logoutCurrentUser();
             }
         });
         logoutBtn.setBounds(591, 525, 117, 29);
