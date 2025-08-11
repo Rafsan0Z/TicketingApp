@@ -207,7 +207,6 @@ public class ManagerInfoPanel extends JPanel {
         Object[] columns = {"Event", "Time", "Venue"
                 , "Cost", "Status"};
         model = new DefaultTableModel(){
-            private static final long serialVersionUID = 1L;
 
 			@Override public boolean isCellEditable(int row, int col) {
                 // e.g., allow edits for name, time, venue, cost; not for status (col 4)
@@ -217,46 +216,6 @@ public class ManagerInfoPanel extends JPanel {
 
         model.setColumnIdentifiers(columns);
         table.setModel(model);
-
-        // every time the user updates a cell, it triggers this, and finds the spot that changed and modifies it in the dto
-        model.addTableModelListener(new TableModelListener() {
-            // this way, you can enter in the simple date format for the chart: for ex, 2025-09-03 19:30
-            final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                if (e.getType() != TableModelEvent.UPDATE) return;
-                int viewRow = e.getFirstRow();
-                int col = e.getColumn();
-                if (viewRow < 0 || col < 0) return;
-
-                // convert because sorting is enabled
-                int modelRow = table.convertRowIndexToModel(viewRow);
-
-                // event is the ptr exact object we added to this table, so modifying this will also modify the actual object
-                EventDto event = events[modelRow];
-                // newValue is the new value that ended up in the table cell after the edit
-                Object newValue = model.getValueAt(modelRow, col);
-
-                try {
-                    switch (col) {
-                        case 0 -> event.setEventName(String.valueOf(newValue));
-                        case 1 -> { // Time
-                            if (newValue instanceof Date d) event.setDate(d);
-                            else event.setDate(DF.parse(String.valueOf(newValue)));
-                        }
-                        case 2 -> event.setVenue(String.valueOf(newValue));
-                        case 3 -> event.setCost(Double.parseDouble(String.valueOf(newValue)));
-                        // col 4 is Status (derived), ignore edits there
-                    }
-                    DataStore.saveEverything();
-                } catch (Exception ex) {
-                    // revert the edited cell to the DTO value if there's an issue (improper entry)
-                    Object[] row = getRowInfo(event);
-                    model.setValueAt(row[col], modelRow, col);
-                }
-            }
-        });
 
 
         table.setBackground(bgColor);

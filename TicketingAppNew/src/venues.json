@@ -1,35 +1,49 @@
-[ {
-  "location" : "MSG",
-  "capacity" : 500,
-  "scheduledEvents" : [ {
-    "soldOut" : false,
-    "eventName" : "graduation",
-    "numTickets" : 50,
-    "numTicketsRemaining" : 49,
-    "cost" : 5.0,
-    "venue" : "MSG",
-    "date" : 1735725600000,
-    "attendees" : [ {
-      "email" : "d@user.com",
-      "ticketId" : 1754945627469255
-    }, {
-      "email" : "d@user.com",
-      "ticketId" : 1754945627493479
-    }, {
-      "email" : "d@user.com",
-      "ticketId" : 1754945627494248
-    }, {
-      "email" : "d@user.com",
-      "ticketId" : 1754945662071370
-    } ]
-  }, {
-    "soldOut" : false,
-    "eventName" : "testing",
-    "numTickets" : 50,
-    "numTicketsRemaining" : 23,
-    "cost" : 5.0,
-    "venue" : "MSG",
-    "date" : 1756942200000,
-    "attendees" : [ ]
-  } ]
-} ]
+[
+  {
+    "soldOut": false,
+    "eventName": "graduation",
+    "numTickets": 50,
+    "numTicketsRemaining": 19,
+    "cost": 5.0,
+    "venue": "MSG",
+    "date": 1756942200000,
+    "attendees": [
+      {
+        "email": "d@user.com",
+        "ticketId": 1754945627469255
+      },
+      {
+        "email": "d@user.com",
+        "ticketId": 1754945627493479
+      },
+      {
+        "email": "d@user.com",
+        "ticketId": 1754945627494248
+      },
+      {
+        "email": "d@user.com",
+        "ticketId": 1754945662071370
+      }
+    ]
+  },
+  {
+    "soldOut": false,
+    "eventName": "testing",
+    "numTickets": 50,
+    "numTicketsRemaining": 23,
+    "cost": 5.0,
+    "venue": "MSG",
+    "date": 1756942200000,
+    "attendees": []
+  },
+  {
+    "soldOut": false,
+    "eventName": "123",
+    "numTickets": 50,
+    "numTicketsRemaining": 23,
+    "cost": 5.0,
+    "venue": "MSG",
+    "date": 1756942200000,
+    "attendees": []
+  }
+]
