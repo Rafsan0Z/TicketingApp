@@ -20,9 +20,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.SpinnerDateModel;
 import java.util.Date;
 import java.awt.event.ActionEvent;
-import com.toedter.calendar.JDateChooser;
 
 public class AddEventPanel extends JPanel {
 
@@ -106,18 +108,18 @@ public class AddEventPanel extends JPanel {
 			}
 		});
 		CancelButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.getDateEditor().addPropertyChangeListener(
-			    new PropertyChangeListener() {
-			        @Override
-			        public void propertyChange(PropertyChangeEvent e) {
-			            if ("date".equals(e.getPropertyName())) {
-			                System.out.println(dateChooser.getDate().toString());
-			                eventDate = dateChooser.getDate();
-			            }
-			        }
-			    });
+
+        JSpinner dateChooser = new JSpinner(new SpinnerDateModel(new Date(), null, null, java.util.Calendar.MINUTE));
+        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateChooser, "yyyy-MM-dd HH:mm");
+        eventDate = (Date) dateChooser.getValue();
+        dateChooser.setEditor(dateEditor);
+        dateChooser.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                eventDate = (Date) dateChooser.getValue();
+                System.out.println(eventDate.toString());
+            }
+        });
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(

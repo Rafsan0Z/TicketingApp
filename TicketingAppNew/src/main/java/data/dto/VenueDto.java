@@ -1,5 +1,6 @@
 package data.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -32,6 +33,8 @@ public class VenueDto {
     public int getCapacity() {return capacity;}
 
     public List<EventDto> getScheduledEvents() {return scheduledEvents;}
+
+    @JsonIgnore
     public EventDto[] getAvailableEvents() {
     	EventDto[] events = new EventDto[scheduledEvents.size()];
     	int i = 0;
