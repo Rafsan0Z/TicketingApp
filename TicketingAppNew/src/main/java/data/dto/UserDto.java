@@ -1,10 +1,12 @@
 package data.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import data.DataStore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // THIS IS BASICALLY THE REGISTERED USER
@@ -85,31 +87,31 @@ public class UserDto {
     	}
     	return total;
     }
-    
+
+    @JsonIgnore
     public TicketDto[] getPassedTickets() {
-    	TicketDto[] passedTickets = new TicketDto[tickets.size()];
-    	int i = 0;
-    	for (TicketDto ticket : tickets) {
-    		if (ticket.findEvent().pastTicket()) {
-    			passedTickets[i] = ticket;
-    			i++;
-    		}
-    	}
-    	return passedTickets;
+        if (tickets == null) return new TicketDto[0];
+        List<TicketDto> out = new ArrayList<>();
+        for (TicketDto t : tickets) {
+            if (t.findEvent().pastTicket()) {
+                out.add(t);
+            }
+        }
+        return out.toArray(new TicketDto[0]);
     }
-    
+
+    @JsonIgnore
     public TicketDto[] getUpcomingTickets() {
-    	TicketDto[] upcomingTickets = new TicketDto[tickets.size()];
-    	int i = 0;
-    	for (TicketDto ticket : tickets) {
-    		if (!ticket.findEvent().pastTicket()) {
-    			upcomingTickets[i] = ticket;
-    			i++;
-    		}
-    	}
-    	return upcomingTickets;
+        if (tickets == null) return new TicketDto[0];
+        List<TicketDto> out = new ArrayList<>();
+        for (TicketDto t : tickets) {
+            if (!t.findEvent().pastTicket()) {
+                out.add(t);
+            }
+        }
+        return out.toArray(new TicketDto[0]);
     }
-    
+
     public void updateUser(String name, String phone, String email, String password) {
     	setName(name);
         setPhone(phone);

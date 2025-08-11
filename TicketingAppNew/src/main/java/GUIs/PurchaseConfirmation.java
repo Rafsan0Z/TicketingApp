@@ -1,26 +1,21 @@
 package GUIs;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPopupMenu;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
+import data.DataStore;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class PurchaseConfirmation extends JFrame {
-
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	
+	private JTextField childField;
+	private JTextField adultField;
+	private JTextField seniorField;
+
+    private String eventName;
 	/**
 	 * Create the panel.
 	 */
-	public PurchaseConfirmation() {
+	public PurchaseConfirmation(String eventName) {
 		getContentPane().setLayout(null);
 		setBounds(50, 50, 310, 290);
 		setLocationRelativeTo(null);
@@ -48,35 +43,49 @@ public class PurchaseConfirmation extends JFrame {
 		getContentPane().add(descriptionLabel);
 		
 		JButton confirmBtn = new JButton("Purchase");
-		confirmBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+        confirmBtn.addActionListener((ActionEvent e) -> {
+            try {
+                int numChild = childField.getText().isEmpty() ? 0 : Integer.parseInt(childField.getText());
+                int numAdult = adultField.getText().isEmpty() ? 0 : Integer.parseInt(adultField.getText());
+                int numSenior = seniorField.getText().isEmpty() ? 0 : Integer.parseInt(seniorField.getText());
+                for (int i = 0; i < numChild; i++) {
+                    DataStore.buyTicket(eventName, "Child");
+                }
+                for (int i = 0; i < numAdult; i++) {
+                    DataStore.buyTicket(eventName, "Adult");
+                }
+                for (int i = 0; i < numSenior; i++) {
+                    DataStore.buyTicket(eventName, "Senior");
+                }
+                dispose();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Please enter valid integers.");
+            }
+        });
 		confirmBtn.setBounds(169, 206, 117, 29);
 		getContentPane().add(confirmBtn);
 		
 		JButton cancelBtn = new JButton("Cancel");
-		cancelBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+        cancelBtn.addActionListener((ActionEvent e) -> {
+            dispose();
+        });
 		cancelBtn.setBounds(26, 206, 117, 29);
 		getContentPane().add(cancelBtn);
 		
-		textField = new JTextField();
-		textField.setBounds(117, 80, 130, 26);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		childField = new JTextField();
+		childField.setBounds(117, 80, 130, 26);
+		getContentPane().add(childField);
+		childField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(117, 122, 130, 26);
-		getContentPane().add(textField_1);
+		adultField = new JTextField();
+		adultField.setColumns(10);
+		adultField.setBounds(117, 122, 130, 26);
+		getContentPane().add(adultField);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(117, 164, 130, 26);
-		getContentPane().add(textField_2);
+		seniorField = new JTextField();
+		seniorField.setColumns(10);
+		seniorField.setBounds(117, 164, 130, 26);
+		getContentPane().add(seniorField);
 
 	}
 }

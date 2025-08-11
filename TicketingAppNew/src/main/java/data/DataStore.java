@@ -34,8 +34,11 @@ public class DataStore {
     private static UserDto currentUser;
     private static ManagerDto currentManager;
 
-    // this bool tracks if the current person signed in is a user or a manager
-    private static boolean isCurrentUser;
+    public enum Role { NONE, USER, MANAGER }
+
+    private static Role currentRole = Role.NONE;
+    public static Role getCurrentRole() { return currentRole; }
+    public static void setCurrentRole(Role role) { currentRole = role; }
 
     static {
         try {
@@ -115,7 +118,7 @@ public class DataStore {
                 .filter(u -> u.checkPassword(password) && u.getEmail().equals(email)).findFirst().orElse(null);
 
         if (found != null) {
-            isCurrentUser = true;
+            setCurrentRole(Role.USER);
             currentUser = found;
         }
 
@@ -127,7 +130,7 @@ public class DataStore {
                 .filter(u -> u.checkPassword(password) && u.getEmail().equals(email)).findFirst().orElse(null);
 
         if (found != null) {
-            isCurrentUser = false;
+            setCurrentRole(Role.MANAGER);
             currentManager = found;
         }
 
@@ -171,8 +174,12 @@ public class DataStore {
 
     public static UserDto getCurrentUser() {return currentUser;}
     public static ManagerDto getCurrentManager() {return currentManager;}
-    public static boolean isCurrentUser() {return isCurrentUser;}
-    public static void logoutCurrentUser() { currentUser = null;}
+    public static void logoutCurrentUser() {
+        saveEverything();
+        currentUser = null;
+        currentManager = null;
+        setCurrentRole(Role.NONE);
+    }
 
 
     // create an event, return true if successful, false if not
@@ -194,7 +201,7 @@ public class DataStore {
     }
     
     // will try to buy ticket, return true if successful, false if not
-    public static boolean buyTicket(String eventName, String ageType) {
+    public static void buyTicket(String eventName, String ageType) {
         EventDto currentEvent = null;
         for (EventDto event : EVENTS) {
             if (eventName.equals(event.getEventName())) {
@@ -202,7 +209,7 @@ public class DataStore {
             }
         }
         if (currentEvent != null && !currentEvent.isSoldOut()) {
-            var cost = currentEvent.getCost() * discountAmount(ageType);
+            double cost = Math.round(currentEvent.getCost() * discountAmount(ageType) * 100.0) / 100.0;
             TicketDto newTicket = new TicketDto(eventName, cost, ageType, true, currentUser.getEmail());
 
             TicketInfo newTicketInfo = new TicketInfo(currentUser.getEmail(), newTicket.getTicketId()); // for the event.getAttendees()
@@ -213,9 +220,6 @@ public class DataStore {
             TICKETS.add(newTicket);
 
             saveEverything();
-            return true;
-        } else {
-            return false;
         }
     }
 

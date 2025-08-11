@@ -5,13 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.ListSelectionEvent;
@@ -31,8 +25,9 @@ public class EventViewerPanel extends JPanel{
     private JButton PurchaseButton;
     private JButton AccountButton;
     private EventDto eventSelected;
+    DataStore.Role r = DataStore.getCurrentRole();
 
-	public EventViewerPanel(){
+    public EventViewerPanel(){
 		
 		
 		// TODO: Add actual Event data to this
@@ -51,7 +46,8 @@ public class EventViewerPanel extends JPanel{
 		TopicLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		
 		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//        table.setEnabled(false);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setSelectionBackground(new Color(143, 188, 143));
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
@@ -82,20 +78,25 @@ public class EventViewerPanel extends JPanel{
         }
 		
 		PurchaseButton = new JButton("Purchase Tickets");
-		PurchaseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PurchaseConfirmation pc = new PurchaseConfirmation();
-				pc.setVisible(true);
-			}
-		});
+        PurchaseButton.setVisible(true);
+        PurchaseButton.addActionListener((ActionEvent e) -> {
+            if (eventSelected != null) {
+                PurchaseConfirmation pc = new PurchaseConfirmation(eventSelected.getEventName());
+                pc.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(EventViewerPanel.this, "Please select an Event");
+            }
+        });
 		PurchaseButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		AccountButton = new JButton("Account Info");
+        AccountButton.setVisible(r == DataStore.Role.USER || r == DataStore.Role.MANAGER);
 		AccountButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainFrame.swap("userinfo");
 			}
 		});
+
 		AccountButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		GroupLayout groupLayout = new GroupLayout(this);
