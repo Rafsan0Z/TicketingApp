@@ -65,7 +65,12 @@ public class EventViewerPanel extends JPanel{
 
         Object[] columns = {"Event", "Time", "Venue"
                 , "Cost"};
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // completely read only
+            };
+        };
 
         model.setColumnIdentifiers(columns);
         table.setModel(model);

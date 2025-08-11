@@ -177,7 +177,7 @@ public class ManagerInfoPanel extends JPanel {
 	/**
      * This method will format and popup a table with ticket information on a scrollable pane
      * @param pane
-     * @param tickets
+     * @param
      * @param bgColor
      */
     public void eventTable(JScrollPane pane, EventDto[] events, Color bgColor) {
@@ -186,7 +186,12 @@ public class ManagerInfoPanel extends JPanel {
         pane.setViewportView(table);
         Object[] columns = {"Event", "Time", "Venue"
                 , "Cost", "Status"};
-        model = new DefaultTableModel();
+        model = new DefaultTableModel(){
+            @Override public boolean isCellEditable(int row, int col) {
+                // e.g., allow edits for name, time, venue, cost; not for status (col 4)
+                return col >= 0 && col <= 3;
+            }
+        };
 
         model.setColumnIdentifiers(columns);
         table.setModel(model);

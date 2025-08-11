@@ -207,7 +207,7 @@ public class AccountInfoPanel extends JPanel{
         pane.setViewportView(table);
         Object[] columns = {"Event", "Time", "Venue"
                 , "Cost"};
-        model = new DefaultTableModel();
+        model = new DefaultTableModel(){};
 
         model.setColumnIdentifiers(columns);
         table.setModel(model);
