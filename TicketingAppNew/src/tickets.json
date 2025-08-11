@@ -1,186 +1,26 @@
 [ {
-  "ticketId" : 1,
-  "eventName" : "Event1",
-  "price" : 50.0,
-  "purchased" : true,
-  "owner" : "so@user.com"
-}, {
-  "ticketId" : 1754873819627385,
+  "ticketId" : 1754945627469255,
   "eventName" : "graduation",
-  "price" : 4.4999998807907104,
+  "price" : 4.5,
   "ageType" : "Child",
   "purchased" : true,
   "owner" : "d@user.com"
 }, {
-  "ticketId" : 1754873819655635,
+  "ticketId" : 1754945627493479,
   "eventName" : "graduation",
-  "price" : 4.4999998807907104,
+  "price" : 4.5,
   "ageType" : "Child",
   "purchased" : true,
   "owner" : "d@user.com"
 }, {
-  "ticketId" : 1754873819656751,
+  "ticketId" : 1754945627494248,
   "eventName" : "graduation",
   "price" : 5.0,
   "ageType" : "Adult",
   "purchased" : true,
   "owner" : "d@user.com"
 }, {
-  "ticketId" : 1754873819656049,
-  "eventName" : "graduation",
-  "price" : 5.0,
-  "ageType" : "Adult",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754874976720672,
-  "eventName" : "graduation",
-  "price" : 4.5,
-  "ageType" : "Child",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012232146,
-  "eventName" : "graduation",
-  "price" : 4.5,
-  "ageType" : "Child",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012256499,
-  "eventName" : "graduation",
-  "price" : 4.5,
-  "ageType" : "Child",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012257322,
-  "eventName" : "graduation",
-  "price" : 4.5,
-  "ageType" : "Child",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012258658,
-  "eventName" : "graduation",
-  "price" : 4.5,
-  "ageType" : "Child",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012259666,
-  "eventName" : "graduation",
-  "price" : 4.5,
-  "ageType" : "Child",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012260978,
-  "eventName" : "graduation",
-  "price" : 4.5,
-  "ageType" : "Child",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012260836,
-  "eventName" : "graduation",
-  "price" : 4.5,
-  "ageType" : "Child",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012261795,
-  "eventName" : "graduation",
-  "price" : 4.5,
-  "ageType" : "Child",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012262560,
-  "eventName" : "graduation",
-  "price" : 4.5,
-  "ageType" : "Child",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012263986,
-  "eventName" : "graduation",
-  "price" : 4.5,
-  "ageType" : "Child",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012264143,
-  "eventName" : "graduation",
-  "price" : 5.0,
-  "ageType" : "Adult",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012264564,
-  "eventName" : "graduation",
-  "price" : 5.0,
-  "ageType" : "Adult",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012265115,
-  "eventName" : "graduation",
-  "price" : 5.0,
-  "ageType" : "Adult",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012266892,
-  "eventName" : "graduation",
-  "price" : 5.0,
-  "ageType" : "Adult",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012266249,
-  "eventName" : "graduation",
-  "price" : 5.0,
-  "ageType" : "Adult",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012267239,
-  "eventName" : "graduation",
-  "price" : 5.0,
-  "ageType" : "Adult",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012267862,
-  "eventName" : "graduation",
-  "price" : 5.0,
-  "ageType" : "Adult",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012268772,
-  "eventName" : "graduation",
-  "price" : 4.25,
-  "ageType" : "Senior",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012269301,
-  "eventName" : "graduation",
-  "price" : 4.25,
-  "ageType" : "Senior",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012269213,
-  "eventName" : "graduation",
-  "price" : 4.25,
-  "ageType" : "Senior",
-  "purchased" : true,
-  "owner" : "d@user.com"
-}, {
-  "ticketId" : 1754876012270943,
+  "ticketId" : 1754945662071370,
   "eventName" : "graduation",
   "price" : 4.25,
   "ageType" : "Senior",

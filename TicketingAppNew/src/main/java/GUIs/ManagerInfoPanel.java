@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import data.DataStore;
 import data.dto.EventDto;
 import data.dto.ManagerDto;
+import data.dto.VenueDto;
 
 public class ManagerInfoPanel extends JPanel {
 
@@ -30,7 +31,7 @@ public class ManagerInfoPanel extends JPanel {
 	private static EventDto[] events;
 	private static ManagerDto manager;
 	private static JScrollPane eventScrollPane;
-	
+
 	private static EventDto eventSelected;
 	private static JButton editButton;
 
@@ -156,6 +157,9 @@ public class ManagerInfoPanel extends JPanel {
         
 //        EventDto[] events = DataStore.getEvents();
         eventScrollPane = new JScrollPane();
+        EventDto[] events = DataStore.getEvents();
+        VenueDto[] venues = DataStore.getVenues();
+        JScrollPane eventScrollPane = new JScrollPane();
         eventScrollPane.setBounds(169, 217, 539, 296);
         this.add(eventScrollPane);
 
@@ -186,7 +190,7 @@ public class ManagerInfoPanel extends JPanel {
         });
         editButton.setBounds(350, 525, 117, 29);
         add(editButton);
-        
+
 	}
 	
 	/**
@@ -213,7 +217,7 @@ public class ManagerInfoPanel extends JPanel {
 
         model.setColumnIdentifiers(columns);
         table.setModel(model);
-        
+
         // every time the user updates a cell, it triggers this, and finds the spot that changed and modifies it in the dto
         model.addTableModelListener(new TableModelListener() {
             // this way, you can enter in the simple date format for the chart: for ex, 2025-09-03 19:30
@@ -280,8 +284,8 @@ public class ManagerInfoPanel extends JPanel {
             });
 
 
-        for (int i = 0; i < events.length; i++) {
-            model.addRow(getRowInfo(events[i]));
+        for (EventDto event : events) {
+            model.addRow(getRowInfo(event));
         }
     }
 	
@@ -323,7 +327,7 @@ public class ManagerInfoPanel extends JPanel {
     	}
     	return null;
     }
-    
+
     public static void refreshTable() {
     	events = DataStore.getEvents();
     	eventTable(eventScrollPane, new Color(240, 255, 240));
