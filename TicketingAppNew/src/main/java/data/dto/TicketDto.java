@@ -82,4 +82,8 @@ public class TicketDto {
     public EventDto findEvent() {
     	return DataStore.findEventByName(eventName);
     }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
 }
