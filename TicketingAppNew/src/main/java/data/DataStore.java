@@ -257,12 +257,30 @@ public class DataStore {
     	return tickets;
 //    	return (TicketDto[]) (TICKETS.toArray());
     }
+    public static void setCurrentUser() { currentUser = null;}
+    public static void logoutCurrentManager() {currentManager = null;}
+    
+    public static EventDto[] getEvents() {
+    	EventDto[] events = new EventDto[EVENTS.size()];
+    	int i = 0;
+    	for (EventDto event : EVENTS) {
+    		events[i] = event;
+    	}
+    	return events;
+    }
+    
+    public static VenueDto[] getVenues() {
+    	VenueDto[] venues = new VenueDto[VENUES.size()];
+    	int i = 0;
+    	for (VenueDto venue : VENUES) {
+    		venues[i] = venue;
+    	}
+    	return venues;
+    }
 
     public static EventDto[] getAvailableEvents() {
         return EVENTS.stream()
                 .filter(e -> !e.isSoldOut())
                 .toArray(EventDto[]::new);
     }
-
-
 }

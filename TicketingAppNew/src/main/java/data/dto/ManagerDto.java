@@ -74,4 +74,11 @@ public class ManagerDto {
     public void setEvents(List<String> events) {
         this.events = events;
     }
+    
+    public void updateManager(String name, String phone, String email, String password) {
+    	this.name = name;
+    	this.phone = phone;
+    	this.email = email;
+    	this.password = password;
+    }
 }
