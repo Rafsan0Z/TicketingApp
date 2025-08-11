@@ -16,6 +16,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class DataStore {
     private static final ObjectMapper MAPPER = new ObjectMapper()
             .enable(SerializationFeature.INDENT_OUTPUT)
@@ -43,39 +45,28 @@ public class DataStore {
     static {
         try {
             System.out.println("Reading users...");
-
             String jsonString = new String(Files.readAllBytes(Path.of("src/users.json")));
-
             USERS.addAll(MAPPER.readValue(jsonString, new TypeReference<List<UserDto>>() {
             }));
-
             System.out.println("Reading users...done amount=" + USERS.size());
 
             System.out.println("Reading managers...");
-
             String managerJSON = new String(Files.readAllBytes(Path.of("src/managers.json")));
-
             MANAGERS.addAll(MAPPER.readValue(managerJSON, new TypeReference<List<ManagerDto>>() {
             }));
-
             System.out.println("Reading managers...done amount=" + MANAGERS.size());
 
             System.out.println("Reading Events...");
-
             String eventsJSON = new String(Files.readAllBytes(Path.of("src/events.json")));
-
             EVENTS.addAll(MAPPER.readValue(eventsJSON, new TypeReference<List<EventDto>>() {
             }));
-
             System.out.println("Reading events...done amount=" + EVENTS.size());
 
+            
             System.out.println("Reading Tickets...");
-
             String ticketsJSON = new String(Files.readAllBytes(Path.of("src/tickets.json")));
-
             TICKETS.addAll(MAPPER.readValue(ticketsJSON, new TypeReference<List<TicketDto>>() {
             }));
-
             System.out.println("Reading Tickets...done amount=" + TICKETS.size());
 
             System.out.println("Reading Venues...");
@@ -193,6 +184,14 @@ public class DataStore {
         }
         if (currentVenue == null || !currentVenue.checkDateAvailability(date)) return false;
 
+        if (numTickets > currentVenue.getCapacity()) {
+        	numTickets = currentVenue.getCapacity();
+        	numTicketsRemaining = currentVenue.getCapacity();
+        	JOptionPane.showMessageDialog(null, 
+        			"Warning: Tickets excedes venue capacity. Number of tickets available has been set to "
+        			+ numTickets);
+        }
+        
         EventDto newEvent = new EventDto(eventName, numTickets, numTicketsRemaining, cost, venue, date);
         currentVenue.scheduleEvent(newEvent);
         EVENTS.add(newEvent);
@@ -249,37 +248,21 @@ public class DataStore {
     }
 
     public static TicketDto[] getTickets() {
-    	TicketDto[] tickets = new TicketDto[TICKETS.size()];
-    	int i = 0;
-    	for (TicketDto ticket : TICKETS) {
-    		tickets[i] = ticket;
-    	}
-    	return tickets;
-//    	return (TicketDto[]) (TICKETS.toArray());
+    	return TICKETS.toArray(TicketDto[]::new);
     }
     public static void setCurrentUser() { currentUser = null;}
 
     public static EventDto[] getEvents() {
-    	EventDto[] events = new EventDto[EVENTS.size()];
-    	int i = 0;
-    	for (EventDto event : EVENTS) {
-    		events[i] = event;
-    	}
-    	return events;
+    	return EVENTS.toArray(EventDto[]::new);
     }
     
     public static VenueDto[] getVenues() {
-    	VenueDto[] venues = new VenueDto[VENUES.size()];
-    	int i = 0;
-    	for (VenueDto venue : VENUES) {
-    		venues[i] = venue;
-    	}
-    	return venues;
+    	return VENUES.toArray(VenueDto[]::new);
     }
 
     public static EventDto[] getAvailableEvents() {
         return EVENTS.stream()
                 .filter(e -> !e.isSoldOut())
                 .toArray(EventDto[]::new);
-    }
+	}
 }

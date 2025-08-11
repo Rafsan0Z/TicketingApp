@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -11,7 +13,6 @@ import data.DataStore;
 import data.dto.VenueDto;
 
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
@@ -27,11 +28,11 @@ import java.awt.event.ActionEvent;
 public class AddEventPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField EventName;
+	private JTextField eventName;
 	
 	private JLabel titleLabel;
 	private JLabel venueChoiceLabel;
-	private JLabel EventNameLabel;
+	private JLabel eventNameLabel;
 	private JLabel NumTicketsLabel;
 	private JLabel DateChoiceLabel;
 	
@@ -42,6 +43,8 @@ public class AddEventPanel extends JPanel {
 	private JButton AddButton;
 	private JButton CancelButton;
 	private static Date eventDate;
+	private JLabel lblPriceOfEvent;
+	private JTextField priceField;
 	
 	/**
 	 * Create the panel.
@@ -73,11 +76,11 @@ public class AddEventPanel extends JPanel {
         });
 		
 		
-		EventNameLabel = new JLabel("Name your Event");
-		EventNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		eventNameLabel = new JLabel("Name your Event");
+		eventNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		EventName = new JTextField();
-		EventName.setColumns(10);
+		eventName = new JTextField();
+		eventName.setColumns(10);
 		
 		NumTicketsLabel = new JLabel("Choose number of tickets");
 		NumTicketsLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -86,15 +89,24 @@ public class AddEventPanel extends JPanel {
 		numTicketsSpinner.setModel(new SpinnerNumberModel(0, 0, 500, 1));
 		numTicketsSpinner.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JFormattedTextField textField = ((JSpinner.DefaultEditor) numTicketsSpinner.getEditor()).getTextField();
-		textField.setFocusable(true);
-		
 		DateChoiceLabel = new JLabel("Choose Date");
 		DateChoiceLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		AddButton = new JButton("Add Event");
 		AddButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				double price = Double.parseDouble(priceField.getText());
+				DataStore.createEvent(
+						eventName.getText(),
+						(int)numTicketsSpinner.getValue(),
+						(int)numTicketsSpinner.getValue(),
+						price,
+						(String)venueChoiceBox.getSelectedItem(),
+						eventDate
+						);
+				ManagerInfoPanel.refreshTable();
+				MainFrame.swap("managerInfoPanel");
+				JOptionPane.showMessageDialog(null, "Event added");
 			}
 		});
 		AddButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -119,37 +131,50 @@ public class AddEventPanel extends JPanel {
             }
         });
 		
+		lblPriceOfEvent = new JLabel("Price of event:");
+		lblPriceOfEvent.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		priceField = new JTextField();
+		priceField.setColumns(10);
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(70)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(EventNameLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(venueChoiceLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-						.addComponent(NumTicketsLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(DateChoiceLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(numTicketsSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(EventName, GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
-								.addComponent(venueChoiceBox, 0, 490, Short.MAX_VALUE))
-							.addGap(235))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(459, Short.MAX_VALUE)
-					.addComponent(titleLabel, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE)
-					.addGap(263))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(279)
+					.addGap(281)
 					.addComponent(AddButton)
-					.addGap(50)
+					.addGap(48)
 					.addComponent(CancelButton, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(429, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(70)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblPriceOfEvent, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(priceField, GroupLayout.PREFERRED_SIZE, 490, GroupLayout.PREFERRED_SIZE)
+							.addGap(235))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(eventNameLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(venueChoiceLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+								.addComponent(NumTicketsLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(DateChoiceLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(numTicketsSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(eventName, GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+										.addComponent(venueChoiceBox, 0, 490, Short.MAX_VALUE))
+									.addGap(235))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap())))))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(277)
+					.addComponent(titleLabel, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(445, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -162,8 +187,8 @@ public class AddEventPanel extends JPanel {
 						.addComponent(venueChoiceBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(EventNameLabel)
-						.addComponent(EventName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(eventNameLabel)
+						.addComponent(eventName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(NumTicketsLabel)
@@ -172,11 +197,15 @@ public class AddEventPanel extends JPanel {
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(DateChoiceLabel)
 						.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(34)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPriceOfEvent, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
+						.addComponent(priceField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(27)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(AddButton)
 						.addComponent(CancelButton, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(311, Short.MAX_VALUE))
+					.addContainerGap(274, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 
