@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
@@ -55,7 +54,9 @@ public class EventViewerPanel extends JPanel{
         Object[] columns = {"Event", "Time", "Venue"
                 , "Cost"};
         DefaultTableModel model = new DefaultTableModel(){
-            @Override
+            private static final long serialVersionUID = 1L;
+
+			@Override
             public boolean isCellEditable(int row, int column) {
                 return false; // completely read only
             };

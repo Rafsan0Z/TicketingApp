@@ -30,6 +30,7 @@ public class ManagerInfoPanel extends JPanel {
 	
 	private static ManagerDto manager;
 	private EventDto eventSelected;
+	private JButton deleteButton;
 
 	/**
 	 * Create the panel.
@@ -167,6 +168,22 @@ public class ManagerInfoPanel extends JPanel {
         addBtn.setBounds(468, 525, 117, 29);
         add(addBtn);
         
+        deleteButton = new JButton("Delete Event");
+        deleteButton.setEnabled(false);
+        deleteButton.setVisible(false);
+        deleteButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if (eventSelected != null) {
+        			
+        			JOptionPane.showMessageDialog(null, "Success!");
+        		} else {
+        			System.out.println("Must select event first");
+        		}
+        	}
+        });
+        deleteButton.setBounds(350, 525, 117, 29);
+        add(deleteButton);
+        
 	}
 	
 	/**
@@ -182,7 +199,9 @@ public class ManagerInfoPanel extends JPanel {
         Object[] columns = {"Event", "Time", "Venue"
                 , "Cost", "Status"};
         model = new DefaultTableModel(){
-            @Override public boolean isCellEditable(int row, int col) {
+            private static final long serialVersionUID = 1L;
+
+			@Override public boolean isCellEditable(int row, int col) {
                 // e.g., allow edits for name, time, venue, cost; not for status (col 4)
                 return col >= 0 && col <= 3;
             }
@@ -248,6 +267,8 @@ public class ManagerInfoPanel extends JPanel {
                     if (viewRow >= 0) {
                         int modelRow = table.convertRowIndexToModel(viewRow);
                         eventSelected = events[modelRow];
+                        deleteButton.setVisible(true);
+                        deleteButton.setEnabled(true);
                     } else {
                         eventSelected = null;
                     }

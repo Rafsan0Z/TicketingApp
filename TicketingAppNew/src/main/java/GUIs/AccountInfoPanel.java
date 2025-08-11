@@ -154,7 +154,7 @@ public class AccountInfoPanel extends JPanel{
         browseBtn.setBounds(169, 525, 117, 29);
         add(browseBtn);
 
-        JButton sellBtn = new JButton("Sell");
+        JButton sellBtn = new JButton("Transfer");
         sellBtn.addActionListener(new ActionListener() {
 
         	public void actionPerformed(ActionEvent e) {
@@ -207,7 +207,12 @@ public class AccountInfoPanel extends JPanel{
         pane.setViewportView(table);
         Object[] columns = {"Event", "Time", "Venue"
                 , "Cost"};
-        model = new DefaultTableModel(){};
+        model = new DefaultTableModel(){
+        	private static final long serialVersionUID = 1L;
+        	
+			@Override 
+			public boolean isCellEditable(int row, int col) {return false;}
+		};
 
         model.setColumnIdentifiers(columns);
         table.setModel(model);
@@ -223,7 +228,7 @@ public class AccountInfoPanel extends JPanel{
             table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             table.setSelectionBackground(new Color(143, 188, 143));
             table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
+            	
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					// TODO Auto-generated method stub
@@ -240,6 +245,10 @@ public class AccountInfoPanel extends JPanel{
             model.addRow(getRowInfo(tickets[i]));
         }
     }
+    
+    public boolean editCellAt(int row, int column, java.util.EventObject e) {
+        return false;
+     }
     
     public static void loadUser() {
     	user = DataStore.getCurrentUser();
