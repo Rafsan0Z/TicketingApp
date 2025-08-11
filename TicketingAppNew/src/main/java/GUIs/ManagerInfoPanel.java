@@ -237,9 +237,6 @@ public class ManagerInfoPanel extends JPanel {
      */
     public static Object[] getRowInfo(EventDto toAdd) {
         Object[] obj = new Object[7];
-        if (toAdd == null) {
-            return obj;
-        }
         obj[0] = toAdd.getEventName();
         obj[1] = toAdd.getDate();
         obj[2] = toAdd.getVenue();
