@@ -155,7 +155,6 @@ public class ManagerInfoPanel extends JPanel {
         editBtn.setBounds(611, 54, 117, 29);
         add(editBtn);
         
-//        EventDto[] events = DataStore.getEvents();
         eventScrollPane = new JScrollPane();
         EventDto[] events = DataStore.getEvents();
         VenueDto[] venues = DataStore.getVenues();
