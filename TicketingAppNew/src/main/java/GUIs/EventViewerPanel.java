@@ -28,7 +28,11 @@ public class EventViewerPanel extends JPanel{
     DataStore.Role r = DataStore.getCurrentRole();
 
     public EventViewerPanel(){
-		
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override public void componentShown(java.awt.event.ComponentEvent e) {
+                updateRoleVisibility();
+            }
+        });
 		
 		// TODO: Add actual Event data to this
 //		EventDto[] events = { new EventDto("Super Cool event", 100, 100, 30.1, "MSG", new Date()),
@@ -38,8 +42,8 @@ public class EventViewerPanel extends JPanel{
 //	    			new EventDto("mets vs yankees", 100, 100, 99.99, "City Field", new Date()),
 //	    			new EventDto("Mumford and Sons", 300, 100, 19.8, "Metlife", new Date())};
         EventDto[] events = DataStore.getAvailableEvents();
-		
-		
+
+
 	
 		TopicLabel = new JLabel("View all Available Events");
 		TopicLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -78,7 +82,7 @@ public class EventViewerPanel extends JPanel{
         }
 		
 		PurchaseButton = new JButton("Purchase Tickets");
-        PurchaseButton.setVisible(true);
+        PurchaseButton.setVisible(r == DataStore.Role.USER);
         PurchaseButton.addActionListener((ActionEvent e) -> {
             if (eventSelected != null) {
                 PurchaseConfirmation pc = new PurchaseConfirmation(eventSelected.getEventName());
@@ -154,5 +158,11 @@ public class EventViewerPanel extends JPanel{
     	}
     	return null;
     }
-
+    private void updateRoleVisibility() {
+        DataStore.Role r = DataStore.getCurrentRole();
+        PurchaseButton.setVisible(r == DataStore.Role.USER);
+        AccountButton.setVisible(r == DataStore.Role.USER || r == DataStore.Role.MANAGER);
+        revalidate();
+        repaint();
+    }
 }
