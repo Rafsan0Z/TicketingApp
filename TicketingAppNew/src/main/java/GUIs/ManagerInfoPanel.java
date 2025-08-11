@@ -27,10 +27,12 @@ public class ManagerInfoPanel extends JPanel {
 	private static JTextField emailField;
 	private static JPasswordField pwdPassword;
 	private static DefaultTableModel model;
-	
+	private static EventDto[] events;
 	private static ManagerDto manager;
-	private EventDto eventSelected;
-	private JButton deleteButton;
+	private static JScrollPane eventScrollPane;
+	
+	private static EventDto eventSelected;
+	private static JButton deleteButton;
 
 	/**
 	 * Create the panel.
@@ -152,12 +154,13 @@ public class ManagerInfoPanel extends JPanel {
         editBtn.setBounds(611, 54, 117, 29);
         add(editBtn);
         
-        EventDto[] events = DataStore.getEvents();
-        JScrollPane eventScrollPane = new JScrollPane();
+//        EventDto[] events = DataStore.getEvents();
+        eventScrollPane = new JScrollPane();
         eventScrollPane.setBounds(169, 217, 539, 296);
         this.add(eventScrollPane);
 
-        this.eventTable(eventScrollPane, events, new Color(240, 255, 240));
+        events = DataStore.getEvents();
+        eventTable(eventScrollPane, new Color(240, 255, 240));
         
         JButton addBtn = new JButton("Add Event");
         addBtn.addActionListener(new ActionListener() {
@@ -192,8 +195,9 @@ public class ManagerInfoPanel extends JPanel {
      * @param
      * @param bgColor
      */
-    public void eventTable(JScrollPane pane, EventDto[] events, Color bgColor) {
+    public static void eventTable(JScrollPane pane, Color bgColor) {
     	System.out.println(events.length);
+
         JTable table = new JTable();
         pane.setViewportView(table);
         Object[] columns = {"Event", "Time", "Venue"
@@ -209,7 +213,7 @@ public class ManagerInfoPanel extends JPanel {
 
         model.setColumnIdentifiers(columns);
         table.setModel(model);
-
+        
         // every time the user updates a cell, it triggers this, and finds the spot that changed and modifies it in the dto
         model.addTableModelListener(new TableModelListener() {
             // this way, you can enter in the simple date format for the chart: for ex, 2025-09-03 19:30
@@ -296,7 +300,11 @@ public class ManagerInfoPanel extends JPanel {
      * @return
      */
     public static Object[] getRowInfo(EventDto toAdd) {
-        Object[] obj = new Object[7];
+    	if (toAdd == null) {
+    		System.out.println("Error");
+    		return new Object[5];
+    	}
+        Object[] obj = new Object[5];
         obj[0] = toAdd.getEventName();
         obj[1] = toAdd.getDate();
         obj[2] = toAdd.getVenue();
@@ -314,6 +322,11 @@ public class ManagerInfoPanel extends JPanel {
     		return events[rowSelected];
     	}
     	return null;
+    }
+    
+    public static void refreshTable() {
+    	events = DataStore.getEvents();
+    	eventTable(eventScrollPane, new Color(240, 255, 240));
     }
 }
 
