@@ -155,16 +155,13 @@ public class AccountInfoPanel extends JPanel{
         add(browseBtn);
 
         JButton sellBtn = new JButton("Transfer");
-        sellBtn.addActionListener(new ActionListener() {
-
-        	public void actionPerformed(ActionEvent e) {
-        		if (ticketSelected != null) {
-        			TransferTicketPanel.loadTicketInfo(ticketSelected);
-        			MainFrame.swap("transfer");
-        		} else {
-        			System.out.println("Please select ticket to transfer or sell");
-        		}
-        	}
+        sellBtn.addActionListener(e -> {
+            if (ticketSelected != null) {
+                TransferTicketPanel.loadTicketInfo(ticketSelected);
+                MainFrame.swap("transfer");
+            } else {
+                System.out.println("Please select ticket to transfer or sell");
+            }
         });
         sellBtn.setBounds(373, 525, 117, 29);
         add(sellBtn);

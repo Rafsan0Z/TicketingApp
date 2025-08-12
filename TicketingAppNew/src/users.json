@@ -3,13 +3,27 @@
   "phone" : "6467689999",
   "email" : "s@user.com",
   "password" : "abc1234",
-  "tickets" : [ ]
+  "tickets" : [ {
+    "ticketId" : 1754975484075471,
+    "eventName" : "Rangers",
+    "price" : 30.5,
+    "ageType" : "Adult",
+    "purchased" : true,
+    "owner" : "s@user.com"
+  } ]
 }, {
   "name" : "mike",
   "phone" : "(+22) 222-333-4444",
   "email" : "m@user.com",
   "password" : "xyz987",
-  "tickets" : [ ]
+  "tickets" : [ {
+    "ticketId" : 1754975484050269,
+    "eventName" : "Rangers",
+    "price" : 27.45,
+    "ageType" : "Child",
+    "purchased" : true,
+    "owner" : "m@user.com"
+  } ]
 }, {
   "name" : "Derek",
   "phone" : "+1 (923) 424-424",

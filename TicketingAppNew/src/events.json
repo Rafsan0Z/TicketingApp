@@ -113,11 +113,17 @@
   "soldOut" : false,
   "eventName" : "Rangers",
   "numTickets" : 300,
-  "numTicketsRemaining" : 300,
+  "numTicketsRemaining" : 298,
   "cost" : 30.5,
   "venue" : "MSG",
   "date" : 1760212800000,
-  "attendees" : [ ]
+  "attendees" : [ {
+    "email" : "m@user.com",
+    "ticketId" : 1754975484050269
+  }, {
+    "email" : "s@user.com",
+    "ticketId" : 1754975484075471
+  } ]
 }, {
   "soldOut" : false,
   "eventName" : "Maneskin",

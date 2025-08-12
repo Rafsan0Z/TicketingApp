@@ -78,7 +78,11 @@ public class TicketDto {
         owner = null;
         purchased = false;
     }
-    
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
     public EventDto findEvent() {
     	return DataStore.findEventByName(eventName);
     }

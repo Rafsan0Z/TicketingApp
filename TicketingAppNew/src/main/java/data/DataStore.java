@@ -330,9 +330,67 @@ public class DataStore {
                 }
             }
         }
+    }
+
+    public static boolean checkValidTransfer(String name, String email) {
+        if (name == null || email == null) return false;
+        name  = name.trim();
+        email = email.trim().toLowerCase();
+        if (currentUser != null &&
+                email.equalsIgnoreCase(currentUser.getEmail())) return false;
+        for (UserDto user : USERS) {
+            if (user == null) continue;
+            String uName  = user.getName();
+            String uEmail = user.getEmail();
+            if (uName == null || uEmail == null) continue;
+            if (uEmail.trim().equalsIgnoreCase(email) &&
+                    uName.trim().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
+    public static void transferTicket(String eventName, long ticketId, String destEmail) {
+        // update in the event json
+        EventDto event = findEventByName(eventName);
+        if (event == null) return;
+        for (TicketInfo attendee : event.getAttendees()) {
+            if (attendee.getTicketId() == ticketId) {
+                attendee.setEmail(destEmail);
+                break;
+            }
+        }
+        // update in the venue json
+        for (VenueDto v : VENUES) {
+            if (v.getLocation().equals(event.getVenue())) {
+                for (EventDto t : v.getScheduledEvents()) {
+                    for (TicketInfo attendee : t.getAttendees()) {
+                        if (attendee.getTicketId() == ticketId) {
+                            attendee.setEmail(destEmail);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        // update in users json and tickets json
+        TicketDto curTicket = null;
+        for (TicketDto t : TICKETS) {
+            if (t.getTicketId() == ticketId) {
+                curTicket = t;
+            }
+        }
+        if (curTicket == null) return;
+        curTicket.setOwner(destEmail);
+        currentUser.getTickets().removeIf(t -> t.getTicketId() == ticketId);
+        for (UserDto user : USERS) {
+            if (user.getEmail().equals(destEmail)) {
+                user.getTickets().add(curTicket);
+            }
+        }
 
-
+        saveEverything();
     }
 }

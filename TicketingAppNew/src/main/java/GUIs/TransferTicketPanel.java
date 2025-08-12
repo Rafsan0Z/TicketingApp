@@ -16,6 +16,7 @@ import data.dto.TicketDto;
 
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.xml.crypto.Data;
 
 public class TransferTicketPanel extends JPanel{
 
@@ -26,6 +27,7 @@ public class TransferTicketPanel extends JPanel{
 	private static JTextPane EventNameTextPane;
 	private static JTextPane VenueNameTextPane;
 	private static JTextPane TicketPriceTextPane;
+    private static long curTicketId;
 
 	private JButton TransferButton;
 	private JButton CancelButton;
@@ -36,18 +38,19 @@ public class TransferTicketPanel extends JPanel{
 	private JLabel TicketPriceLabel;
 	private JLabel UserNameLabel;
 	private JLabel UserEmailLabel;
-	private JLabel userAgeLabel;
-	private JTextField userAgeField;
 	
 	
 	public TransferTicketPanel(){
 
 		TransferButton = new JButton("Transfer to this user");
-		TransferButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
+		TransferButton.addActionListener(e -> {
+            if (DataStore.checkValidTransfer(UserNameField.getText(), UserEmailField.getText())) {
+                DataStore.transferTicket(EventNameTextPane.getText(), curTicketId, UserEmailField.getText());
+                MainFrame.swap("userinfo");
+            } else {
+                System.out.println("invalid entry");
+            }
+        });
 		TransferButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		TitleLabel = new JLabel("Transfering Ticket");
@@ -68,7 +71,18 @@ public class TransferTicketPanel extends JPanel{
 		VenueNameTextPane = new JTextPane();
 				
 		TicketPriceTextPane = new JTextPane();
-		
+
+        EventNameTextPane.setEditable(false);
+        EventNameTextPane.setFocusable(false);
+
+        VenueNameTextPane.setEditable(false);
+        VenueNameTextPane.setFocusable(false);
+
+        TicketPriceTextPane.setEditable(false);
+        TicketPriceTextPane.setFocusable(false);
+
+        String eventName = EventNameTextPane.getText();
+
 		UserNameLabel = new JLabel("User Name");
 		UserNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
@@ -82,19 +96,9 @@ public class TransferTicketPanel extends JPanel{
 		UserEmailField.setColumns(10);
 		
 		CancelButton = new JButton("Cancel");
-		CancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				MainFrame.swap("userinfo");
-			}
-		});
+		CancelButton.addActionListener(e -> MainFrame.swap("userinfo"));
 		CancelButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
-		userAgeLabel = new JLabel("User Age");
-		userAgeLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
-		userAgeField = new JTextField();
-		userAgeField.setColumns(10);
-		
+
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -128,14 +132,11 @@ public class TransferTicketPanel extends JPanel{
 								.addComponent(TicketVenueLabel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
 								.addGap(26)
 								.addComponent(VenueNameTextPane, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE))
-							.addGroup(Alignment.TRAILING, groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(UserEmailLabel, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(userAgeLabel, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-									.addGap(36)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(userAgeField, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
-										.addComponent(UserEmailField, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE))))))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                        .addComponent(UserEmailLabel, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+                                        .addGap(36)
+                                        .addComponent(UserEmailField, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE))
+                        ))
 					.addGap(356))
 		);
 		groupLayout.setVerticalGroup(
@@ -164,9 +165,6 @@ public class TransferTicketPanel extends JPanel{
 						.addComponent(UserEmailLabel, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
 						.addComponent(UserEmailField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(userAgeLabel, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-						.addComponent(userAgeField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(46)
 					.addComponent(TransferButton)
 					.addGap(30)
@@ -182,6 +180,7 @@ public class TransferTicketPanel extends JPanel{
 			EventNameTextPane.setText(ticket.getEventName());
 			VenueNameTextPane.setText(DataStore.findEventByName(ticket.getEventName()).getVenue());
 			TicketPriceTextPane.setText(Double.toString(ticket.getPrice()));
+            curTicketId = ticket.getTicketId();
 		}
 	}
 }
