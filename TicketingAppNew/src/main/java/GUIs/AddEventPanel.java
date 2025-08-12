@@ -127,7 +127,6 @@ public class AddEventPanel extends JPanel {
             @Override
             public void stateChanged(ChangeEvent e) {
                 eventDate = (Date) dateChooser.getValue();
-                System.out.println(eventDate.toString());
             }
         });
 		

@@ -16,8 +16,6 @@ import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class EditEventPanel extends JPanel {
 
@@ -95,14 +93,13 @@ public class EditEventPanel extends JPanel {
         add(saveBtn);
         
         // Delete event
-        JButton deleteBtn = new JButton("Cancel");
-        deleteBtn.addActionListener(e -> {
+        JButton cancelBtn = new JButton("Cancel");
+        cancelBtn.addActionListener(e -> {
             ManagerInfoPanel.refreshTable();
             MainFrame.swap("managerInfoPanel");
-            JOptionPane.showMessageDialog(null, "Event deleted");
         });
-        deleteBtn.setBounds(486, 495, 117, 29);
-        add(deleteBtn);
+        cancelBtn.setBounds(486, 495, 117, 29);
+        add(cancelBtn);
 		
 	}
 
