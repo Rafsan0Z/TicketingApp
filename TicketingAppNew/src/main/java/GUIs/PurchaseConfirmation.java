@@ -11,7 +11,6 @@ public class PurchaseConfirmation extends JFrame {
 	private JTextField adultField;
 	private JTextField seniorField;
 
-    private String eventName;
 	/**
 	 * Create the panel.
 	 */
@@ -58,6 +57,8 @@ public class PurchaseConfirmation extends JFrame {
                     DataStore.buyTicket(eventName, "Senior");
                 }
                 dispose();
+                AccountInfoPanel.loadTables();
+                MainFrame.swap("userinfo");
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Please enter valid integers.");
             }
