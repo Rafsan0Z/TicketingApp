@@ -230,11 +230,13 @@ public class DataStore {
 
             currentEvent.getAttendees().add(newTicketInfo);
             tmp.getAttendees().add(newTicketInfo);
-            currentUser.getTickets().add(newTicket);
+            currentUser.addTicket(newTicket);
+            
             TICKETS.add(newTicket);
 
             saveEverything();
         }
+        
     }
 
     public static float discountAmount(String ageType) {
