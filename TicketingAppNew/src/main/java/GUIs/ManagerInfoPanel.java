@@ -170,19 +170,17 @@ public class ManagerInfoPanel extends JPanel {
         });
         addBtn.setBounds(468, 525, 117, 29);
         add(addBtn);
-        
+
         editButton = new JButton("Edit Event");
         editButton.setEnabled(false);
         editButton.setVisible(false);
-        editButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		if (eventSelected != null) {
-        			EditEventPanel.loadEventInfo(eventSelected);
-        			MainFrame.swap("editEventPanel");
-        		} else {
-        			System.out.println("Must select event first");
-        		}
-        	}
+        editButton.addActionListener(e -> {
+            if (eventSelected != null) {
+                EditEventPanel.loadEventInfo(eventSelected);
+                MainFrame.swap("editEventPanel");
+            } else {
+                JOptionPane.showMessageDialog(ManagerInfoPanel.this, "Please select an Event");
+            }
         });
         editButton.setBounds(350, 525, 117, 29);
         add(editButton);
@@ -205,10 +203,10 @@ public class ManagerInfoPanel extends JPanel {
         model = new DefaultTableModel(){
             private static final long serialVersionUID = 1L;
 
-			@Override public boolean isCellEditable(int row, int col) {
-                // e.g., allow edits for name, time, venue, cost; not for status (col 4)
-                return col >= 0 && col <= 3;
-            }
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // completely read only
+            };
         };
 
         model.setColumnIdentifiers(columns);

@@ -293,10 +293,13 @@ public class DataStore {
         for (VenueDto v : VENUES) {
             if (v.getLocation().equals(eventSelected.getVenue())) {
                 for (EventDto event : v.getScheduledEvents()) {
+                    System.out.println(eventSelected.getEventName());
+                    System.out.println(event.getEventName());
                     if (eventSelected.getEventName().equals(event.getEventName())) {
                         event.setEventName(eventName);
                         event.setDate(date);
                         event.setCost(cost);
+                        break;
                     }
                 }
             }
@@ -308,10 +311,15 @@ public class DataStore {
          * for every ticket id in the tickets, update the info
          */
         List<TicketInfo> attendees = eventSelected.getAttendees();
-        long id = -1;
+        long id;
         for (TicketInfo ticket : attendees) {
             String email = ticket.getEmail();
             id = ticket.getTicketId();
+            for (TicketDto t : TICKETS) {
+                if (t.getTicketId() == id) {
+                    t.setEventName(eventName);
+                }
+            }
             for (UserDto user : USERS) {
                 if (user.getEmail().equals(email)) {
                     for (TicketDto t : user.getTickets()) {
@@ -322,11 +330,7 @@ public class DataStore {
                 }
             }
         }
-        for (TicketDto t : TICKETS) {
-            if (t.getTicketId() == id) {
-                t.setEventName(eventName);
-            }
-        }
+
 
 
 

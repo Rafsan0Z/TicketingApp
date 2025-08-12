@@ -41,14 +41,10 @@ public class EventViewerPanel extends JPanel{
 		table = new JTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setSelectionBackground(new Color(143, 188, 143));
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				// TODO Auto-generated method stub
-				int rowSelected = table.getSelectedRow();
-				eventSelected = getSelectedEvent(events, rowSelected);
-			}
+        table.getSelectionModel().addListSelectionListener(e -> {
+            // TODO Auto-generated method stub
+            int rowSelected = table.getSelectedRow();
+            eventSelected = getSelectedEvent(events, rowSelected);
         });
 
         Object[] columns = {"Event", "Time", "Venue"

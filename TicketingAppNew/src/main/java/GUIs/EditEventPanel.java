@@ -8,6 +8,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import data.DataStore;
 import data.dto.EventDto;
 import java.awt.Font;
 import java.util.Date;
@@ -25,6 +26,7 @@ public class EditEventPanel extends JPanel {
 	private static Date eventDate;
 	private static JTextField costField;
 	private static JSpinner dateChooser;
+    private static EventDto currentEvent;
 
 	/**
 	 * Create the panel.
@@ -83,24 +85,21 @@ public class EditEventPanel extends JPanel {
         
         // Save event
         JButton saveBtn = new JButton("Save");
-        saveBtn.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		ManagerInfoPanel.refreshTable();
-        		MainFrame.swap("managerInfoPanel");
-        		JOptionPane.showMessageDialog(null, "Event updated");
-        	}
+        saveBtn.addActionListener(e -> {
+            DataStore.updateEvent(currentEvent, nameField.getText(), eventDate, Double.parseDouble(costField.getText()));
+            ManagerInfoPanel.refreshTable();
+            MainFrame.swap("managerInfoPanel");
+            JOptionPane.showMessageDialog(null, "Event updated");
         });
         saveBtn.setBounds(615, 495, 117, 29);
         add(saveBtn);
         
         // Delete event
-        JButton deleteBtn = new JButton("Delete");
-        deleteBtn.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		ManagerInfoPanel.refreshTable();
-        		MainFrame.swap("managerInfoPanel");
-        		JOptionPane.showMessageDialog(null, "Event deleted");
-        	}
+        JButton deleteBtn = new JButton("Cancel");
+        deleteBtn.addActionListener(e -> {
+            ManagerInfoPanel.refreshTable();
+            MainFrame.swap("managerInfoPanel");
+            JOptionPane.showMessageDialog(null, "Event deleted");
         });
         deleteBtn.setBounds(486, 495, 117, 29);
         add(deleteBtn);
@@ -113,6 +112,7 @@ public class EditEventPanel extends JPanel {
 	 */
 	public static void loadEventInfo(EventDto event) {
 		if (event != null) {
+            currentEvent = event;
 			nameField.setText(event.getEventName());
 			dateChooser.setValue(event.getDate());
 			costField.setText(Double.toString(event.getCost()));

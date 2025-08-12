@@ -11,8 +11,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class VenueDto {
 
-    @JsonProperty("name")
-    private String name;
     @JsonProperty("location")
     private String location;
     @JsonProperty("capacity")
@@ -22,7 +20,7 @@ public class VenueDto {
 
     public VenueDto() {}
 
-    public VenueDto(String name, String location, int capacity, List<EventDto> scheduledEvents) {
+    public VenueDto(String location, int capacity, List<EventDto> scheduledEvents) {
         this.location = location;
         this.capacity = capacity;
         this.scheduledEvents = scheduledEvents;

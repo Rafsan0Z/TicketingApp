@@ -3,12 +3,12 @@
   "capacity" : 500,
   "scheduledEvents" : [ {
     "soldOut" : false,
-    "eventName" : "graduation",
+    "eventName" : "Gradutation",
     "numTickets" : 50,
     "numTicketsRemaining" : 49,
-    "cost" : 5.0,
+    "cost" : 6.8,
     "venue" : "MSG",
-    "date" : 1735725600000,
+    "date" : 1756942200000,
     "attendees" : [ {
       "email" : "john.doe@example.com",
       "ticketId" : 1723456789000
@@ -27,6 +27,7 @@
     "attendees" : [ ]
   }, {
     "soldOut" : false,
+    "eventName" : "Knicks Game",
     "numTickets" : 500,
     "numTicketsRemaining" : 500,
     "cost" : 1000.0,

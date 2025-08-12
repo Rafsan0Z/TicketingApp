@@ -227,14 +227,10 @@ public class AccountInfoPanel extends JPanel{
         if (selectable) {
             table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             table.setSelectionBackground(new Color(143, 188, 143));
-            table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            	
-				@Override
-				public void valueChanged(ListSelectionEvent e) {
-					// TODO Auto-generated method stub
-					int rowSelected = table.getSelectedRow();
-					ticketSelected = getSelectedTicket(tickets, rowSelected);
-				}
+            table.getSelectionModel().addListSelectionListener(e -> {
+                // TODO Auto-generated method stub
+                int rowSelected = table.getSelectedRow();
+                ticketSelected = getSelectedTicket(tickets, rowSelected);
             });
             
         } else {
