@@ -424,37 +424,41 @@ public class DataStore {
          * for every ticket id in the tickets, update the info
          */
         List<TicketInfo> attendees = event.getAttendees();
+        System.out.println(attendees.size());
         long id;
         String email;
         for (TicketInfo ticket : attendees) {
             email = ticket.getEmail();
             id = ticket.getTicketId();
             
-            UserDto user = findUserByEmail(ticket.getEmail());
-            
+            UserDto user = findUserByEmail(email);
+            	
             TicketDto toRemove = null;
-            for (TicketDto t : user.getTickets()) {
+            if (user != null) {
+            	for (TicketDto t : user.getTickets()) {
+            		if (t.getTicketId() == id) {
+            			toRemove = t;
+            			break;
+            		}
+            	}
+            	
+            	// Remove event from user
+            	if (toRemove != null) {    	
+            		user.removeTicket(toRemove);
+            	}
+            }
+            
+            toRemove = null;
+            for (TicketDto t : TICKETS) {
             	if (t.getTicketId() == id) {
             		toRemove = t;
             		break;
             	}
             }
-            
-            // Remove event from user
-            if (toRemove != null) {    	
-            	user.removeTicket(toRemove);
-            }
-            
-            toRemove = null;
-            for (TicketDto t : TICKETS) {
-                if (t.getTicketId() == id) {
-                	toRemove = t;
-                    break;
-                }
-            }
-            
             // Remove event from TICKETS
-            TICKETS.remove(toRemove);
+            if (toRemove != null)
+            	TICKETS.remove(toRemove);   
+            
         }
         
         // Remove event from venue
