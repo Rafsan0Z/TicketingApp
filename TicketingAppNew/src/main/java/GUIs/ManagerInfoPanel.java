@@ -14,6 +14,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import data.DataStore;
 import data.dto.EventDto;
@@ -205,6 +206,18 @@ public class ManagerInfoPanel extends JPanel {
             public boolean isCellEditable(int row, int column) {
                 return false; // completely read only
             };
+            
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 1: // Time column
+                        return Date.class;
+                    case 3: // Cost column
+                        return Double.class;
+                    default: // All other columns are treated as Strings
+                        return String.class;
+                }
+            }
         };
 
         model.setColumnIdentifiers(columns);
@@ -257,6 +270,21 @@ public class ManagerInfoPanel extends JPanel {
         table.setFont(new Font("Tahoma", Font.PLAIN, 10));
         table.setRowHeight(30);
         table.setAutoCreateRowSorter(true);
+        
+     // Formatting date for easy sorting
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM YYY dd HH:mm:ss");
+        table.getColumnModel().getColumn(1).setCellRenderer((table1, value, isSelected, hasFocus, row, column) -> {
+            JLabel label = new JLabel(formatter.format((Date) value));
+            label.setFont(new Font("Tahoma", Font.PLAIN, 10));
+            label.setOpaque(true);
+            label.setBackground(isSelected ? table1.getSelectionBackground() : table1.getBackground());
+            label.setForeground(isSelected ? table1.getSelectionForeground() : table1.getForeground());
+            return label;
+        });
+        
+        // Sorting
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        table.setRowSorter(sorter);
 
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setSelectionBackground(new Color(143, 188, 143));

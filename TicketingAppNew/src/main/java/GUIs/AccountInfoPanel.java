@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import data.DataStore;
 import data.dto.TicketDto;
@@ -15,10 +16,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.JCheckBox;
 
 public class AccountInfoPanel extends JPanel{
@@ -205,15 +212,35 @@ public class AccountInfoPanel extends JPanel{
      * @param bgColor
      */
     public void ticketTable(JScrollPane pane, TicketDto[] tickets, Color bgColor, boolean selectable) {
+    	
+    	// Initializing table
         JTable table = new JTable();
+        Font tableFont = new Font("SansSerif", Font.PLAIN, 16);
+        table.setFont(tableFont);
+        table.getTableHeader().setFont(tableFont);
+        
         pane.setViewportView(table);
         Object[] columns = {"Event", "Time", "Venue"
                 , "Cost", "type"};
-       DefaultTableModel model = new DefaultTableModel(){
+        
+       // Creating table model
+        DefaultTableModel model = new DefaultTableModel(){
         	private static final long serialVersionUID = 1L;
         	
 			@Override 
 			public boolean isCellEditable(int row, int col) {return false;}
+			
+			@Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 1: // Time column
+                        return Date.class;
+                    case 3: // Cost column
+                        return Double.class;
+                    default: // All other columns are treated as Strings
+                        return String.class;
+                }
+            }
 		};
 
         model.setColumnIdentifiers(columns);
@@ -225,7 +252,23 @@ public class AccountInfoPanel extends JPanel{
         table.setFont(new Font("Tahoma", Font.PLAIN, 10));
         table.setRowHeight(30);
         table.setAutoCreateRowSorter(true);
+        
+        // Formatting date for easy sorting
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM YYY dd HH:mm:ss");
+        table.getColumnModel().getColumn(1).setCellRenderer((table1, value, isSelected, hasFocus, row, column) -> {
+            JLabel label = new JLabel(formatter.format((Date) value));
+            label.setFont(new Font("Tahoma", Font.PLAIN, 10));
+            label.setOpaque(true);
+            label.setBackground(isSelected ? table1.getSelectionBackground() : table1.getBackground());
+            label.setForeground(isSelected ? table1.getSelectionForeground() : table1.getForeground());
+            return label;
+        });
+        
+        // Sorting
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        table.setRowSorter(sorter);
 
+        // Allowing selection for upcoming events
         if (selectable) {
             table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             table.setSelectionBackground(new Color(143, 188, 143));
