@@ -1,8 +1,8 @@
 [ {
   "soldOut" : false,
-  "eventName" : "Gradutation",
+  "eventName" : "Graduation!",
   "numTickets" : 50,
-  "numTicketsRemaining" : 23,
+  "numTicketsRemaining" : 21,
   "cost" : 6.8,
   "venue" : "MSG",
   "date" : 1756942200000,
@@ -90,30 +90,51 @@
   }, {
     "email" : "d@user.com",
     "ticketId" : 1754876012270943
+  }, {
+    "email" : "s@user.com",
+    "ticketId" : 1755021034786045
+  }, {
+    "email" : "s@user.com",
+    "ticketId" : 1755028875239730
   } ]
 }, {
   "soldOut" : false,
   "eventName" : "Lady Gaga",
   "numTickets" : 500,
-  "numTicketsRemaining" : 500,
+  "numTicketsRemaining" : 498,
   "cost" : 499.99,
   "venue" : "MSG",
   "date" : 1755907200000,
-  "attendees" : [ ]
+  "attendees" : [ {
+    "email" : "s@user.com",
+    "ticketId" : 1755021853966130
+  }, {
+    "email" : "d@user.com",
+    "ticketId" : 1755028662879446
+  } ]
 }, {
   "soldOut" : false,
   "eventName" : "Knicks Game",
   "numTickets" : 500,
-  "numTicketsRemaining" : 500,
+  "numTicketsRemaining" : 497,
   "cost" : 1000.0,
   "venue" : "MSG",
   "date" : 1775947500000,
-  "attendees" : [ ]
+  "attendees" : [ {
+    "email" : "s@user.com",
+    "ticketId" : 1755016920858085
+  }, {
+    "email" : "s@user.com",
+    "ticketId" : 1755016920864687
+  }, {
+    "email" : "d@user.com",
+    "ticketId" : 1755022380146893
+  } ]
 }, {
   "soldOut" : false,
-  "eventName" : "Rangers",
+  "eventName" : "rangers",
   "numTickets" : 300,
-  "numTicketsRemaining" : 298,
+  "numTicketsRemaining" : 295,
   "cost" : 30.5,
   "venue" : "MSG",
   "date" : 1760212800000,
@@ -123,23 +144,53 @@
   }, {
     "email" : "s@user.com",
     "ticketId" : 1754975484075471
+  }, {
+    "email" : "s@user.com",
+    "ticketId" : 1755017189224505
+  }, {
+    "email" : "s@user.com",
+    "ticketId" : 1755017412001651
+  }, {
+    "email" : "d@user.com",
+    "ticketId" : 1755022459796106
   } ]
 }, {
   "soldOut" : false,
   "eventName" : "Maneskin",
   "numTickets" : 300,
-  "numTicketsRemaining" : 300,
+  "numTicketsRemaining" : 297,
   "cost" : 129.86,
   "venue" : "MSG",
   "date" : 1754945100000,
-  "attendees" : [ ]
+  "attendees" : [ {
+    "email" : "s@user.com",
+    "ticketId" : 1755016802629499
+  }, {
+    "email" : "s@user.com",
+    "ticketId" : 1755016802651481
+  }, {
+    "email" : "s@user.com",
+    "ticketId" : 1755021409547808
+  } ]
 }, {
   "soldOut" : false,
   "eventName" : "Commencment",
   "numTickets" : 60,
-  "numTicketsRemaining" : 60,
+  "numTicketsRemaining" : 56,
   "cost" : 50.0,
   "venue" : "MSG",
   "date" : 1754944036465,
-  "attendees" : [ ]
+  "attendees" : [ {
+    "email" : "s@user.com",
+    "ticketId" : 1755017270958872
+  }, {
+    "email" : "s@user.com",
+    "ticketId" : 1755021612536929
+  }, {
+    "email" : "s@user.com",
+    "ticketId" : 1755022166884547
+  }, {
+    "email" : "s@user.com",
+    "ticketId" : 1755028966281701
+  } ]
 } ]
