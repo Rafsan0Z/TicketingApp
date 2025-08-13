@@ -84,6 +84,8 @@ public class EditEventPanel extends JPanel {
         // Save event
         JButton saveBtn = new JButton("Save");
         saveBtn.addActionListener(e -> {
+        	System.out.println(currentEvent.getEventName());
+        	System.out.println(nameField.getText());
             DataStore.updateEvent(currentEvent, nameField.getText(), eventDate, Double.parseDouble(costField.getText()));
             ManagerInfoPanel.refreshTable();
             MainFrame.swap("managerInfoPanel");

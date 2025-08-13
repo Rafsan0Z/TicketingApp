@@ -284,6 +284,8 @@ public class DataStore {
 	}
 
     public static void updateEvent(EventDto eventSelected, String eventName, Date date, double cost) {
+    	String ogVenue = eventSelected.getVenue();
+    	String ogName = eventSelected.getEventName();
         for (EventDto event : EVENTS) { // update the event.json
             if (eventSelected.getEventName().equals(event.getEventName())) {
                 event.setEventName(eventName);
@@ -293,11 +295,9 @@ public class DataStore {
         }
         // update the venue.json
         for (VenueDto v : VENUES) {
-            if (v.getLocation().equals(eventSelected.getVenue())) {
+            if (v.getLocation().equals(ogVenue)) {
                 for (EventDto event : v.getScheduledEvents()) {
-                    System.out.println(eventSelected.getEventName());
-                    System.out.println(event.getEventName());
-                    if (eventSelected.getEventName().equals(event.getEventName())) {
+                    if (ogName.equals(event.getEventName())) {
                         event.setEventName(eventName);
                         event.setDate(date);
                         event.setCost(cost);
@@ -332,6 +332,7 @@ public class DataStore {
                 }
             }
         }
+        saveEverything();
     }
 
     public static boolean checkValidTransfer(String name, String email) {
