@@ -86,6 +86,8 @@ public class EditEventPanel extends JPanel {
         // Save event
         JButton saveBtn = new JButton("Save");
         saveBtn.addActionListener(e -> {
+        	System.out.println(currentEvent.getEventName());
+        	System.out.println(nameField.getText());
             DataStore.updateEvent(currentEvent, nameField.getText(), eventDate, Double.parseDouble(costField.getText()));
             ManagerInfoPanel.refreshTable();
             MainFrame.swap("managerInfoPanel");
@@ -95,14 +97,23 @@ public class EditEventPanel extends JPanel {
         add(saveBtn);
         
         // Delete event
-        JButton deleteBtn = new JButton("Cancel");
-        deleteBtn.addActionListener(e -> {
+        JButton cancelBtn = new JButton("Cancel Event");
+        cancelBtn.addActionListener(e -> {
+        	DataStore.cancelEvent(currentEvent);
             ManagerInfoPanel.refreshTable();
             MainFrame.swap("managerInfoPanel");
-            JOptionPane.showMessageDialog(null, "Event deleted");
         });
-        deleteBtn.setBounds(486, 495, 117, 29);
-        add(deleteBtn);
+        cancelBtn.setBounds(486, 495, 117, 29);
+        add(cancelBtn);
+        
+        JButton backBtn = new JButton("Back");
+        backBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		MainFrame.swap("managerInfoPanel");
+        	}
+        });
+        backBtn.setBounds(157, 95, 117, 29);
+        add(backBtn);
 		
 	}
 

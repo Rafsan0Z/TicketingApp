@@ -154,7 +154,6 @@ public class ManagerInfoPanel extends JPanel {
         editBtn.setBounds(611, 54, 117, 29);
         add(editBtn);
         
-//        EventDto[] events = DataStore.getEvents();
         eventScrollPane = new JScrollPane();
         eventScrollPane.setBounds(169, 217, 539, 296);
         this.add(eventScrollPane);
@@ -175,7 +174,7 @@ public class ManagerInfoPanel extends JPanel {
         editButton.setEnabled(false);
         editButton.setVisible(false);
         editButton.addActionListener(e -> {
-            if (eventSelected != null) {
+            if (eventSelected != null) { 
                 EditEventPanel.loadEventInfo(eventSelected);
                 MainFrame.swap("editEventPanel");
             } else {
@@ -194,8 +193,7 @@ public class ManagerInfoPanel extends JPanel {
      * @param bgColor
      */
     public static void eventTable(JScrollPane pane, Color bgColor) {
-    	System.out.println(events.length);
-
+    	
         JTable table = new JTable();
         pane.setViewportView(table);
         Object[] columns = {"Event", "Time", "Venue"

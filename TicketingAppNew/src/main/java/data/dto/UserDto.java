@@ -93,9 +93,11 @@ public class UserDto {
         if (tickets == null) return new TicketDto[0];
         List<TicketDto> out = new ArrayList<>();
         for (TicketDto t : tickets) {
-            if (t.findEvent().pastTicket()) {
-                out.add(t);
-            }
+        	if (t.findEvent() != null) {
+	            if (t.findEvent().pastTicket()) {
+	                out.add(t);
+	            }
+        	}
         }
         return out.toArray(new TicketDto[0]);
     }
@@ -119,5 +121,13 @@ public class UserDto {
         setPassword(password);
         System.out.println(password);
         DataStore.saveEverything();
+    }
+    
+    public void addTicket(TicketDto ticket) {
+    	tickets.add(ticket);
+    }
+    
+    public void removeTicket(TicketDto ticket) {
+    	tickets.remove(ticket);
     }
 }

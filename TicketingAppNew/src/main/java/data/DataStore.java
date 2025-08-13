@@ -230,11 +230,13 @@ public class DataStore {
 
             currentEvent.getAttendees().add(newTicketInfo);
             tmp.getAttendees().add(newTicketInfo);
-            currentUser.getTickets().add(newTicket);
+            currentUser.addTicket(newTicket);
+            
             TICKETS.add(newTicket);
 
             saveEverything();
         }
+        
     }
 
     public static float discountAmount(String ageType) {
@@ -261,19 +263,44 @@ public class DataStore {
     	}
     	return null;
     }
-
-    public static TicketDto[] getTickets() {
-    	return TICKETS.toArray(TicketDto[]::new);
-    }
-    public static void setCurrentUser() { currentUser = null;}
-
-    public static EventDto[] getEvents() {
-    	return EVENTS.toArray(EventDto[]::new);
+    
+    /**
+     * Search venue list by name
+     * @param name
+     * @return
+     */
+    public static VenueDto findVenueByName(String name) {
+    	for (VenueDto venue : VENUES) {
+    		if (venue.getLocation().equals(name)) {
+    			return venue;
+    		}
+    	}
+    	return null;
     }
     
-    public static VenueDto[] getVenues() {
-    	return VENUES.toArray(VenueDto[]::new);
+    public static UserDto findUserByEmail(String email) {
+    	for (UserDto user: USERS) {
+    		if (user.getEmail().equals(email)) {
+    			return user;
+    		}
+    	}
+    	return null;
     }
+    
+    public static TicketDto findTicketById(long id) {
+    	for (TicketDto ticket : TICKETS) {
+    		if (ticket.getTicketId() == id) {
+    			return ticket;
+    		}
+    	}
+    	return null;
+    }
+
+    public static TicketDto[] getTickets() {return TICKETS.toArray(TicketDto[]::new);}
+    public static void setCurrentUser() { currentUser = null;}
+
+    public static EventDto[] getEvents() {return EVENTS.toArray(EventDto[]::new);}    
+    public static VenueDto[] getVenues() {return VENUES.toArray(VenueDto[]::new);}
 
     public static EventDto[] getAvailableEvents() {
         return EVENTS.stream()
@@ -282,28 +309,19 @@ public class DataStore {
 	}
 
     public static void updateEvent(EventDto eventSelected, String eventName, Date date, double cost) {
-        for (EventDto event : EVENTS) { // update the event.json
-            if (eventSelected.getEventName().equals(event.getEventName())) {
-                event.setEventName(eventName);
-                event.setDate(date);
-                event.setCost(cost);
-            }
-        }
+    	String ogName = eventSelected.getEventName();
+        
         // update the venue.json
-        for (VenueDto v : VENUES) {
-            if (v.getLocation().equals(eventSelected.getVenue())) {
-                for (EventDto event : v.getScheduledEvents()) {
-                    System.out.println(eventSelected.getEventName());
-                    System.out.println(event.getEventName());
-                    if (eventSelected.getEventName().equals(event.getEventName())) {
-                        event.setEventName(eventName);
-                        event.setDate(date);
-                        event.setCost(cost);
-                        break;
-                    }
-                }
-            }
+        VenueDto venue = findVenueByName(eventSelected.getVenue());
+        for (EventDto event : venue.getScheduledEvents()) {
+        	if (ogName.equals(event.getEventName())) {
+        		event.setEventName(eventName);
+        		event.setDate(date);
+        		event.setCost(cost);
+        		break;
+        	}
         }
+        
         // update the tickets.json
         /**
          * iterate through event attendees, for each attendee, find that attendee in the users
@@ -330,6 +348,10 @@ public class DataStore {
                 }
             }
         }
+        eventSelected.setEventName(eventName);
+    	eventSelected.setDate(date);
+    	eventSelected.setCost(cost);
+        saveEverything();
     }
 
     public static boolean checkValidTransfer(String name, String email) {
@@ -391,6 +413,62 @@ public class DataStore {
             }
         }
 
+        saveEverything();
+    }
+    
+    public static void cancelEvent(EventDto event) {
+    	// update the tickets.json
+        /**
+         * iterate through event attendees, for each attendee, find that attendee in the users
+         * for the user's tickets, find event name and then change that
+         * for every ticket id in the tickets, update the info
+         */
+        List<TicketInfo> attendees = event.getAttendees();
+        System.out.println(attendees.size());
+        long id;
+        String email;
+        for (TicketInfo ticket : attendees) {
+            email = ticket.getEmail();
+            id = ticket.getTicketId();
+            
+            UserDto user = findUserByEmail(email);
+            	
+            TicketDto toRemove = null;
+            if (user != null) {
+            	for (TicketDto t : user.getTickets()) {
+            		if (t.getTicketId() == id) {
+            			toRemove = t;
+            			break;
+            		}
+            	}
+            	
+            	// Remove event from user
+            	if (toRemove != null) {    	
+            		user.removeTicket(toRemove);
+            	}
+            }
+            
+            toRemove = null;
+            for (TicketDto t : TICKETS) {
+            	if (t.getTicketId() == id) {
+            		toRemove = t;
+            		break;
+            	}
+            }
+            // Remove event from TICKETS
+            if (toRemove != null)
+            	TICKETS.remove(toRemove);   
+            
+        }
+        
+        // Remove event from venue
+        VenueDto venue = findVenueByName(event.getVenue());
+        System.out.println("Venue: " + venue.getLocation());
+        venue.cancelEvent(event);
+        
+        // Remove event from EVENTS
+        EVENTS.remove(event);
+        
         saveEverything();
     }
 }

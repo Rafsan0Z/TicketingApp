@@ -1,5 +1,6 @@
 package GUIs;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 
 import javax.swing.JLabel;
@@ -20,8 +21,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JCheckBox;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 public class AccountInfoPanel extends JPanel{
 
@@ -31,15 +30,20 @@ public class AccountInfoPanel extends JPanel{
     private static JTextField phoneField;
     private static JTextField nameField;
     private static JTextField emailField;
-    private static DefaultTableModel model;
-    private boolean editMode = false;
     
+    private static JScrollPane upcomingScrollPane;
+    private static JScrollPane pastScrollPane;
     private static UserDto user;
+    private static JButton sellBtn;
+    
+    private boolean editMode = false;
     private TicketDto ticketSelected = null;
 
     public AccountInfoPanel(){
 
         setLayout(null);
+        upcomingScrollPane = new JScrollPane();
+        pastScrollPane = new JScrollPane();
 
         // Title information on panel
         JLabel titleLabel = new JLabel("Welcome");
@@ -154,7 +158,9 @@ public class AccountInfoPanel extends JPanel{
         browseBtn.setBounds(169, 525, 117, 29);
         add(browseBtn);
 
-        JButton sellBtn = new JButton("Transfer");
+        sellBtn = new JButton("Transfer");
+        sellBtn.setVisible(false);
+        sellBtn.setEnabled(false);
         sellBtn.addActionListener(e -> {
             if (ticketSelected != null) {
                 TransferTicketPanel.loadTicketInfo(ticketSelected);
@@ -203,8 +209,8 @@ public class AccountInfoPanel extends JPanel{
         JTable table = new JTable();
         pane.setViewportView(table);
         Object[] columns = {"Event", "Time", "Venue"
-                , "Cost"};
-        model = new DefaultTableModel(){
+                , "Cost", "type"};
+       DefaultTableModel model = new DefaultTableModel(){
         	private static final long serialVersionUID = 1L;
         	
 			@Override 
@@ -225,9 +231,10 @@ public class AccountInfoPanel extends JPanel{
             table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             table.setSelectionBackground(new Color(143, 188, 143));
             table.getSelectionModel().addListSelectionListener(e -> {
-                // TODO Auto-generated method stub
                 int rowSelected = table.getSelectedRow();
                 ticketSelected = getSelectedTicket(tickets, rowSelected);
+                sellBtn.setVisible(true);
+                sellBtn.setEnabled(true);
             });
             
         } else {
@@ -239,10 +246,9 @@ public class AccountInfoPanel extends JPanel{
         }
     }
     
-    public boolean editCellAt(int row, int column, java.util.EventObject e) {
-        return false;
-     }
-    
+    /**
+     * This method will load the user data into the class
+     */
     public static void loadUser() {
     	user = DataStore.getCurrentUser();
     	pwdPassword.setText(user.getPassword());
@@ -253,22 +259,22 @@ public class AccountInfoPanel extends JPanel{
     	
     }
     
+    /**
+     * This method will load table information and call the table to be created
+     */
     public static void loadTables() {
     	TicketDto[] pastTickets = user.getPassedTickets();
     	TicketDto[] upcomingTickets = user.getUpcomingTickets();
         
-    	JScrollPane upcomingScrollPane = new JScrollPane();
         upcomingScrollPane.setBounds(169, 247, 539, 133);
         MainFrame.userinfoPanel.add(upcomingScrollPane);
 
         MainFrame.userinfoPanel.ticketTable(upcomingScrollPane, upcomingTickets, new Color(240, 255, 240), true);
         
-        JScrollPane pastScrollPane = new JScrollPane();
         pastScrollPane.setBounds(169, 414, 539, 99);
         MainFrame.userinfoPanel.add(pastScrollPane);
 
         MainFrame.userinfoPanel.ticketTable(pastScrollPane, pastTickets, new Color(255, 228, 225), false);
-        
     }
 
     /**
@@ -282,6 +288,7 @@ public class AccountInfoPanel extends JPanel{
         obj[1] = DataStore.findEventByName(toAdd.getEventName()).getDate();
         obj[2] = DataStore.findEventByName(toAdd.getEventName()).getVenue();
         obj[3] = toAdd.getPrice();
+        obj[4] = toAdd.getAgeType();
         return obj;
     }
     
@@ -290,5 +297,12 @@ public class AccountInfoPanel extends JPanel{
     		return tickets[rowSelected];
     	}
     	return null;
+    }
+    
+    public static void refreshTable() {
+    	TicketDto[] pastTickets = user.getPassedTickets();
+    	TicketDto[] upcomingTickets = user.getUpcomingTickets();
+    	
+    	MainFrame.userinfoPanel.ticketTable(upcomingScrollPane, upcomingTickets, new Color(240, 255, 240), true);
     }
 }

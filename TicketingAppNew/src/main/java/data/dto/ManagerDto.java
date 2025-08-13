@@ -15,8 +15,8 @@ public class ManagerDto {
     private String email;
     @JsonProperty("password")
     private String password;
-    @JsonProperty("events")
-    private List<String> events;
+//    @JsonProperty("events")
+//    private List<String> events;
 
     public ManagerDto(){
 
@@ -27,7 +27,7 @@ public class ManagerDto {
         this.phone = phone;
         this.email = email;
         this.password = password;
-        this.events = events;
+//        this.events = events;
     }
 
     public boolean checkPassword(String entry) {
@@ -67,13 +67,13 @@ public class ManagerDto {
         this.password = password;
     }
 
-    public List<String> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<String> events) {
-        this.events = events;
-    }
+//    public List<String> getEvents() {
+//        return events;
+//    }
+//
+//    public void setEvents(List<String> events) {
+//        this.events = events;
+//    }
     
     public void updateManager(String name, String phone, String email, String password) {
     	this.name = name;
