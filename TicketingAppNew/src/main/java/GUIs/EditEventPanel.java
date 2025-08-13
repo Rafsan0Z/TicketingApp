@@ -16,6 +16,8 @@ import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class EditEventPanel extends JPanel {
 
@@ -103,6 +105,15 @@ public class EditEventPanel extends JPanel {
         });
         cancelBtn.setBounds(486, 495, 117, 29);
         add(cancelBtn);
+        
+        JButton backBtn = new JButton("Back");
+        backBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		MainFrame.swap("managerInfoPanel");
+        	}
+        });
+        backBtn.setBounds(157, 95, 117, 29);
+        add(backBtn);
 		
 	}
 

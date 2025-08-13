@@ -429,8 +429,7 @@ public class DataStore {
         for (TicketInfo ticket : attendees) {
             email = ticket.getEmail();
             id = ticket.getTicketId();
-//            for (UserDto user : USERS) {
-//            	if (user.getEmail().equals(email)) {
+            
             UserDto user = findUserByEmail(ticket.getEmail());
             
             TicketDto toRemove = null;
@@ -439,9 +438,6 @@ public class DataStore {
             		toRemove = t;
             		break;
             	}
-//            		}
-//            	}
-//            }
             }
             
             // Remove event from user
@@ -457,7 +453,7 @@ public class DataStore {
                 }
             }
             
-            // Remove event from tickets
+            // Remove event from TICKETS
             TICKETS.remove(toRemove);
         }
         
@@ -466,6 +462,7 @@ public class DataStore {
         System.out.println("Venue: " + venue.getLocation());
         venue.cancelEvent(event);
         
+        // Remove event from EVENTS
         EVENTS.remove(event);
         
         saveEverything();
