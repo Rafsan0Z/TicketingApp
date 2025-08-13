@@ -58,6 +58,7 @@ public class PurchaseConfirmation extends JFrame {
                 }
                 dispose();
                 AccountInfoPanel.loadTables();
+                EventViewerPanel.refreshEvents();
                 MainFrame.swap("userinfo");
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Please enter valid integers.");

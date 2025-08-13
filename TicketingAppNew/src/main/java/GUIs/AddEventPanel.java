@@ -105,6 +105,7 @@ public class AddEventPanel extends JPanel {
 						eventDate
 						);
 				ManagerInfoPanel.refreshTable();
+				EventViewerPanel.refreshEvents();
 				MainFrame.swap("managerInfoPanel");
 				JOptionPane.showMessageDialog(null, "Event added");
 			}

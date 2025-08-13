@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import data.DataStore;
@@ -22,6 +20,8 @@ public class EventViewerPanel extends JPanel{
     private JButton PurchaseButton;
     private JButton AccountButton;
     private EventDto eventSelected;
+    private static EventDto[] events;
+    private static DefaultTableModel model;
     DataStore.Role r = DataStore.getCurrentRole();
 
     public EventViewerPanel(){
@@ -31,7 +31,7 @@ public class EventViewerPanel extends JPanel{
             }
         });
 
-		EventDto[] events = DataStore.getAvailableEvents();
+		events = DataStore.getAvailableEvents();
 
 
 		TopicLabel = new JLabel("View all Available Events");
@@ -49,7 +49,7 @@ public class EventViewerPanel extends JPanel{
 
         Object[] columns = {"Event", "Time", "Venue"
                 , "Cost"};
-        DefaultTableModel model = new DefaultTableModel(){
+        model = new DefaultTableModel(){
             private static final long serialVersionUID = 1L;
 
 			@Override
@@ -155,5 +155,13 @@ public class EventViewerPanel extends JPanel{
         AccountButton.setVisible(r == DataStore.Role.USER || r == DataStore.Role.MANAGER);
         revalidate();
         repaint();
+    }
+    
+    public static void refreshEvents() {
+    	events = DataStore.getAvailableEvents();
+    	model.setRowCount(0);
+    	for (int i = 0; i < events.length; i++) {
+            model.addRow(getRowInfo(events[i]));
+        }
     }
 }

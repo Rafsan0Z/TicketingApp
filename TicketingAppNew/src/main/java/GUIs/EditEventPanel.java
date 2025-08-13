@@ -109,6 +109,7 @@ public class EditEventPanel extends JPanel {
         JButton backBtn = new JButton("Back");
         backBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		EventViewerPanel.refreshEvents();
         		MainFrame.swap("managerInfoPanel");
         	}
         });
