@@ -144,7 +144,7 @@ public class DataStore {
 
     public static boolean registerUser(String name, String phone, String email, String password) {
         if(isEmailUnique(email)) {
-            UserDto newUser = new UserDto(name, phone, email, password, Collections.EMPTY_LIST);
+            UserDto newUser = new UserDto(name, phone, email, password, new ArrayList<TicketDto>());
             USERS.add(newUser);
             saveEverything();
             return true;
@@ -154,7 +154,7 @@ public class DataStore {
     }
     public static boolean registerManager(String name, String phone, String email, String password) {
         if(isEmailUnique(email)) {
-            ManagerDto newManager = new ManagerDto(name, phone, email, password, Collections.EMPTY_LIST);
+            ManagerDto newManager = new ManagerDto(name, phone, email, password, new ArrayList<String>());
             MANAGERS.add(newManager);
             saveEverything();
             return true;

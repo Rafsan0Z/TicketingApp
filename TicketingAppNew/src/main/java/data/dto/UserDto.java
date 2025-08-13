@@ -23,7 +23,7 @@ public class UserDto {
     @JsonProperty("password")
     private String password;
     @JsonProperty("tickets")
-    private List<TicketDto> tickets;
+    private List<TicketDto> tickets = new ArrayList<TicketDto>();
 
     public UserDto() {
     }
