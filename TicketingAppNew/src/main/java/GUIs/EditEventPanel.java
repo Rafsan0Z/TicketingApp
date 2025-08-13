@@ -95,8 +95,9 @@ public class EditEventPanel extends JPanel {
         add(saveBtn);
         
         // Delete event
-        JButton cancelBtn = new JButton("Cancel");
+        JButton cancelBtn = new JButton("Cancel Event");
         cancelBtn.addActionListener(e -> {
+        	DataStore.cancelEvent(currentEvent);
             ManagerInfoPanel.refreshTable();
             MainFrame.swap("managerInfoPanel");
         });

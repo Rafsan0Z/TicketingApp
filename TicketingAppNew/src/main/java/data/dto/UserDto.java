@@ -126,4 +126,8 @@ public class UserDto {
     public void addTicket(TicketDto ticket) {
     	tickets.add(ticket);
     }
+    
+    public void removeTicket(TicketDto ticket) {
+    	tickets.remove(ticket);
+    }
 }

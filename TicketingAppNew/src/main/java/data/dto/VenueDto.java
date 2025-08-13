@@ -49,8 +49,16 @@ public class VenueDto {
         scheduledEvents.add(event);
     }
     public void cancelEvent(EventDto event) {
-        scheduledEvents.remove(event);
+    	EventDto toCancel = null;
+    	for (EventDto e : scheduledEvents) {
+    		if (e.getEventName().equals(event.getEventName())) {
+    			toCancel = e;
+    		}
+    	}
+    	if (toCancel != null)
+    		scheduledEvents.remove(toCancel);
     }
+    
     public boolean checkDateAvailability(Date toCheck) {
         for (EventDto event : scheduledEvents) {
             if (event.getDate().equals(toCheck)) {

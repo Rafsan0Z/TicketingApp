@@ -26,4 +26,5 @@ public class TicketInfo {
     public void setTicketId(long ticketId) {
         this.ticketId = ticketId;
     }
+    
 }
