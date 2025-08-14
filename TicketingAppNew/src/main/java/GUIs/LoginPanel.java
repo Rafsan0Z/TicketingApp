@@ -63,7 +63,7 @@ public class LoginPanel extends JPanel {
         managerBtn.setBounds(567, 332, 142, 63);
         add(managerBtn);
         
-        JButton guestBtn = new JButton("Login as Guest");
+        JButton guestBtn = new JButton("Login as User");
         guestBtn.setBounds(413, 332, 142, 63);
         add(guestBtn);
         
