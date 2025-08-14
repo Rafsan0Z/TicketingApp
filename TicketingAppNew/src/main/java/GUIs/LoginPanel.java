@@ -47,7 +47,7 @@ public class LoginPanel extends JPanel {
         		MainFrame.swap("eventview");
         	}
         });
-        viewAvailableEventsBtn.setBounds(91, 332, 142, 63);
+        viewAvailableEventsBtn.setBounds(59, 332, 174, 63);
         add(viewAvailableEventsBtn);
         
         JButton registerBtn = new JButton("Register");
