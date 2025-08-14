@@ -76,7 +76,7 @@ public class RegisterPanel extends JPanel{
         add(passwordField);
 
         JButton registerUserBtn = new JButton("Register as User");
-        registerUserBtn.setBounds(532, 513, 117, 29);
+        registerUserBtn.setBounds(532, 513, 158, 29);
         add(registerUserBtn);
         registerUserBtn.addActionListener((ActionEvent e) -> {
             if (emailField.getText().isEmpty() || passwordField.getText().isEmpty() || nameField.getText().isEmpty() || phoneField.getText().isEmpty() || confirmField.getText().isEmpty()) {
@@ -101,11 +101,11 @@ public class RegisterPanel extends JPanel{
                 MainFrame.swap("login");
             }
         });
-        cancelBtn.setBounds(269, 513, 117, 29);
+        cancelBtn.setBounds(211, 513, 117, 29);
         add(cancelBtn);
 
         JButton registerManagerBtn = new JButton("Register as Manager");
-        registerManagerBtn.setBounds(386, 513, 140, 29);
+        registerManagerBtn.setBounds(340, 513, 186, 29);
         add(registerManagerBtn);
         registerManagerBtn.addActionListener((ActionEvent e) -> {
             if (emailField.getText().isEmpty() || passwordField.getText().isEmpty() || nameField.getText().isEmpty() || phoneField.getText().isEmpty() || confirmField.getText().isEmpty()) {
